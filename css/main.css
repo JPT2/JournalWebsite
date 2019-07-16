@@ -458,6 +458,47 @@ a {
 .hover:hover {
   color: red;
 }
+
+.post {
+  width: 100%;
+  display: block;
+  height: 50px;
+  background: antiquewhite;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 5px;
+  margin: 5px;
+}
+.post img {
+  height: 50px;
+  width: 50px;
+  float: left;
+  border-radius: 5px 0 0 5px;
+}
+
+.preview {
+  float: left;
+  padding: 5px;
+  text-align: center;
+}
+
+.summary ul {
+  list-style-type: none;
+}
+
+.title {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 800px;
+}
+
+.good {
+  background: #82e882;
+}
+
+.bad {
+  background: #e88282;
+}
 /*
 font-family: 'Dosis', sans-serif;
 font-family: 'Josefin Sans', sans-serif;
