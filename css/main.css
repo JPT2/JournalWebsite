@@ -499,6 +499,41 @@ a {
 .bad {
   background: #e88282;
 }
+
+@media only screen and (max-width: 600px) {
+  .post {
+    height: 100px;
+    position: relative;
+  }
+  .post img {
+    height: 100px;
+    width: 100px;
+    float: left;
+    border-radius: 5px 0 0 5px;
+  }
+  .preview {
+    padding: 0;
+    text-align: center;
+    height: 100px;
+    /* width: 150px; */
+    width: 150px;
+    overflow: hidden;
+  }
+  ul {
+    padding: 0;
+  }
+
+  .title {
+    white-space: normal;
+    overflow: scroll;
+    text-overflow: ellipsis;
+    /* word-wrap: normal; */
+    /* max-width: 800px; */
+    height: 100px;
+    overflow-wrap: break-word;
+    width: 100%;
+  }
+}
 /*
 font-family: 'Dosis', sans-serif;
 font-family: 'Josefin Sans', sans-serif;
