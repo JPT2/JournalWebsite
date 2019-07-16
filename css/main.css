@@ -284,10 +284,9 @@ html, body {
 
 #menu-bar {
   width: 100%;
-  height: 50px;
+  height: 56px;
   background: black;
   color: white;
-  padding: 5px;
 }
 
 #menu-bar ul {
@@ -396,6 +395,7 @@ a {
   height: 50px;
   width: 300px;
   float: left;
+  padding: 3px;
 }
 
 .siteName {
@@ -453,6 +453,10 @@ a {
 
 .marker {
   font-family: 'Permanent Marker', cursive;
+}
+
+.hover:hover {
+  color: red;
 }
 /*
 font-family: 'Dosis', sans-serif;
