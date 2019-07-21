@@ -346,6 +346,22 @@ html, body {
   width: 60%;
 }
 
+.body ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.body ul li {
+  float: left; /* Puts everything on same line */
+  width: 30%;
+  margin-bottom: 25px;
+}
+
+.body ul li .card {
+  width: 60%;
+}
+
 .hero-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
   
@@ -453,6 +469,7 @@ a {
 
 .marker {
   font-family: 'Permanent Marker', cursive;
+  /*font-family: 'Audiowide', cursive;*/
 }
 
 .hover:hover {
@@ -482,6 +499,10 @@ a {
 }
 
 .summary ul {
+  list-style-type: none;
+}
+
+.body ul {
   list-style-type: none;
 }
 
