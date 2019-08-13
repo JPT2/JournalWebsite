@@ -30,7 +30,7 @@ class Card {
 
     createPostCard() {
     	let card = document.createElement("div");
-    	card.classList.add("container");
+    	card.classList.add("postcard");
 
     	let titleElement = document.createElement("h4");
     	titleElement.textContent = this.title;
@@ -39,16 +39,17 @@ class Card {
     	descriptionElement.textContent = this.description;
 
     	let container = document.createElement("div");
-    	container.classList.add("container");
+    	container.classList.add("postbox");
     	container.appendChild(titleElement);
     	container.appendChild(descriptionElement);
 
     	let imgSpace = document.createElement("img");
+    	imgSpace.classList.add("postcardThumbnail")
     	imgSpace.src = this.imgLink;	// Is this a vulnerability?
 
     	// Check if should put status banner on the card
     	if (this.status) {
-    		
+    		// Code to put status descriptor on the post
     	}
 
     	// Put card together
@@ -65,4 +66,17 @@ class Card {
     createNewsfeedCard() {
 
     }
+}
+
+var postArea = null;
+window.onload = function() {
+	console.log("Running new card");
+	postArea = document.getElementById("testArea");
+	for (let i = 0; i < 5; i++) {
+		let card = new Card("id", "Test Card", "Newly Finished!", [], "post", "An exciting new card", "../img/cyberPunk.jpg");
+		let cardCard = card.createPostCard();
+		console.log(cardCard);
+		postArea.appendChild(cardCard);
+	}
+	
 }

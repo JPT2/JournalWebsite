@@ -320,8 +320,12 @@ html, body {
   position: relative; /* Needed for the ribbon */
 }
 
+li .card {
+  height: 300px;
+}
+
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.7);
 }
 
 .container {
@@ -338,7 +342,7 @@ html, body {
 
 #newsfeed ul li {
   float: left; /* Puts everything on same line */
-  width: 30%;
+  width: 33%;
   margin-bottom: 25px;
 }
 
@@ -519,6 +523,58 @@ a {
 
 .bad {
   background: #e88282;
+}
+
+.postcard {
+  box-shadow: 0px 10px 8px 0px rgba(136, 52, 52, 0.44);
+  transition: 0.3s;
+  width: 40%;
+  margin: 0 auto;
+  position: relative;
+  width: 532px;
+  height: 200px;
+  float: left;
+  margin: 15px;
+}
+
+.postcard .postbox {
+  width: 300px;
+  height: 200px;
+  float: left;
+  background: #f7eded;
+  padding: 0px 16px;
+}
+
+.postcardThumbnail {
+  height: 200px;
+  width: 200px;
+  float: left;
+}
+
+.postcardmini {
+  box-shadow: 0px 10px 8px 0px rgba(136, 52, 52, 0.44);
+  transition: 0.3s;
+  width: 40%;
+  margin: 0 auto;
+  position: relative;
+  width: 532px;
+  height: 200px;
+  float: left;
+  margin: 15px;
+}
+
+.postcardmini .postboxmini {
+  width: 300px;
+  height: 100px;
+  float: left;
+  background: #f7eded;
+  padding: 0px 16px;
+}
+
+.postcardminiThumbnail {
+  height: 100px;
+  width: 100px;
+  float: left;
 }
 
 @media only screen and (max-width: 600px) {
