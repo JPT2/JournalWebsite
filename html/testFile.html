@@ -1,0 +1,191 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Audiowide|Bitter|Dosis|Indie+Flower|Josefin+Sans|Merriweather+Sans|Permanent+Marker|Shadows+Into+Light&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+
+  <!-- Add your site or application content here -->
+  <div id="menu-bar" class="marker">
+    <div class="masthead">
+      <div class="siteName">JecT</div>
+      <div class="subtitle">An interactive project journal</div>
+    </div>
+    <ul>
+      <li><a class="hover" href="./contacts.html">Contact</a></li>
+      <li><a class="hover" href="./books.html">Books</a></li>
+      <li><a class="hover">Notes</a></li>
+      <li><a class="hover" href="./projects.html">Projects</a></li>
+      <li><a class="hover" href="../index.html">Home</a></li>
+    </ul>
+  </div>
+  <div class="header">
+    <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/cyberPunk.jpg');">
+      <div class="hero-text">
+        <h1 class="marker">Development Page Please Ignore...</h1>
+        <p>No. Really. Go away please...</p>
+      </div>
+    </div>
+  </div>
+  <div class="body shadowBox">
+    <div class="summary"> 
+      <p style="font-size:14px; text-align: center;">Like really please go away.</p>
+    </div>
+    <ul>
+      <li>
+        <div class="card">
+          <a href="./notes/gaming.html">
+          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/notes/gaming/imgs/icon.jpg');">
+            <div class="hero-text">
+              <h1 class="marker">Gaming</h1>
+              <p>See what I'm playing and what I think of it.</p>
+            </div>
+          </div>
+          </a>
+        </div>
+      </li>
+      <li>
+        <div class="shadowBox">
+          <button class="collapsible">Create New Post</button>
+          <div class="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          </div>
+        </div>
+        
+      </li>
+    </ul>
+    <div class="summary" id="postArea"> 
+      <p style="font-size:100px; text-align: center;">&#128126</p>
+    </div>
+  </div>
+  <script src="../js/vendor/modernizr-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="../js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
+  <script src="../js/plugins.js"></script>
+  <script src="../js/main.js"></script>
+
+  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+  <script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set','transport','beacon'); ga('send', 'pageview')
+  </script>
+  <script type="text/javascript">
+    // Code to add a hoverable menu below posts (so if someone hovers mouse over a post for a while show the menu for editing)
+    var cards = document.getElementsByClassName("card");
+    var optionsMenu = document.createElement("div");
+    optionsMenu.classList.add("cardOptionsMenu");
+
+    var optionsMenu2 = document.createElement("div");
+    optionsMenu2.classList.add("cardOptionsMenu2");
+
+
+    for (i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      card.appendChild(optionsMenu2);
+      // card.addEventListener("mouseover", function() {
+      //   console.log("Mouse in!");
+      //   timeout = setTimeout(function() {
+      //     card.appendChild(optionsMenu);
+      //   }, 500);
+        
+      // });
+      // card.addEventListener("mouseout", function() {
+      //   console.log("Mouse out!");
+      //   clearTimeout(timeout);
+      //   card.removeChild(optionsMenu);
+      // });
+    }
+  </script>
+  <script>
+    // Code for creating new posts
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    let save = document.createElement("div");
+    save.classList.add("menuButton");
+    save.setAttribute("contenteditable", false);
+    save.style.width = "50%";
+    save.textContent = "Save Post";
+    save.addEventListener("click", function() {
+      let post = document.getElementById("newPost");
+      uploadNewPost(postArea, post.firstElementChild.textContent);
+      post.firstElementChild.innerHTML = "";;
+    });
+    let clear = document.createElement("div");
+    clear.classList.add("menuButton");
+    clear.setAttribute("contenteditable", false);
+    clear.style.width = "50%";
+    clear.textContent = "Clear Post";
+    let menuButtons = document.createElement("div");
+    menuButtons.style.width = "100%";
+    menuButtons.appendChild(save);
+    menuButtons.appendChild(clear);
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+
+        // Bad for to add an id here. But i know there's only going to be 1 so w/e
+        var content = this.nextElementSibling;
+        content.id = "newPost";
+        content.classList.add("open");
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+          content.firstElementChild.setAttribute("contenteditable", false);
+          this.removeChild(this.lastChild);
+          if (content.firstElementChild.innerHTML === "") {
+            this.textContent = "Create New Post";
+          } else {
+            this.textContent = "Re-Open Post";
+          }
+        } else {
+          // Extend the collapsible div and make it possible for user to type something
+          // content.style.maxHeight = content.scrollHeight + "px";
+          content.style.maxHeight = 'inherit';
+          // content.style.overflow = "auto";
+          content.appendChild(menuButtons);
+          content.firstElementChild.setAttribute("contenteditable", true);
+          clear.addEventListener("click", function() {
+            // TODO add ability to set title by double clicking on collapsible area?
+            console.log("Click event listener went off!");
+            content.firstElementChild.innerHTML = "";
+            console.log(content.childNodes);
+            console.log(content.firstElementChild);
+            console.log("Cleared text!");
+          });
+          this.textContent = "Hide Post (Will Not Save)";
+          
+        }
+
+        
+      });
+
+      function uploadNewPost(attachPoint, postBody) {
+        let newPost = document.createElement("p");
+        newPost.classList.add("post");
+        newPost.textContent = postBody;
+        attachPoint.prepend(newPost);
+      }
+    }
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+</body>
+
+</html>

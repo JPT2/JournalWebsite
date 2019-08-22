@@ -280,6 +280,7 @@ html, body {
   width: 100%;
   background: #2c537b;
   padding: 40px 0;
+  height: 400px;
 }
 
 #menu-bar {
@@ -316,13 +317,41 @@ html, body {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   width: 40%;
+  height: 300px;
   margin: 0 auto;
   position: relative; /* Needed for the ribbon */
 }
 
-li .card {
-  height: 300px;
+.mini-card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+  height: 150px;
+  margin: 0 auto;
+  position: relative; /* Needed for the ribbon */
 }
+
+td .mini-card {
+  width: 100%;
+}
+
+.title-card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+  height: 300px;
+  margin: 0 auto;
+  position: relative; /* Needed for the ribbon */
+}
+
+.title-card .container {
+  height: 100px;
+}
+
+.spotlight .card {
+  height: 600px;
+}
+
 
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.7);
@@ -387,6 +416,8 @@ li .card {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+  overflow: hidden;
+  width: 100%;
 }
 
 .header {
@@ -577,6 +608,13 @@ a {
   float: left;
 }
 
+/*#newPost {
+  height: 200px;
+  text-align: center;
+  font-size: 75px;
+  background-color: blue;
+}*/
+
 @media only screen and (max-width: 600px) {
   .post {
     height: 100px;
@@ -611,6 +649,70 @@ a {
     width: 100%;
   }
 }
+
+.collapsible {
+  background-color: #2b799db0;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #2b799d;
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #e0eff7;
+}
+
+/* Class for any buttons for handling actions/forms  */
+.menuButton {
+  background-color: #2b799db0;
+  color: white;
+  text-align: center;
+  float: left;
+}
+
+.menuButton:hover {
+  background-color: #2b799d;
+}
+
+.content p {
+  min-height: 50px;
+}
+
+.shadowBox {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.cardOptionsMenu {
+  height: 100px;
+  background: red;
+}
+
+.cardOptionsMenu2 {
+  height: 300px;
+  background: #d7d7d74a;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  float: left;
+}
+
+table {
+  width: 100%;
+}
+
 /*
 font-family: 'Dosis', sans-serif;
 font-family: 'Josefin Sans', sans-serif;
