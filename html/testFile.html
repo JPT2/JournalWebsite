@@ -62,16 +62,10 @@
           </a>
         </div>
       </li>
-      <li>
-        <div class="shadowBox">
-          <button class="collapsible">Create New Post</button>
-          <div class="content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          </div>
-        </div>
-        
-      </li>
     </ul>
+    <div id="newsfeed">
+      
+    </div>
     <div class="summary" id="postArea"> 
       <p style="font-size:100px; text-align: center;">&#128126</p>
     </div>
@@ -115,75 +109,153 @@
     }
   </script>
   <script>
-    // Code for creating new posts
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-    let save = document.createElement("div");
-    save.classList.add("menuButton");
-    save.setAttribute("contenteditable", false);
-    save.style.width = "50%";
-    save.textContent = "Save Post";
-    save.addEventListener("click", function() {
-      let post = document.getElementById("newPost");
-      uploadNewPost(postArea, post.firstElementChild.textContent);
-      post.firstElementChild.innerHTML = "";;
-    });
-    let clear = document.createElement("div");
-    clear.classList.add("menuButton");
-    clear.setAttribute("contenteditable", false);
-    clear.style.width = "50%";
-    clear.textContent = "Clear Post";
-    let menuButtons = document.createElement("div");
-    menuButtons.style.width = "100%";
-    menuButtons.appendChild(save);
-    menuButtons.appendChild(clear);
+    class newPostObj {
+      constructor(attachPoint) {
 
-    for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
+      }
 
-        // Bad for to add an id here. But i know there's only going to be 1 so w/e
-        var content = this.nextElementSibling;
-        content.id = "newPost";
-        content.classList.add("open");
-        if (content.style.maxHeight){
-          content.style.maxHeight = null;
-          content.firstElementChild.setAttribute("contenteditable", false);
-          this.removeChild(this.lastChild);
-          if (content.firstElementChild.innerHTML === "") {
-            this.textContent = "Create New Post";
-          } else {
-            this.textContent = "Re-Open Post";
-          }
-        } else {
-          // Extend the collapsible div and make it possible for user to type something
-          // content.style.maxHeight = content.scrollHeight + "px";
-          content.style.maxHeight = 'inherit';
-          // content.style.overflow = "auto";
-          content.appendChild(menuButtons);
-          content.firstElementChild.setAttribute("contenteditable", true);
-          clear.addEventListener("click", function() {
-            // TODO add ability to set title by double clicking on collapsible area?
-            console.log("Click event listener went off!");
-            content.firstElementChild.innerHTML = "";
-            console.log(content.childNodes);
-            console.log(content.firstElementChild);
-            console.log("Cleared text!");
-          });
-          this.textContent = "Hide Post (Will Not Save)";
-          
-        }
+      editTitle() {
 
-        
-      });
+      }
 
-      function uploadNewPost(attachPoint, postBody) {
-        let newPost = document.createElement("p");
-        newPost.classList.add("post");
-        newPost.textContent = postBody;
-        attachPoint.prepend(newPost);
+      editContent() {
+
+      }
+
+      publish() {
+
+      }
+
+      clear() {
+
       }
     }
+
+    class editablePost {
+      constructor(attachPoint) {
+
+      }
+
+      render() {
+
+      }
+    }
+
+    class collapsibleNewPost {
+      constructor(attachPoint) {
+        // Bind context for certain methods that need a constant this
+        // this.publish = this.publish.bind(this);
+        this.newPost = this.render();
+        this.attachPoint = attachPoint;
+        console.log("New Post: " + attachPoint);
+        console.log("AttachPoint: " + attachPoint);
+        console.log("Test: " + attachPoint != null);
+        console.log(this.newPost != null + " and ");
+        if (this.newPost != null && attachPoint != null) {
+          console.log("Attaching new post obj");
+          attachPoint.appendChild(this.newPost);
+        }
+      }
+
+      render() {
+        // Create the holder for everything
+        let shadowBox = document.createElement("div");
+        shadowBox.classList.add("shadowBox");
+
+        // Create button that will handle collapsing (and title)
+        let collapsible = document.createElement("button");
+        collapsible.classList.add("collapsible");
+        collapsible.textContent = "Create New Post";
+
+        let newSpan = document.createElement("span");
+        newSpan.innerHTML = "&#9999";
+        newSpan.addEventListener("click", function(event) {
+          event.stopPropagation();
+          collapsible.setAttribute("contenteditable", true);
+        });
+        
+
+        // Create div to house the content
+        let content = document.createElement("div");
+        content.classList.add("content");
+
+        // paste inside the div a place for the user to edit
+        let editableContent = document.createElement("p");
+
+        // Create the menu buttons for saving and deleting
+        let menuButtons = document.createElement("div");
+        menuButtons.style.width = "100%";
+
+        // Create the button to publish post
+        let save = document.createElement("div");
+        save.classList.add("menuButton");
+        save.style.width = "50%";
+        save.textContent = "Publish Post";
+
+        let collapsiblePost = this;
+        save.addEventListener("click", function() {
+          let post = collapsiblePost.publish(editableContent.textContent);
+          editableContent.textContent = "";
+        });
+
+        // Create the button to delete post
+        let clear = document.createElement("div");
+        clear.classList.add("menuButton");
+        clear.style.width = "50%";
+        clear.textContent = "Clear Post";
+        clear.addEventListener("click", function() {
+          editableContent.textContent = "";
+        });
+
+        menuButtons.appendChild(save);
+        menuButtons.appendChild(clear);
+
+        // Put everything together
+        content.appendChild(editableContent);
+        content.appendChild(menuButtons);
+        shadowBox.appendChild(collapsible);
+        shadowBox.appendChild(content);
+
+        collapsible.addEventListener("click", function() {
+          // Activate the div
+          collapsible.classList.toggle("active");
+          content.classList.add("open");
+          if (content.style.maxHeight) {
+            // closing the post
+            content.style.maxHeight = null;
+            editableContent.setAttribute("contenteditable", false);
+            // Why would we want to remove last child here?
+
+            // Check if continuing or if new post
+            if (editableContent.textContent === "") {
+              collapsible.textContent = "Create New Post";
+            } else {
+              collapsible.textContent = "Re-Open Post";
+            }
+          } else {
+            collapsible.textContent = "Hide Post (Will not publish!)";
+            content.style.maxHeight = "inherit";
+            editableContent.setAttribute("contenteditable", true);
+          }
+          collapsible.appendChild(newSpan);
+        });
+        return shadowBox;
+      }
+
+      publish(postBody) {
+        if (postBody != "") {
+          let newPost = document.createElement("p");
+          newPost.classList.add("post");
+          newPost.textContent = postBody;
+          this.attachPoint.prepend(newPost);
+        }
+      }
+    }
+
+    // Code for creating new posts
+    var coll = document.getElementsByClassName("collapsible");
+    let attachPoint = document.getElementById("newsfeed");
+    var newPostThingy = new collapsibleNewPost(attachPoint);
   </script>
   <script src="https://www.google-analytics.com/analytics.js" async></script>
 </body>

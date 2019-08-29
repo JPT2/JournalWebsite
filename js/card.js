@@ -154,7 +154,7 @@ class PictureCard {
 let reading = [
 		["Godel Escher Bach: An Eternal Golden Braid", "One of my favorites of 2019", '../res/books/geb/icon.jpg', "none", []],
 		["Empires of the Sea: The siege of Malta, The Battle of Lepanto, and the Contest for the Center of the World", "Given to me by a friend", '../res/books/empiresOfTheSea/icon.jpg', "none", []],
-		["The Black Swan: The Impact of the Highly Improbable", "", '../res/books/blackSwan/icon.jpg', "none", []],
+		["33 Strategies of War", "", '../res/books/33Strategies/icon.jpg', "none", []],
 		["Benjamin Franklin: An American Life", "", '../res/books/franklinIsaacson/icon.jpg', "none", []],
 		["Do Androids Dream of Electric Sheep?", "First book of a book club I'm in", '../res/books/electricSheep/icon.png', "none", []],
 	]
@@ -162,7 +162,6 @@ let reading = [
 	let toRead = [
 		["Shoe Dog: A Memoir by the Creator of Nike", "", '../res/books/shoeDog/icon.jpg', "none", []],
 		["Raise Your Game: High-Performance Secrets from the Best of the Best", "", '../res/books/raiseYourGame/icon.jpg', "none", []],
-		["33 Strategies of War", "", '../res/books/33Strategies/icon.jpg', "none", []],
 		["The Future of Humanity: Terraforming Mars, Interstellar Travel, Immortality, and Our Destiny Beyond Earth", "", '../res/books/futureHumanity/icon.jpg', "none", []],
 		["Bad Blood: Secrets and Lies in a Silicon Valley Startup", "", '../res/books/badBlood/icon.jpg', "none", []],
 		["Life 3.0: Being Human in the Age of Artificial Intelligence", "", '../res/books/life3/icon.jpg', "none", []],
@@ -171,6 +170,7 @@ let reading = [
 	]
 
 	let read = [
+	    ["The Black Swan: The Impact of the Highly Improbable", "", '../res/books/blackSwan/icon.jpg', "none", []],
 		["The Signal and the Noise: Why So Many Predictions Fail-but Some Don't", "", '../res/books/signalNoise/icon.jpg', "none", []],
 		["The Innovators: How a Group of Hackers, Geniuses, and Geeks Created the Digital Revolution", "", '../res/books/innovators/icon.jpg', "none", []],
 		["The Power of Habit: Why We Do What We Do in Life and Business", "", '../res/books/powerOfHabit/icon.jpg', "none", []],
@@ -200,7 +200,7 @@ let reading = [
 		["Tribe: On Homecoming and Belonging", "", "../res/books/tribe/icon.jpg", "none", []],
 		["Weapons of Math Destruction: How Big Data Increases Inequality and Threatens Democracy", "", "../res/books/mathDestruction/icon.jpg", "none", []],
 		["Turning Point: 1997-2008", "", "../res/books/turningPoint/icon.jpg", "none", []],
-		["Starting Point: 1979-1996", "", "../res/books/turningPoint/icon.jpg", "none", []],
+		["Starting Point: 1979-1996", "", "../res/books/startingPoint/icon.jpg", "none", []],
 		["Mastery", "", "../res/books/mastery/icon.jpg", "none", []],
 		["Principles", "", "../res/books/principles/icon.jpg", "none", []],
 		["Superintelligence: Paths, Dangers, Strategies", "", "../res/books/superintelligence/icon.jpg", "none", []],
@@ -275,19 +275,19 @@ window.onload = function() {
 	postArea = document.getElementById("postArea");
 
 	let readingTitle = document.createElement("h1");
-	readingTitle.innerHTML = "Books I'm working on";
+	readingTitle.innerHTML = "Books I'm working on (" + reading.length + ")";
 	postArea.appendChild(readingTitle);
 
 	renderBookList(postArea, reading);
 
 	let toReadHeader = document.createElement("h1");
-	toReadHeader.innerHTML = "Books on my To-Do list";
+	toReadHeader.innerHTML = "Books on my To-Do list (" + toRead.length + ")";
 	postArea.appendChild(toReadHeader);
 
 	renderBookList(postArea, toRead);
 
 	let readHeader = document.createElement("h1");
-	readHeader.innerHTML = "Books I Finished!";
+	readHeader.innerHTML = "Books I Finished in 2019! (" + read.length + "/52)";
 	postArea.appendChild(readHeader);
 	renderBookList(postArea, read);
 
@@ -302,8 +302,13 @@ window.onload = function() {
 	renderBookList(postArea, read2018);	
 }
 
+let screenSize = 0;
 window.onresize = function resize() {
 	console.log("Resize!");
+	// Try not to repopulate for minor changes
+	if (screenSize == window.innerWidth) {
+		return;
+	}
 	let postArea = document.getElementById("postArea");
 	// Remove previous elements
 	while (postArea.firstChild) {
