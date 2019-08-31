@@ -512,9 +512,10 @@ a {
 }
 
 .post {
-  width: 100%;
+  /*width: 100%;*/
   display: block;
-  height: 50px;
+  /*height: 50px;*/
+  padding: 10px;
   background: antiquewhite;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   border-radius: 5px;
@@ -525,6 +526,10 @@ a {
   width: 50px;
   float: left;
   border-radius: 5px 0 0 5px;
+}
+
+li .post {
+  margin-left: 50px;
 }
 
 .preview {
