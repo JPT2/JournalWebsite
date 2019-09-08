@@ -45,8 +45,16 @@
       </div>
     </div>
   </div>
-  <div class="body">
+  <div class="body" id="wall">
     <div class="summary">The curious result of continuously scaling back the scope of a The Legend of Zelda Fan Game. Hyrule Herder explores what life would have been like if Link had decided not to go on an adventure but instead care for his 5 cows.</div>
+    <object codetype="application/java" classid="java:Game"
+   archive="../res/jars/HyruleHerder.jar" width="740" height="400"></object>
+   
+    <p class="post">Currently in the process of trying to embed the "final" version of the game. I say "final" as its the way the game has been for a few years now, but there are a couple of seemingly low-hanging fruit I've been mulling over adding just to imrprove the experience.</p>
+
+    
+    <APPLET ARCHIVE="../res/jars/HyruleHerder.jar" CODE="Game.class" WIDTH=400 HEIGHT=200>
+      </APPLET>
   </div>
   <script src="../js/vendor/modernizr-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>

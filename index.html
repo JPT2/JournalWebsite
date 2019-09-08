@@ -37,7 +37,6 @@
     </ul>
   </div>
   <div id="spotlight">
-    
       <div class="title-card">
         <a href="./html/hyruleHerder.html">
         <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./res/hyruleHerder/imgs/titleScreen.png');"></div>
@@ -48,12 +47,12 @@
         </div>
         </a>
       </div>
-    
+  </div>
+  <div id="heartbeat">
   </div>
   <div id="newsfeed">
     <ul>
       <li>
-        
           <div class="card">
             <a href="./html/platoonDynamics.html">
             <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./res/platoonDynamics/imgs/icon.png');">
@@ -64,10 +63,8 @@
             </div>
             </a>
           </div>
-        
       </li>
       <li>
-        
           <div class="card">
             <a href="./html/noScriptForYou.html">
             <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./res/noScriptForYou/imgs/noScriptForYou.png');">
@@ -78,10 +75,8 @@
             </div>
             </a>
           </div>
-        
       </li>
       <li>
-        
           <div class="card">
             <a href="./html/threads.html">
             <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./res/threads/imgs/threads.png');">
@@ -92,10 +87,8 @@
             </div>
             </a>
           </div>
-        
       </li>
       <li>
-        
           <div class="card">
             <a href="./html/okEmoji.html">
             <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./res/okEmoji/imgs/okEmoji.png');">
@@ -106,10 +99,8 @@
             </div>
             </a>
           </div>
-        
       </li>
       <li>
-        
           <div class="card">
             <a href="./html/noted.html">
             <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./res/noted/imgs/noted.png');">
@@ -120,7 +111,6 @@
             </div>
             </a>
           </div>
-        
       </li>
       <li>
         
@@ -138,11 +128,54 @@
       </li>
     </ul>
   </div>
+  <div id="newsfeedArea">
+  </div>
   <script src="js/vendor/modernizr-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/note.js"></script>
+  <script src="js/project.js"></script>
+  <script src="js/newsfeed.js"></script>
+  <script>
+      // Create list of fake events for purpose of testing
+      let newsData = [
+        {status: "New post in <a href='./html/hyruleHerder.html'><span class='project-title'>Hyrule Herder</span></a>!", date: "09/08/2019"},
+        {status: "New post in <a href='./html/personalSite.html'><span class='project-title'>Personal Website</span></a>!", date: "09/08/2019"},
+        {status: "Started reading <span class='project-title'>Don Quixote</span>! <a href='./html/books.html'><span>Books in Progress</span></a>", date: "09/05/2019"},
+        {status: "Finished reading <span class='project-title'>The Everything Store!</span> <a href='./html/books.html'><span>Finished Books</span></a>", date: "09/06/2019"},
+        {status: "New post in <a href='./html/personalSite.html'><span class='project-title'>Personal Website</span></a>!", date: "09/05/2019"},
+        {status: "New post in <a href='./html/personalSite.html'><span class='project-title'>Personal Website</span></a>!", date: "09/05/2019"},
+        {status: "Started reading <span class='project-title'>The Everything Store</span>! <a href='./html/books.html'><span>Books in Progress</span></a>", date: "09/05/2019"},
+        {status: "Finished reading <span class='project-title'>Einstein</span>! <a href='./html/books.html'><span>Finished Books</span></a>", date: "09/05/2019"},
+        {status: "Finished reading <span class='project-title'>Do Androids Dream of Electric Sheep</span>! <a href='./html/books.html'><span>Finished Books</span></a>", date: "09/03/2019"},
+        {status: "New post in <a href='./html/personalSite.html'><span class='project-title'>Personal Website</span></a>!", date: "09/03/2019"},
+        {status: "New post in <a href='./html/personalSite.html'><span class='project-title'>Personal Website</span></a>!", date: "09/03/2019"},
+        {status: "Started reading <span class='project-title'>Einstein</span>! <a href='./html/books.html'><span>Books in Progress</span></a>", date: "09/03/2019"},
+        {status: "Finished reading <span class='project-title'>Bad Blood</span>! <a href='./html/books.html'><span>Finished Books</span></a>", date: "09/02/2019"},
+        {status: "Started reading <span class='project-title'>Bad Blood</span>! <a href='./html/books.html'><span>Books in Progress</span></a>", date: "09/01/2019"},
+        {status: "New project! (<a href='./html/personalSite.html'><span class='project-title'>Personal Website</span></a>)", date: "09/01/2019"},
+        {status: "New project! (<a href='./html/threads.html'><span class='project-title'>Threads</span></a>)", date: "07/22/2019"},
+        {status: "New project! (<a href='./html/noted.html'><span class='project-title'>Noted</span></a>)", date: "07/22/2019"},
+        {status: "New project! (<a href='./html/personalSite.html'><span class='project-title'>Personal Website</span></a>)", date: "09/08/2019"},
+        {status: "New project! (<a href='./html/personalSite.html'><span class='project-title'>Personal Website</span></a>)", date: "09/08/2019"},
+      ];
+  
+      let newsObjects = [];
+      for (let i = 0; i < newsData.length; i++) {
+        newsObjects.push(new News(newsData[i].status, newsData[i].date));
+      }
+  
+      let newsfeedManager = new Newsfeed(newsObjects, null);
+      let newsfeedContainer = document.getElementById("newsfeedArea");
+      newsfeedManager.render(newsfeedContainer);
+      newsfeedManager.populate();
+    </script>
+  <script>
+    // Init the projects that were "updated"
+
+  </script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>

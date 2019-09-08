@@ -622,7 +622,7 @@ li .post {
 
 @media only screen and (max-width: 600px) {
   .post {
-    height: 100px;
+    /*height: 100px;*/
     position: relative;
   }
   .post img {
@@ -673,15 +673,21 @@ li .post {
 
 .content {
   padding: 0 18px;
-  max-height: 0;
+  /* max-height: 0; */
   overflow: hidden;
   transition: max-height 0.2s ease-out;
-  background-color: #e0eff7;
+  /* background-color: #e0eff7; */
+  background-color: #aed5f7;
+  position: relative;
+}
+
+.createPost .content {
+  max-height: 0;
 }
 
 /* Class for any buttons for handling actions/forms  */
 .menuButton {
-  background-color: #2b799db0;
+  background-color: #aed5f79c;
   color: white;
   text-align: center;
   float: left;
@@ -689,6 +695,10 @@ li .post {
 
 .menuButton:hover {
   background-color: #2b799d;
+}
+
+.half {
+  width: 50%;
 }
 
 .content p {
@@ -716,6 +726,126 @@ li .post {
 
 table {
   width: 100%;
+}
+
+.blogPost {
+  background: #2b799d;
+  /* padding: 0 15px; */
+  margin: 0 0 10px 0;
+}
+
+.postTitle {
+  font-size: x-large;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
+
+.postSubtitle {
+  font-size: large;
+  color: white;
+}
+
+.initial {
+  padding: 10px;
+}
+
+.hover {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.hover:hover {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.8);
+}
+
+.menu {
+  width: 100%;
+  height: 50px;
+}
+
+.closeButton {
+  top: 5px;
+  right: 5px;
+  position: absolute;
+}
+
+.project {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+  transition: 0.3s;
+  margin: 10px auto;
+  position: relative; /* Needed for the ribbon */
+}
+
+.project-header {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+  transition: 0.3s;
+  height: 300px;
+  margin: 0 auto;
+  position: relative; /* Needed for the ribbon */
+}
+
+.project:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.7);
+}
+
+.notebook {
+  padding: 0 10px 10px 10px;
+}
+
+.projectButton {
+  height: 48px;
+  border: 1px solid white;
+  text-align: center;
+}
+
+.projectButton img {
+  height: 50px;
+  width: 50px;
+}
+
+.hoverable {
+  position: relative;
+}
+
+.hoverable:hover > .overlay {
+  width:100%;
+  height:100%;
+  position:absolute;
+  background-color:#000;
+  opacity:0.5;
+  border-radius:30px;
+}
+
+/*
+Styles for the newsfeed
+*/
+#newsfeed {
+  height: 650px;
+}
+
+.newsfeed {
+  
+}
+.news {
+
+}
+
+.news .content {
+
+}
+
+.project-title {
+  font-style: italic;
+  font-weight: 700;
+}
+
+.news .content a {
+  text-decoration: none;
+  color: white;
+}
+.news .content a:hover {
+  /* color: black; */
+  text-decoration: underline;
 }
 
 /*
