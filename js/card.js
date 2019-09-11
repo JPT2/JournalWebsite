@@ -86,7 +86,11 @@ class PictureCard {
 		let heroImage = document.createElement("div");
 		let cssString = "background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/platoonDynamics/imgs/icon.png');";
 		// heroImage.style.cssText = cssString;
-		heroImage.setAttribute("style", "background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/drl/imgs/icon.png');");
+		if (this.imgLink) {
+			heroImage.setAttribute("style", "background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + this.imgLink + ");");
+		} else {
+			heroImage.setAttribute("style", "background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/drl/imgs/icon.png');");
+		}
 		heroImage.classList.add("hero-image");
 
 		// Make div for the hero text
@@ -138,15 +142,15 @@ class PictureCard {
 		card.appendChild(heroText);
 		return card;
 
-		card.addEventListener("mouseover", function() {
-			console.log("mouseover");
-			heroImage.setAttribute("style", "background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('" + this.imgLink + "');");
-		});
+		// card.addEventListener("mouseover", function() {
+		// 	console.log("mouseover");
+		// 	heroImage.setAttribute("style", "background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('" + this.imgLink + "');");
+		// });
 
-		card.addEventListener("mouseout", function() {
-			console.log("mouseout");
-			heroImage.setAttribute("style", "background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('" + this.imgLink + "');");
-		});
+		// card.addEventListener("mouseout", function() {
+		// 	console.log("mouseout");
+		// 	heroImage.setAttribute("style", "background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('" + this.imgLink + "');");
+		// });
 	}
 
 }

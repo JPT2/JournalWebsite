@@ -82,6 +82,8 @@
   <script src="../js/plugins.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/note.js"></script>
+  <script src="../js/blogPost.js"></script>
+  <script src="../js/card.js"></script>
   <script src="../js/project.js"></script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
@@ -135,7 +137,8 @@
     let attachPoint = document.getElementById("newsfeed");
     var newPostThingy = new CollapsibleNoteCreator(attachPoint);
     let newProject = new Project("JECT", "An online project journal", "../img/cyberPunk.jpg", blogNotes, attachPoint);
-
+    let projectButton = new NewProject();
+    projectButton.render(attachPoint);
   </script>
   <script src="https://www.google-analytics.com/analytics.js" async></script>
 </body>

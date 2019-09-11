@@ -61,12 +61,12 @@ class News {
     // What could a news update consist of? Images, links, text.
         // Initial version should just be text with links
         // Would most likely be passed in a short text that just need to render (so like add the embdeded html);
-    constructor(status, date) {
+    constructor(note) {
         // Other option is to just have explicit updates like "new post in x project..."
         // Guess I can just build out both
         // Benefit of this approach is that its straightforward and familiar, although its not as "interesting"
-        this.status = status; // Need to decide at some point if there will be some type of crazy encoding I'll do
-        this.date = date;
+        // this.status = status; // Need to decide at some point if there will be some type of crazy encoding I'll do
+        this.note = note;
         this.domElement = this.create();
     }
 
@@ -76,7 +76,7 @@ class News {
 
         let content = document.createElement("div");
         content.classList.add("content");
-        content.innerHTML = this.date + "| " + this.status;
+        content.innerHTML = this.note.getDate() + "| " + this.note.getContent();
         newsPost.appendChild(content);
         return newsPost;
     }

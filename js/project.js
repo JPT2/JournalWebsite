@@ -1,5 +1,4 @@
 /*
-
 TODO - Make it so that if open up to a page dedicated solely to project, can 1 click go back (maybe use cookies)
 */
 class Project {
@@ -136,5 +135,206 @@ class Project {
 			console.log("No attachpoint found for " + this.attachPoint);
 		}
 		
+	}
+}
+
+/*
+	Used to collect data to create new project
+
+	Should I create a factory for creating new elements?
+*/
+class NewProject {
+	constructor() {
+		// Feel like using modals to just quickly get all the data might work
+
+		this.modal = this.createProjectModal();
+		this.modalContent = this.modal.firstChild.firstChild;
+		this.domElement = this.createButton();
+		this.img = "../img/library.jpg";
+		this.title = "Example Title";
+		this.subtitle = "Example Subtitle";
+		this.description = "Example description";
+	}
+
+	render(attachPoint) {
+		attachPoint.appendChild(this.domElement);
+		attachPoint.appendChild(this.modal);
+	}
+
+	createButton() {
+		// So create a floating button that when clicked spawns process of creating a new project?
+		let newProjectDiv = document.createElement("div");
+		newProjectDiv.classList.add("new-project-div");
+
+		let newProjectButton = document.createElement("button");
+		newProjectButton.textContent = "New Project";
+		newProjectButton.classList.add("new-project-button");
+		let npObj = this;
+		newProjectButton.onclick = function() {
+			npObj.modal.style.display = "block";
+		}
+
+		newProjectDiv.appendChild(newProjectButton);
+		return newProjectDiv;
+	}
+
+	// TODO refactor (make shorter, organize)
+	createProjectModal() {
+		let newProjObj = this;
+
+		// Create an example of what it would look like
+		let exampleProject = document.createElement("div");
+		exampleProject.classList.add("container");	
+		let refreshExample = function() {
+			if (exampleProject.firstElementChild) {
+				exampleProject.removeChild(exampleProject.firstElementChild);
+			}
+			
+			let pictureCard = new PictureCard(newProjObj.title, newProjObj.subtitle, newProjObj.img, null, null);
+			exampleProject.appendChild(pictureCard.createCard());	// Should probably switch to just updating...
+		}
+		refreshExample();
+
+		let modal = this.createModal();
+		let content = modal.firstChild.firstChild;
+
+		let header = document.createElement("div");
+		header.classList.add("header");
+		header.classList.add("marker");
+		header.textContent = "Create a New Project!";
+
+		let nameRequest = document.createElement("h2");
+		nameRequest.textContent = "Project name";
+		let nameInput = document.createElement("input");
+		nameInput.type = "text";
+		nameInput.name = "project-name";
+		nameInput.oninput = function(e) {
+			newProjObj.title = nameInput.value;
+			refreshExample();
+		}
+
+		let bgImg = document.createElement("h2");
+		bgImg.textContent = "Upload background image";
+		let bgImgInput = document.createElement("input");
+		bgImgInput.type = "file";
+		bgImgInput.name = "bgImg";
+		bgImgInput.accept = "image/gif, image/jpeg, image/png";
+
+		let tstImg = document.createElement("img");
+		content.appendChild(tstImg);
+		bgImgInput.addEventListener("change", function() {
+			var file = bgImgInput.files[0];
+			var reader  = new FileReader();
+
+			reader.onloadend = function (theFile) {
+				console.log("Reader.result: " + reader.result);
+				console.log("TheFile: "+ theFile.target.result);
+				// console.log("TheFile: "+ theFile);
+				newProjObj.img = reader.result;
+				newProjObj.img = theFile.target.result;
+				tstImg.src = reader.result;
+				refreshExample();
+			}
+
+			if (file) {
+				reader.readAsDataURL(file);
+			} else {
+				// Error'd out. Print error message and prompt re-entry
+				// preview.src = "";
+			}
+		}, false);
+		// bgImgInput.onchange = function(e) {
+		// 	// Should save image somehow?
+		// 	newProjObj.img = e.target.result;
+		// 	console.log("Setting img to: " + e.target.result);
+		// 	console.log(e.target.result);
+		// 	refreshExample();
+		// }
+
+		let subtitleRequest = document.createElement("h2");
+		subtitleRequest.textContent = "Project subtitle";
+		let subtitleInput = document.createElement("input");
+		subtitleInput.type = "text";
+		subtitleInput.name = "subtitle";
+		subtitleInput.oninput = function() {
+			newProjObj.subtitle = subtitleInput.value;
+			console.log("Updated subtitle to: " + newProjObj.subtitle);
+			refreshExample();
+		}
+
+		let descriptionRequest = document.createElement("h2");
+		descriptionRequest.textContent = "Project description";
+		let descriptionInput = document.createElement("textarea");
+		descriptionInput.oninput = function() {
+			newProjObj.description = descriptionInput.value;
+			console.log("Updated description to: " + newProjObj.description);
+			refreshExample();
+		}
+
+		// TODO add stuff for goals or expected finish date?
+		content.appendChild(header);
+		content.appendChild(nameRequest);
+		content.appendChild(nameInput);
+		content.appendChild(bgImg);
+		content.appendChild(bgImgInput);
+		content.appendChild(subtitleRequest);
+		content.appendChild(subtitleInput);
+		content.appendChild(descriptionRequest);
+		content.appendChild(descriptionInput);
+		content.appendChild(exampleProject);
+		return modal;
+	}
+
+	createModal() {
+		let modal = document.createElement("div");
+		modal.classList.add("modal");
+
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+		let modalContent = document.createElement("div");
+		modalContent.classList.add("modal-content");
+
+		let closeButton = document.createElement("span");
+		closeButton.innerHTML = "&times;";
+		closeButton.classList.add("close");
+		closeButton.onclick = function() {
+			modal.style.display = "none";
+		}
+
+		let container = document.createElement("div");
+		container.classList.add("container");
+
+		modalContent.appendChild(container);
+		modalContent.appendChild(closeButton);
+		modal.appendChild(modalContent);
+
+		return modal;
+	}
+
+	askForTitle() {
+		let title = document.createElement("h2");
+		title.textContent = "Project name: ";
+		let input = document.createElement("input");
+		input.type = "text";
+		input.name = "project-name";
+		input.addEventListener("keypress", function(e) {
+			console.log("Key press!");
+		});
+	}
+
+	askForSubtitle() {
+		
+	}
+
+	askForDescription() {
+		
+	}
+
+	askForBackgroundImage() {
+	
 	}
 }
