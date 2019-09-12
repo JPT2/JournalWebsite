@@ -1,13 +1,14 @@
 /*
 TODO - Make it so that if open up to a page dedicated solely to project, can 1 click go back (maybe use cookies)
+TODO - Add mobile friendly version of project?
+TODO - Decide if should be coupled with note?
 */
 class Project {
-	constructor(title, subtitle, displayImgPath, notes, attachPoint) {
+	constructor(title, subtitle, displayImgPath, notes) {
 		this.title = title;
 		this.subtitle = subtitle;
 		this.imgPath = displayImgPath ? displayImgPath : "default image";
 		this.notes = notes ? notes : [];
-		this.attachPoint = attachPoint;
 		this.domElement = this.createDomElement();
 		// Create region for appending notes and other new things
 		this.notebook = document.createElement("div");
@@ -16,7 +17,6 @@ class Project {
 
 		this.isOpen = false;
 		this.canEdit = false;
-		this.render();
 	}
 
 	createDomElement() {
@@ -128,11 +128,11 @@ class Project {
 		}
 	}
 
-	render() {
-		if (this.attachPoint) {
-			this.attachPoint.appendChild(this.domElement);
+	render(attachPoint) {
+		if (attachPoint) {
+			attachPoint.appendChild(this.domElement);
 		} else {
-			console.log("No attachpoint found for " + this.attachPoint);
+			console.log("No attachpoint found for " + attachPoint);
 		}
 		
 	}
@@ -189,9 +189,12 @@ class NewProject {
 			if (exampleProject.firstElementChild) {
 				exampleProject.removeChild(exampleProject.firstElementChild);
 			}
+
+			let project = new Project(newProjObj.title, newProjObj.subtitle, newProjObj.img, null);
 			
-			let pictureCard = new PictureCard(newProjObj.title, newProjObj.subtitle, newProjObj.img, null, null);
-			exampleProject.appendChild(pictureCard.createCard());	// Should probably switch to just updating...
+			// let pictureCard = new PictureCard(newProjObj.title, newProjObj.subtitle, newProjObj.img, null, null);
+			project.render(exampleProject);
+			// exampleProject.appendChild(project.);	// Should probably switch to just updating...
 		}
 		refreshExample();
 
@@ -220,19 +223,19 @@ class NewProject {
 		bgImgInput.name = "bgImg";
 		bgImgInput.accept = "image/gif, image/jpeg, image/png";
 
-		let tstImg = document.createElement("img");
-		content.appendChild(tstImg);
+		// let tstImg = document.createElement("img");
+		// content.appendChild(tstImg);
 		bgImgInput.addEventListener("change", function() {
 			var file = bgImgInput.files[0];
 			var reader  = new FileReader();
 
 			reader.onloadend = function (theFile) {
-				console.log("Reader.result: " + reader.result);
-				console.log("TheFile: "+ theFile.target.result);
-				// console.log("TheFile: "+ theFile);
-				newProjObj.img = reader.result;
+				// console.log("Reader.result: " + reader.result);
+				// console.log("TheFile: "+ theFile.target.result);
+				// // console.log("TheFile: "+ theFile);
+				// newProjObj.img = reader.result;
 				newProjObj.img = theFile.target.result;
-				tstImg.src = reader.result;
+				// tstImg.src = reader.result;
 				refreshExample();
 			}
 
