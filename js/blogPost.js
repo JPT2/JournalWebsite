@@ -1,5 +1,7 @@
 // TODO should this extend note?
 // TODO decide if this should go into a "render models" folder
+// TODO decide if "parent" should be used at all
+// TODO Might want to make a "RENDER" class that handles logic of rendering
 class BlogPost {
 	/*
 		Title - Title of the blog post (if there is one)
@@ -7,12 +9,20 @@ class BlogPost {
 		date - when the post was made
 		parent - TODO (think it should eventually be the id of the node to attach to (or something like that))
 	*/
-	constructor(title, content, date, tags, parent) {
-		this.note = new Note(title, content, date, tags, parent);
+	constructor(note) {
+		this.note = note;
 		this.domElement = this.create();
 		this.editing = false;
-		// this.render(parent); // Or maybe render logic should be handled by the caller? That might make more sense...
+		this.rendered = false;
 	}
+
+	// // Should probably decomission this constructor
+	// constructor(title, content, date, tags, parent) {
+	// 	this.note = new Note(title, content, date, tags, parent);
+	// 	this.domElement = this.create();
+	// 	this.editing = false;
+	// 	// this.render(parent); // Or maybe render logic should be handled by the caller? That might make more sense...
+	// }
 
 	create() {
 		let postDiv = document.createElement("div");
@@ -117,7 +127,17 @@ class BlogPost {
 		this.editing = false;
 	}
 
-	render(defaultAttachPoint) {
+	render(attachPoint) {
+		if (attachPoint) {
+			console.log("Rendering note");
+			attachPoint.appendChild(this.domElement);
+			this.rendered = true;
+		} else {
+			console.log("Failed to render note - " + this.title + " with content " + this.content);
+		}
+	}
+
+	render2(defaultAttachPoint) {
 		if (this.parent) {
 			console.log("Had parent");
 			console.log(this.parent);
@@ -133,6 +153,7 @@ class BlogPost {
 		if (this.domElement.parentNode) {
 			this.domElement.parentNode.removeChild(this.domElement);
 		}
+		this.rendered = false;
 	}
 
 	getAttachPoint() {
@@ -148,5 +169,7 @@ class BlogPost {
 	getNewsEvent() {
 		// Need to include the news event
 			// Have to return a news object (or should the news object have a way of pulling data from here?)
+		// Technically news event is just a wrapped note. Or it could be a refernce to a note (maybe return a string like "New Blog Post in Project")
+		return this.note;
 	}
 }

@@ -1,5 +1,9 @@
 /*
 	This will serve as the core atom from which most site content will be built from (they might just have different render wrappers around this base)
+
+	TODO
+	---------------------
+	Think I should get rid of the title option and leave that to only the projects
 */
 class Note {
 	// This class is basically a data struct wrapper for notes on the site
@@ -80,6 +84,7 @@ class CollapsibleNoteCreator {
 	  }
 	}
 
+	// TODO Move the creation into a separate method and then have render just attach it
 	render() {
 	  // Create the holder for everything
 	  let shadowBox = document.createElement("div");

@@ -1,4 +1,5 @@
 // Should spent the most time re-evaluating the corner stones of a work and little time building from there. Invest time proportional to the time it might save
+// Should only invent new functions as need fundamentally new behaviors
 
 let reading = [
     ["Godel Escher Bach: An Eternal Golden Braid", "One of my favorites of 2019", '../res/books/geb/icon.jpg', "none", []],

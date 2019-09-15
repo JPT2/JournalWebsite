@@ -794,6 +794,14 @@ table {
   padding: 0 10px 10px 10px;
 }
 
+.notebook .project .project-header{
+  height: 150px;
+}
+
+.notebook .project .hero-text {
+  height: 150px;
+}
+
 .projectButton {
   height: 48px;
   border: 1px solid white;

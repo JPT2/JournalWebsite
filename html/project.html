@@ -41,6 +41,9 @@
   <div class="header">
     
   </div>
+  <div class="body" id="tester">
+
+  </div>
   <div class="body" id="wall">
     <div class="description"></div>
     <div class="notes"></div>
@@ -50,6 +53,36 @@
   <script>window.jQuery || document.write('<script src="../js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
   <script src="../js/plugins.js"></script>
   <script src="../js/main.js"></script>
+  <script src="../js/note.js"></script>
+  <script src="../js/blogPost.js"></script>
+  <script src="../js/project.js"></script>
+  <script>
+    // TODO Auto Generate this page dynamically based on URL params
+    function newNote(content, date, tags) {
+      return new BlogPost(new Note(null, content, date, tags, null));
+    }
+    let projectNotes = [
+      newNote("Description of this really cool project I'm working on!"),
+      newNote("Follow up with goals and stuff related to the project"),
+      new Project("Feature/Milestone 1", "The first thing I attempted to do", "../img/library.jpg", [
+        newNote("Thoughts about my first attempt", "9/13/2019", []),
+        newNote("Following that same vein", "9/13/2019", []),
+        newNote("Doubts and issues I've run into", "9/13/2019", []),
+      ]),
+      new Project("Feature/Mileston 2", "The second thing I attempted to do", "../img/cyberPunk.jpg", [
+        newNote("Thoughts about this second thing I did", "9/13/2019", []),
+        newNote("Hit a snag"),
+      ]),
+      newNote("Some random thoughts I had about project as a whole", "9/13/2019", []),
+      new Project("Feature/Milestone 3", "The third major part of the project", "../img/bookshelf.jpg", [
+        newNote("Initial thoughts", "9/13/2019", []),
+      ]),
+    ]
+
+    let project2Render = new Project("Big massive project", "Very cool", "../res/personalSite/imgs/personalSite.png", projectNotes);
+    let attachPoint = document.getElementById("tester")
+    project2Render.render(attachPoint);
+  </script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>

@@ -1,7 +1,54 @@
+// class Project {
+// 	constructor(title, subtitle, imgPath, noteList) {
+// 		this.title = title;
+// 		this.subtitle = subtitle;
+// 		this.imgPath = imgPath ? imgPath : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/triangulation-minimalist-abstract-marble-and-metal-geometric-art-tina-lavoie.jpg";
+// 		this.notes = noteList ? noteList : [];
+// 	}
+
+// 	getTitle() {
+// 		return this.title;
+// 	}
+// 	setTitle(title) {
+// 		this.title = title;
+// 	}
+
+// 	getSubtitle() {
+// 		return this.subtitle;
+// 	}
+// 	setSubtitle(subtitle) {
+// 		this.subtitle = subtitle;
+// 	}
+
+// 	getImg() {
+// 		return this.imgPath;
+// 	}
+// 	setImg(imgPath) {
+// 		this.imgPath = imgPath;
+// 	}
+
+// 	addNote(note) {
+// 		this.notes.push(note);
+// 	}
+// 	removeNote(note) {
+// 		for (let i = 0; i < this.notes.length; i++) {
+// 			if (this.notes[i] == note) {
+// 				// TODO ? Might want some type of equals operator defined 
+// 				this.notes.splice(i, 1);
+// 			}
+// 		}
+// 	}
+// 	clearNotes() {
+// 		this.notes.clear();
+// 	}
+// }
+
 /*
 TODO - Make it so that if open up to a page dedicated solely to project, can 1 click go back (maybe use cookies)
 TODO - Add mobile friendly version of project?
 TODO - Decide if should be coupled with note?
+TODO - Decide if should store notes and then wrap them with a renderer, or just store the note
+TODO - Allow just setting bg colors as bgImg
 */
 class Project {
 	constructor(title, subtitle, displayImgPath, notes) {
@@ -17,6 +64,7 @@ class Project {
 
 		this.isOpen = false;
 		this.canEdit = false;
+		this.rendered = false;
 	}
 
 	createDomElement() {
@@ -129,12 +177,20 @@ class Project {
 	}
 
 	render(attachPoint) {
-		if (attachPoint) {
+		if (attachPoint && !this.rendered) {
 			attachPoint.appendChild(this.domElement);
+			this.rendered = true; // Prevent circular rendering. Everything should render once at highest level it can be (maybe don't render things after a certain depth tho)
 		} else {
 			console.log("No attachpoint found for " + attachPoint);
 		}
 		
+	}
+
+	unrender() {
+		if (this.domElement.parentNode) {
+			this.domElement.parentNode.removeChild(this.domElement);
+		}
+		this.rendered = false;
 	}
 }
 
