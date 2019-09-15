@@ -271,9 +271,9 @@ html, body {
 }
 
 #newsfeed {
-  width: 100%;
+  /* width: 100%; */
   /*height: 800px;*/
-  padding-top: 25px;
+  /* padding-top: 25px; */
 }
 
 #spotlight {
@@ -830,7 +830,7 @@ table {
 Styles for the newsfeed
 */
 #newsfeed {
-  height: 650px;
+  /* height: 650px; */
 }
 
 .newsfeed {

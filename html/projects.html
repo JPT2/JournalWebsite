@@ -47,104 +47,7 @@
   </div>
   <div class="body">
     <div class="summary"> <p style="font-size:14px; text-align: center;">A list of projects I've made over the past couple of years. Hopefully I'll be adding some new projects in domains like A.I., blockchain, networks, and who knows what else soon!</p></div>
-    <ul>
-      <li>
-        <div class="card">
-          <a href="./botting.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/botting/imgs/icon.jpg');">
-            <div class="hero-text">
-              <h1 class="marker">Bots</h1>
-              <p>Messing around with python bots.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="./drl.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/drl/imgs/icon.png');">
-            <div class="hero-text">
-              <h1 class="marker">Deep Reinforcement Learning</h1>
-              <p>Learning all about policy. Guess i'm a politician now.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="./platoonDynamics.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/platoonDynamics/imgs/icon.png');">
-            <div class="hero-text">
-              <h1 class="marker">Platoon Dynamics</h1>
-              <p>Team built application for dealing with decision problems for platooning autonomous vehicles.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="./noScriptForYou.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/noScriptForYou/imgs/noScriptForYou.png');">
-            <div class="hero-text">
-              <h1 class="marker">No Script For You</h1>
-              <p>A RNN for generating fake Seinfeld scripts.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="./threads.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/threads/imgs/threads.png');">
-            <div class="hero-text">
-              <h1 class="marker">Threads</h1>
-              <p>A tool for notebooking in a web format.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="./okEmoji.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/okEmoji/imgs/okEmoji.png');">
-            <div class="hero-text">
-              <h1 class="marker">OkEmoji</h1>
-              <p>Maps people's emoji responses in your vicinity. Best First Hack at HackNY.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="./noted.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/noted/imgs/noted.png');">
-            <div class="hero-text">
-              <h1 class="marker">Noted</h1>
-              <p>A tool for sharing ideas with friends and mapping concepts.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-         <div class="card">
-          <a href="./personalSite.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/personalSite/imgs/personalSite.png');">
-            <div class="hero-text">
-              <h1 class="marker">This Website</h1>
-              <p>Attempt at making an online progress journal for myself.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-    </ul>
+    <div id="newsfeed"></div>
     <div class="summary"> Thats all for now folks! <br/> <p style="font-size:100px; text-align: center;">&#128126</p></div>
   </div>
   <script src="../js/vendor/modernizr-3.7.1.min.js"></script>
@@ -152,11 +55,27 @@
   <script>window.jQuery || document.write('<script src="../js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
   <script src="../js/plugins.js"></script>
   <script src="../js/main.js"></script>
+  <script src="../js/note.js"></script>
+  <script src="../js/blogPost.js"></script>
   <script src="../js/project.js"></script>
+
   <script>
     let projects = [
-      {title: , subtitle: , imgLink: , link: }
+      new Project("Bots", "Messing around with Python Bots", "../res/botting/imgs/icon.jpg", []),
+      new Project("Deep Reinforcement Learning", "Learing all about policy. Guess I should be a politician", "../res/drl/imgs/icon.png", []),
+      new Project("Platoon Dynamics", "A Decision Platform for HDVs", "../res/platoonDynamics/imgs/icon.png", []),
+      new Project("No Script For You!", "A RNN for generating Seinfeld Scripts", "../res/noScriptForYou/imgs/noScriptForYou.png", []),
+      new Project("Threads", "A Web Based Notebooking Tool", "../res/threads/imgs/threads.png", []),
+      new Project("OkEmoji", "Maps People's Emoji Responses in Your Vicinity. Won Best First Hack at HackNY some years back", "../res/okEmoji/imgs/okEmoji.png", []),
+      new Project("Noted", "A tool for sharing ideas with friends and mapping concepts (Predecessor to threads)", "../res/noted/imgs/noted.png", []),
+      new Project("This Website!", "Attempt at making an online progress journal for myself.", "../res/personalSite/imgs/personalSite.png", []),
     ]
+
+    let attachPoint = document.getElementById("newsfeed");
+    for (let i = 0; i < projects.length; i++) {
+      let renderable = new RenderProject(projects[i]);
+      renderable.render(attachPoint);
+    }
   </script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->

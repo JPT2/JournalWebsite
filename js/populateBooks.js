@@ -36,6 +36,7 @@ let toRead = [
 ]
 
 let read = [
+["The Everything Store: Jeff Bezos and the Age of Amazon", "", '../res/books/everythingStore/icon.jpg', "none", []],
 ["Do Androids Dream of Electric Sheep?", "First book of a book club I'm in", '../res/books/electricSheep/icon.png', "none", []],
 ["Einstein", "", "../res/books/einstein/icon.jpg", "none", []],
 ["Bad Blood: Secrets and Lies in a Silicon Valley Startup", "", '../res/books/badBlood/icon.jpg', "none", []],
@@ -100,45 +101,37 @@ let read2018 = [
 var postArea = null;
 
 let screenWidth = -1;
-function renderBookList(attachPoint, bookList) {
+function renderBookList(attachPoint, title, subtitle, bookList) {
     console.log("Screen width: " + window.innerWidth);
     // if (screenWidth === window.innerWidth) {
     // 	return;
     // }
 
     let newList = document.createElement("table");
+    let books = [];
     if (window.innerWidth < 500) {
         for (let i = 0; i < bookList.length; i++) {
             let row = document.createElement("tr");
             let entry = document.createElement("td");
-            let photoCard = new Project(bookList[i][0], bookList[i][1], bookList[i][2], []);
-            // let photoCard = new PictureCard(bookList[i][0], bookList[i][1], bookList[i][2], bookList[i][3], bookList[i][4]);
-            // let photoCardHTML = photoCard.createMiniCard();
-            // entry.appendChild(photoCardHTML);
-            photoCard.render(entry);
-
+            let photoCard = new RenderProject(new Project(bookList[i][0], bookList[i][1], bookList[i][2], []));
+            // photoCard.render(entry);
             row.appendChild(entry);
-            
             newList.appendChild(row);
+            books.push(photoCard);
         }
     } else {
         for (let i = 0; i < bookList.length/2; i++) {
             let row = document.createElement("tr");
             let entry = document.createElement("td");
-            let photoCard = new Project(bookList[i * 2][0], bookList[i * 2][1], bookList[i * 2][2], []);
-            // let photoCard = new PictureCard(bookList[i * 2][0], bookList[i * 2][1], bookList[i * 2][2], bookList[i * 2][3], bookList[i * 2][4]);
-            // let photoCardHTML = photoCard.createMiniCard();
-            // entry.appendChild(photoCardHTML);
-            photoCard.render(entry);
+            let photoCard = new RenderProject(new Project(bookList[i * 2][0], bookList[i * 2][1], bookList[i * 2][2], []));
+            // photoCard.render(entry);
+            books.push(photoCard);
 
-            let photoCardHTML2 = null;
             let entry2 = document.createElement("td");
             if ((i * 2 + 1) < bookList.length) {
-                let photoCard2 = new Project(bookList[i * 2 + 1][0], bookList[i * 2 + 1][1], bookList[i * 2 + 1][2], []);
-                // let photoCard2 = new PictureCard(bookList[i * 2 + 1][0], bookList[i * 2 + 1][1], bookList[i * 2 + 1][2], bookList[i * 2 + 1][3], bookList[i * 2 + 1][4]);
-                // photoCardHTML2 = photoCard2.createMiniCard();
-                // entry2.appendChild(photoCardHTML2);
-                photoCard2.render(entry2);
+                let photoCard2 = new RenderProject(new Project(bookList[i * 2 + 1][0], bookList[i * 2 + 1][1], bookList[i * 2 + 1][2], []));
+                // photoCard2.render(entry2);
+                books.push(photoCard2);
             }
 
             row.appendChild(entry);
@@ -148,7 +141,12 @@ function renderBookList(attachPoint, bookList) {
         }
     }
 
-    attachPoint.appendChild(newList);
+    // attachPoint.appendChild(newList);
+    console.log("Books: " + books.length);
+    let img = books.length > 0 ? books[Math.floor(Math.random() * books.length)].getImg() : "../img/library.jpg";
+    console.log("Image: " + img);
+    let booksWrapper = new RenderProject(new Project(title, subtitle, img, books));
+    booksWrapper.render(attachPoint);
     screenWidth = window.innerWidth;
 }
 
@@ -159,39 +157,12 @@ window.onload = function() {
 function populateBooks() {
     console.log("Running new card");
     postArea = document.getElementById("postArea");
-
-    let readingTitle = document.createElement("h1");
-    readingTitle.innerHTML = "Books I'm working on (" + reading.length + ")";
-    postArea.appendChild(readingTitle);
-
-    renderBookList(postArea, reading);
-
-    let toReadHeader = document.createElement("h1");
-    toReadHeader.innerHTML = "Books on my To-Do list (" + toRead.length + ")";
-    postArea.appendChild(toReadHeader);
-
-    renderBookList(postArea, toRead);
-
-    let readHeader = document.createElement("h1");
-    readHeader.innerHTML = "Books I Finished in 2019! (" + read.length + "/52)";
-    postArea.appendChild(readHeader);
-    renderBookList(postArea, read);
-
-    let toConsider = document.createElement("h1");
-    toConsider.innerHTML = "Books I'm considering (" + considering.length + ")";
-    postArea.appendChild(toConsider);
-
-    renderBookList(postArea, considering);
-
-    let didntFinish2019Header = document.createElement("h1");
-    didntFinish2019Header.innerHTML = "Books I started and didn't finish (2019)";
-    postArea.appendChild(didntFinish2019Header);
-    renderBookList(postArea, didntFinish2019);
-
-    let readHeader2018 = document.createElement("h1");
-    readHeader2018.innerHTML = "Books I Finished (2018)";
-    postArea.appendChild(readHeader2018);
-    renderBookList(postArea, read2018);	
+    renderBookList(postArea, "Books I'm Working On", "Currently trying to read through " + reading.length + " books", reading);
+    renderBookList(postArea, "Books on my To-Do list", "Might pick up one of these " + toRead.length, toRead);
+    renderBookList(postArea, "Books I Finished in 2019", "Trying to read a book a week! Currently at " + read.length + "/52", read);
+    renderBookList(postArea, "Books I'm Considering", "Currently thinking over " + considering.length + ". Let me know if you think any really deserve a read!", considering);
+    renderBookList(postArea, "Books I Started and Didn't Finish (2019)", "I tried reading one of these " + didntFinish2019.length + ". But I just couldn't bring myself to finish.", didntFinish2019);
+    renderBookList(postArea, "Books I Finished (2018)", "I managed to get through " + read2018.length + "!", read2018);	
 }
 
 let screenSize = 0;

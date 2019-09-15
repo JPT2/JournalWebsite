@@ -49,63 +49,31 @@
         </a>
       </div>
   </div>
-  <div id="newsfeed">
-    <ul>
-      <li>
-        <div class="card">
-          <a href="">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../res/notes/watching/punisher/imgs/icon.jpg');">
-            <div class="hero-text">
-              <h1 class="marker">Marvel's The Punisher</h1>
-              <p>Liked S1. Attention lost in S2.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../res/notes/watching/breakingBad/imgs/icon.jpg');">
-            <div class="hero-text">
-              <h1 class="marker">Breaking Bad</h1>
-              <p>Yeah... I know I'm behind the times</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../res/notes/watching/nge/imgs/icon.jpg');">
-            <div class="hero-text">
-              <h1 class="marker">Neon Genesis Evangelion</h1>
-              <p>Very behind the times.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../res/notes/watching/dark/imgs/icon.jpg');">
-            <div class="hero-text">
-              <h1 class="marker">Dark</h1>
-              <p>I recommend this one.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-    </ul>
+  <div id="newsfeed" class="body">
+    
   </div>
   <script src="js/vendor/modernizr-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
+  <script src="../../js/plugins.js"></script>
+  <script src="../../js/main.js"></script>
+  <script src="../../js/note.js"></script>
+  <script src="../../js/blogPost.js"></script>
+  <script src="../../js/project.js"></script>
+  <script>
+    let shows = [
+      // new Project("Kill La Kill", "I really enjoyed the humor here", "../../res/notes/watching/killLaKill/imgs/icon.jpg", []),
+      new Project("Marvel's The Punisher", "Liked S1, lost interest in S2", "../../res/notes/watching/punisher/imgs/icon.jpg", []),
+      new Project("Breaking Bad", "I'm behind the times I know. I started it but couldn't really stay interested", "../../res/notes/watching/breakingBad/imgs/icon.jpg", []),
+      new Project("Neon Genesis Evangelion", "I've only seen one episode so far...", "../../res/notes/watching/nge/imgs/icon.jpg", []),
+      new Project("Dark", "A really good German show that's basically stranger things as a thriller. Recommed!", "../../res/notes/watching/dark/imgs/icon.jpg", []),
+    ]
+    let attachPoint = document.getElementById("newsfeed");
+    for (let i = 0; i < shows.length; i++) {
+      let renderable = new RenderProject(shows[i]);
+      renderable.render(attachPoint);
+    }
+  </script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>

@@ -1,47 +1,54 @@
-// class Project {
-// 	constructor(title, subtitle, imgPath, noteList) {
-// 		this.title = title;
-// 		this.subtitle = subtitle;
-// 		this.imgPath = imgPath ? imgPath : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/triangulation-minimalist-abstract-marble-and-metal-geometric-art-tina-lavoie.jpg";
-// 		this.notes = noteList ? noteList : [];
-// 	}
+// TODO - I think it would be cool to have a featured project top and to the left, and then a scrollable carousel to the right where hovering over something in it causes it to be featured
+class Project {
+	constructor(title, subtitle, imgPath, noteList) {
+		this.title = title;
+		this.subtitle = subtitle;
+		this.imgPath = imgPath ? imgPath : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/triangulation-minimalist-abstract-marble-and-metal-geometric-art-tina-lavoie.jpg";
+		this.notes = noteList ? noteList : [];
+	}
 
-// 	getTitle() {
-// 		return this.title;
-// 	}
-// 	setTitle(title) {
-// 		this.title = title;
-// 	}
+	getTitle() {
+		return this.title;
+	}
+	setTitle(title) {
+		this.title = title;
+	}
 
-// 	getSubtitle() {
-// 		return this.subtitle;
-// 	}
-// 	setSubtitle(subtitle) {
-// 		this.subtitle = subtitle;
-// 	}
+	getSubtitle() {
+		return this.subtitle;
+	}
+	setSubtitle(subtitle) {
+		this.subtitle = subtitle;
+	}
 
-// 	getImg() {
-// 		return this.imgPath;
-// 	}
-// 	setImg(imgPath) {
-// 		this.imgPath = imgPath;
-// 	}
+	getImg() {
+		return this.imgPath;
+	}
+	setImg(imgPath) {
+		this.imgPath = imgPath;
+	}
 
-// 	addNote(note) {
-// 		this.notes.push(note);
-// 	}
-// 	removeNote(note) {
-// 		for (let i = 0; i < this.notes.length; i++) {
-// 			if (this.notes[i] == note) {
-// 				// TODO ? Might want some type of equals operator defined 
-// 				this.notes.splice(i, 1);
-// 			}
-// 		}
-// 	}
-// 	clearNotes() {
-// 		this.notes.clear();
-// 	}
-// }
+	getNote(index) {
+		return this.notes[index];
+	}
+	numNotes() {
+		return this.notes.length;
+	}
+	addNote(note) {
+		this.notes.push(note);
+	}
+	removeNote(note) {
+		for (let i = 0; i < this.notes.length; i++) {
+			if (this.notes[i] == note) {
+				// TODO ? Might want some type of equals operator defined 
+				this.notes.splice(i, 1);
+			}
+		}
+	}
+	clearNotes() {
+		this.notes.clear();
+	}
+}
 
 /*
 TODO - Make it so that if open up to a page dedicated solely to project, can 1 click go back (maybe use cookies)
@@ -50,12 +57,9 @@ TODO - Decide if should be coupled with note?
 TODO - Decide if should store notes and then wrap them with a renderer, or just store the note
 TODO - Allow just setting bg colors as bgImg
 */
-class Project {
-	constructor(title, subtitle, displayImgPath, notes) {
-		this.title = title;
-		this.subtitle = subtitle;
-		this.imgPath = displayImgPath ? displayImgPath : "default image";
-		this.notes = notes ? notes : [];
+class RenderProject {
+	constructor(project) {
+		this.project = project;
 		this.domElement = this.createDomElement();
 		// Create region for appending notes and other new things
 		this.notebook = document.createElement("div");
@@ -81,13 +85,13 @@ class Project {
 
 		let heroImage = document.createElement("div");
 		heroImage.classList.add("hero-image");
-		heroImage.style.backgroundImage  = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + this.imgPath + ")";
+		heroImage.style.backgroundImage  = "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(" + this.project.getImg() + ")";
 		
 		// Darken on hover
-		let imgPath = this.imgPath;
+		let imgPath = this.project.getImg();
 		heroImage.addEventListener("mouseenter", function() {
 			console.log("Mouse entered!");
-			heroImage.style.backgroundImage = "linear-gradient(rgba(0, 10, 30, 0.6), rgba(0, 10, 30, 0.6)), url(" + imgPath + ")";
+			heroImage.style.backgroundImage = "linear-gradient(rgba(0, 10, 30, 0.2), rgba(0, 10, 30, 0.2)), url(" + imgPath + ")";
 		});
 		let project = this;
 		var optionsMenu2 = document.createElement("div"); // Menu for interacting with project
@@ -141,11 +145,11 @@ class Project {
 
 		let title = document.createElement("h1");
 		title.classList.add("marker"); // Choose what font to display in
-		title.textContent = this.title;
+		title.textContent = this.project.getTitle();
 		heroText.appendChild(title);
 
 		let subtitle = document.createElement("p");
-		subtitle.textContent = this.subtitle;
+		subtitle.textContent = this.project.getSubtitle();
 		heroText.appendChild(subtitle);
 		projectHeader.appendChild(heroImage);
 
@@ -153,26 +157,28 @@ class Project {
 	}
 
 	enableEditing() {
-		for (let i = 0; i < this.notes.length; i++) {
-			this.notes[i].enableEditing();
+		// TODO shouldn't it also apply to self?
+		for (let i = 0; i < this.project.numNotes(); i++) {
+			this.Project.getNote(i).enableEditing();
 		}
 	}
 
 	disableEditing() {
-		for (let i = 0; i < this.notes.length; i++) {
-			this.notes[i].disableEditing();
+		// TODO Shouldn't it also apply to itself?
+		for (let i = 0; i < this.project.numNotes(); i++) {
+			this.project.getNote(i).disableEditing();
 		}
 	}
 
 	open() {
-		for (let i = 0; i < this.notes.length; i++) {
-			this.notes[i].render(this.notebook);
+		for (let i = 0; i < this.project.numNotes(); i++) {
+			this.project.getNote(i).render(this.notebook);
 		}
 	}
 
 	close() {
-		for (let i = 0; i < this.notes.length; i++) {
-			this.notes[i].unrender();
+		for (let i = 0; i < this.project.numNotes(); i++) {
+			this.project.getNote(i).unrender();
 		}
 	}
 
@@ -191,6 +197,21 @@ class Project {
 			this.domElement.parentNode.removeChild(this.domElement);
 		}
 		this.rendered = false;
+	}
+
+	/*
+		Right now still need a way to expose the underlying methods of pulling data out...
+	*/
+	getTitle() {
+		return this.project.getTitle();
+	}
+
+	getSubtitle() {
+		return this.project.getSubtitle();
+	}
+
+	getImg() {
+		return this.project.getImg();
 	}
 }
 

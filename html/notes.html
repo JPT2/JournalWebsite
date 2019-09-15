@@ -49,44 +49,7 @@
     <div class="summary"> 
       <p style="font-size:14px; text-align: center;">Currently just a collection of random resources that I interact with. If you want a recomendation for one of the categories below click through.</p>
     </div>
-    <ul>
-      <li>
-        <div class="card">
-          <a href="./notes/gaming.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/notes/gaming/imgs/icon.jpg');">
-            <div class="hero-text">
-              <h1 class="marker">Gaming</h1>
-              <p>See what I'm playing and what I think of it.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="./notes/watching.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/notes/watching/imgs/icon.jpg');">
-            <div class="hero-text">
-              <h1 class="marker">Watching</h1>
-              <p>See what I'm watching.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="./notes/research.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../res/notes/research/imgs/icon.jpg');">
-            <div class="hero-text">
-              <h1 class="marker">Research Papers</h1>
-              <p>A collection of papers I've read and some thoughts. Trying to get better at drawing knowledge from this resource.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-    </ul>
+    <div id="newsfeed"></div>
     <div class="summary"> 
       <p style="font-size:100px; text-align: center;">&#128126</p>
     </div>
@@ -96,6 +59,24 @@
   <script>window.jQuery || document.write('<script src="../js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
   <script src="../js/plugins.js"></script>
   <script src="../js/main.js"></script>
+  <script src="../js/note.js"></script>
+  <script src="../js/blogPost.js"></script>
+  <script src="../js/project.js"></script>
+
+  <script>
+    let notes = [
+      // new Project("Bioshock", "Both impressed and unimpressed with this game. Only half way (maybe?) through tho", []),
+      new Project("Gaming", "See what I'm playing and what I think of it", "../res/notes/gaming/imgs/icon.jpg", []),
+      new Project("Watching", "See what I'm watching", "../res/notes/watching/imgs/icon.jpg", []),
+      new Project("Research", "A collection og papers I've read and some thoughts. Trying to get better at drawing knowledge from this resource", "../res/notes/research/imgs/icon.jpg", []),
+    ]
+
+    let attachPoint = document.getElementById("newsfeed");
+    for (let i = 0; i < notes.length; i++) {
+      let renderable = new RenderProject(notes[i]);
+      renderable.render(attachPoint);
+    }
+  </script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>

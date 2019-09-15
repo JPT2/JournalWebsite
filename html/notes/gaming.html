@@ -39,49 +39,42 @@
   </div>
   <div id="spotlight">
     <div class="title-card">
-      <a href="./gaming/hollowKnight.html">
-      <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../res/notes/gaming/hollowKnight/imgs/icon.jpg');"></div>
+      <!-- <a href="./gaming/hollowKnight.html"> -->
+      <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../res/notes/gaming/bioshock/imgs/icon.jpg');"></div>
       <div class="container">
-        <div class="top-ribbon">Recently Completed!</div>
-        <h4><b>Hollow Knight</b></h4> 
-        <p>Is this a dark souls?</p>
+        <div class="top-ribbon">Currently Playing!</div>
+        <h4><b>Bioshock</b></h4> 
+        <p>The OG Daddy</p>
       </div>
-      </a>
+      <!-- </a> -->
     </div>
   </div>
-  <div id="newsfeed">
-    <ul>
-      <li>
-        <div class="card">
-          <a href="./gaming/darkestDungeon.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../res/notes/gaming/darkestDungeon/imgs/icon.jpg');">
-            <div class="hero-text">
-              <h1 class="marker">Darkest Dungeon</h1>
-              <p>Stress testing the saying: "People are a means to an ends"</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="card">
-          <a href="./gaming/tft.html">
-          <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../res/notes/gaming/tft/imgs/icon.jpg');">
-            <div class="hero-text">
-              <h1 class="marker">Team Fight Tactics</h1>
-              <p>Reinvent the wheel.</p>
-            </div>
-          </div>
-          </a>
-        </div>
-      </li>
-    </ul>
+  <div class="body" id="newsfeed">
   </div>
   <script src="js/vendor/modernizr-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
+  <script src="../../js/plugins.js"></script>
+  <script src="../../js/main.js"></script>
+  <script src="../../js/note.js"></script>
+  <script src="../../js/blogPost.js"></script>
+  <script src="../../js/project.js"></script>
+
+  <script>
+    let games = [
+      // new Project("Bioshock", "Both impressed and unimpressed with this game. Only half way (maybe?) through tho", []),
+      new Project("Psychonauts", "Haven't made my mind up on this one yet", "../../res/notes/gaming/psychonauts/imgs/icon.jpg", []),
+      new Project("Hollow Knight", "Is this a dark souls?", "../../res/notes/gaming/hollowKnight/imgs/icon.jpg", []),
+      new Project("Darkest Dungeon", "Stess testing the thought that people are a means to an ends", "../../res/notes/gaming/darkestDungeon/imgs/icon.jpg", []),
+      new Project("Team Fight Tactics", "Thought it was fun for a bit. But I've since moved on.", "../../res/notes/gaming/tft/imgs/icon.jpg", []),
+    ]
+
+    let attachPoint = document.getElementById("newsfeed");
+    for (let i = 0; i < games.length; i++) {
+      let renderable = new RenderProject(games[i]);
+      renderable.render(attachPoint);
+    }
+  </script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>
