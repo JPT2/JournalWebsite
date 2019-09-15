@@ -622,41 +622,6 @@ li .post {
   background-color: blue;
 }*/
 
-@media only screen and (max-width: 600px) {
-  .post {
-    /*height: 100px;*/
-    position: relative;
-  }
-  .post img {
-    height: 100px;
-    width: 100px;
-    float: left;
-    border-radius: 5px 0 0 5px;
-  }
-  .preview {
-    padding: 0;
-    text-align: center;
-    height: 100px;
-    /* width: 150px; */
-    width: 150px;
-    overflow: hidden;
-  }
-  ul {
-    padding: 0;
-  }
-
-  .title {
-    white-space: normal;
-    overflow: scroll;
-    text-overflow: ellipsis;
-    /* word-wrap: normal; */
-    /* max-width: 800px; */
-    height: 100px;
-    overflow-wrap: break-word;
-    width: 100%;
-  }
-}
-
 .collapsible {
   background-color: #2b799db0;
   color: white;
@@ -774,7 +739,7 @@ table {
 .project {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
   transition: 0.3s;
-  margin: 10px auto;
+  margin: 35px auto;
   position: relative; /* Needed for the ribbon */
 }
 
@@ -791,7 +756,11 @@ table {
 }
 
 .notebook {
-  padding: 0 10px 10px 10px;
+  padding: 0 10px 10px 50px;
+}
+
+.notebook .project {
+  margin: 10px auto;
 }
 
 .notebook .project .project-header{
@@ -800,6 +769,8 @@ table {
 
 .notebook .project .hero-text {
   height: 150px;
+  text-align: left;
+  padding-left: 35px;
 }
 
 .projectButton {
@@ -903,6 +874,48 @@ Styles for the newsfeed
   text-decoration: none;
   cursor: pointer;
 } 
+
+@media only screen and (max-width: 600px) {
+  .post {
+    /*height: 100px;*/
+    position: relative;
+  }
+  .post img {
+    height: 100px;
+    width: 100px;
+    float: left;
+    border-radius: 5px 0 0 5px;
+  }
+  .preview {
+    padding: 0;
+    text-align: center;
+    height: 100px;
+    /* width: 150px; */
+    width: 150px;
+    overflow: hidden;
+  }
+  ul {
+    padding: 0;
+  }
+
+  .title {
+    white-space: normal;
+    overflow: scroll;
+    text-overflow: ellipsis;
+    /* word-wrap: normal; */
+    /* max-width: 800px; */
+    height: 100px;
+    overflow-wrap: break-word;
+    width: 100%;
+  }
+  .notebook {
+    padding: 0 10px 10px 10px;
+  }
+  
+  .notebook .project .hero-text {
+    height: 150px;
+  }
+}
 
 /*
 font-family: 'Dosis', sans-serif;

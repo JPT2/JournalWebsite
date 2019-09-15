@@ -64,22 +64,22 @@
     let projectNotes = [
       newNote("Description of this really cool project I'm working on!"),
       newNote("Follow up with goals and stuff related to the project"),
-      new Project("Feature/Milestone 1", "The first thing I attempted to do", "../img/library.jpg", [
+      new RenderProject(new Project("Feature/Milestone 1", "The first thing I attempted to do", "../img/library.jpg", [
         newNote("Thoughts about my first attempt", "9/13/2019", []),
         newNote("Following that same vein", "9/13/2019", []),
         newNote("Doubts and issues I've run into", "9/13/2019", []),
-      ]),
-      new Project("Feature/Mileston 2", "The second thing I attempted to do", "../img/cyberPunk.jpg", [
+      ])),
+      new RenderProject(new Project("Feature/Mileston 2", "The second thing I attempted to do", "../img/cyberPunk.jpg", [
         newNote("Thoughts about this second thing I did", "9/13/2019", []),
         newNote("Hit a snag"),
-      ]),
+      ])),
       newNote("Some random thoughts I had about project as a whole", "9/13/2019", []),
-      new Project("Feature/Milestone 3", "The third major part of the project", "../img/bookshelf.jpg", [
+      new RenderProject(new Project("Feature/Milestone 3", "The third major part of the project", "../img/bookshelf.jpg", [
         newNote("Initial thoughts", "9/13/2019", []),
-      ]),
+      ])),
     ]
 
-    let project2Render = new Project("Big massive project", "Very cool", "../res/personalSite/imgs/personalSite.png", projectNotes);
+    let project2Render = new RenderProject(new Project("Big massive project", "Very cool", "../res/personalSite/imgs/personalSite.png", projectNotes));
     let attachPoint = document.getElementById("tester")
     project2Render.render(attachPoint);
   </script>
