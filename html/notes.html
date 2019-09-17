@@ -66,14 +66,14 @@
   <script>
     let notes = [
       // new Project("Bioshock", "Both impressed and unimpressed with this game. Only half way (maybe?) through tho", []),
-      new Project("Gaming", "See what I'm playing and what I think of it", "../res/notes/gaming/imgs/icon.jpg", []),
-      new Project("Watching", "See what I'm watching", "../res/notes/watching/imgs/icon.jpg", []),
-      new Project("Research", "A collection og papers I've read and some thoughts. Trying to get better at drawing knowledge from this resource", "../res/notes/research/imgs/icon.jpg", []),
+      {project: new Project("Gaming", "See what I'm playing and what I think of it", "../res/notes/gaming/imgs/icon.jpg", []), link: "./notes/gaming.html"},
+      {project: new Project("Watching", "See what I'm watching", "../res/notes/watching/imgs/icon.jpg", []), link: "./notes/watching.html"},
+      {project: new Project("Research", "A collection og papers I've read and some thoughts. Trying to get better at drawing knowledge from this resource", "../res/notes/research/imgs/icon.jpg", []), link: "./notes/watching.html"},
     ]
 
     let attachPoint = document.getElementById("newsfeed");
     for (let i = 0; i < notes.length; i++) {
-      let renderable = new RenderProject(notes[i]);
+      let renderable = new LinkedRenderProject(notes[i].project, notes[i].link);
       renderable.render(attachPoint);
     }
   </script>

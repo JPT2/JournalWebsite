@@ -11,7 +11,12 @@ class BlogPost {
 	*/
 	constructor(note) {
 		this.note = note;
-		this.domElement = this.create();
+		if (this.note) {
+			this.domElement = this.create();
+		} else {
+			console.log("No note provided to create blog post!");
+		}
+		
 		this.editing = false;
 		this.rendered = false;
 	}
@@ -29,21 +34,21 @@ class BlogPost {
 		postDiv.classList.add("blogPost");
 
 		// Add a div for displaying the title (or subtitle) if there is one
-		if (this.note.hasTitle()) {
-			let titleDiv = document.createElement("div");
-			if (this.note.hasParent()) {
-				// Add subtitle
-				titleDiv.classList.add("postSubtitle");
-			} else {
-				titleDiv.classList.add("postTitle");
-				postDiv.classList.add("initial");
-			}
-			titleDiv.textContent = this.note.getTitle();
-			postDiv.appendChild(titleDiv);
+		// if (this.note.hasTitle()) {
+		// 	let titleDiv = document.createElement("div");
+		// 	if (this.note.hasParent()) {
+		// 		// Add subtitle
+		// 		titleDiv.classList.add("postSubtitle");
+		// 	} else {
+		// 		titleDiv.classList.add("postTitle");
+		// 		postDiv.classList.add("initial");
+		// 	}
+		// 	titleDiv.textContent = this.note.getTitle();
+		// 	postDiv.appendChild(titleDiv);
 			
-			// TODO - Add ability to edit the title
-				// TODO - Only edit title if there is permission (double the check on the backend.)
-		}
+		// 	// TODO - Add ability to edit the title
+		// 		// TODO - Only edit title if there is permission (double the check on the backend.)
+		// }
 
 		// Populate the content
 		let contentDiv = document.createElement("div");

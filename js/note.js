@@ -109,7 +109,7 @@ class CollapsibleNoteCreator {
 	  content.classList.add("content");
 
 	  // paste inside the div a place for the user to edit
-	  let editableContent = document.createElement("p");
+	  let editableContent = document.createElement("div");
 
 	  // Create the menu buttons for saving and deleting
 	  let menuButtons = document.createElement("div");
@@ -145,6 +145,8 @@ class CollapsibleNoteCreator {
 	  shadowBox.appendChild(collapsible);
 	  shadowBox.appendChild(content);
 
+	  let editor = new Editor();
+	//   editor.render(content);
 	  collapsible.addEventListener("click", function() {
 		// Activate the div
 		collapsible.classList.toggle("active");
@@ -152,8 +154,7 @@ class CollapsibleNoteCreator {
 		if (content.style.maxHeight) {
 		  // closing the post
 		  content.style.maxHeight = null;
-		  editableContent.setAttribute("contenteditable", false);
-		  // Why would we want to remove last child here?
+		//   editableContent.unrender();
 
 		  // Check if continuing or if new post
 		  if (editableContent.textContent === "") {
@@ -164,7 +165,7 @@ class CollapsibleNoteCreator {
 		} else {
 		  collapsible.textContent = "Hide Post (Will not publish!)";
 		  content.style.maxHeight = "inherit";
-		  editableContent.setAttribute("contenteditable", true);
+		  editor.render(editableContent);
 		}
 		collapsible.appendChild(newSpan);
 	  });
@@ -178,5 +179,50 @@ class CollapsibleNoteCreator {
 		newPost.textContent = postBody;
 		this.attachPoint.appendChild(newPost);
 	  }
+	}
+}
+
+class Editor {
+    constructor(width, height) {
+        this.width = width;
+		this.height = height;
+		this.setup = false;
+
+        // Create new quill editor
+        this.editor = document.createElement("div");
+        this.editor.id = "editor";
+        this.editor.width = width ? width + "px" : "100%";
+        this.editor.height = height ? height + "px" : "100%";
+    }
+
+    setupQuill() {
+		let quill = null;
+		if (!this.setup) {
+			console.log("have not setup before, setting up quill");
+			quill = new Quill("#editor", {
+				theme: "snow",
+			});
+			this.setup = true;
+		}
+        return quill;
+    }
+
+    render(attachPoint) {
+        if (attachPoint) {
+			console.log("Have attachpoint for editor");
+			attachPoint.appendChild(this.editor);
+			console.log("Setting up quill");
+            this.setupQuill();
+        } else {
+			console.log("Tried to render editor without an attach point!")
+		}
+	}
+	
+	unrender() {
+		if (this.editor.parentNode) {
+			this.editor.parentNode.removeChild(this.editor);
+		} else {
+			console.log("Tried to unrender editor when wasn't rendered!");
+		}
 	}
 }

@@ -216,6 +216,79 @@ class RenderProject {
 }
 
 /*
+	How to deal with issue of clicking to open to see notes and clicking to follow a link?
+*/
+class LinkedRenderProject {
+	// Would technically not even want to load the data for a project in this case as its an un-necessary expense...
+	constructor(project, link) {
+		this.project = project;
+		this.link = link;
+		this.domElement = this.create();
+	}
+
+	create() {
+		// Create the link element
+		let linkTag = document.createElement("a");
+		linkTag.href = this.link;
+
+		// Should I re-use the card thing I have to allow for easily changing how it is displayed? or just make own thing?
+		
+		// Create div that will hold everything
+		let projectDiv = document.createElement("div");
+		projectDiv.classList.add("project");
+
+		// SETUP HEADER (The Hero image and Project title)
+		let projectHeader = document.createElement("div");
+		projectHeader.classList.add("project-header");
+		projectDiv.appendChild(projectHeader);
+
+		let heroImage = document.createElement("div");
+		heroImage.classList.add("hero-image");
+		heroImage.style.backgroundImage  = "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(" + this.project.getImg() + ")";
+		
+		// Darken on hover
+		let imgPath = this.project.getImg();
+		heroImage.addEventListener("mouseenter", function() {
+			console.log("Mouse entered!");
+			heroImage.style.backgroundImage = "linear-gradient(rgba(0, 10, 30, 0.2), rgba(0, 10, 30, 0.2)), url(" + imgPath + ")";
+		});
+		let project = this;
+		heroImage.addEventListener("mouseleave", function() {
+			console.log("Mouse exited!");
+			if (!project.isOpen) {
+				heroImage.style.backgroundImage  = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + imgPath + ")";
+			}
+		});
+
+		let heroText = document.createElement("div");
+		heroText.classList.add("hero-text");
+		heroImage.appendChild(heroText);
+
+		let title = document.createElement("h1");
+		title.classList.add("marker"); // Choose what font to display in
+		title.textContent = this.project.getTitle();
+		heroText.appendChild(title);
+
+		let subtitle = document.createElement("p");
+		subtitle.textContent = this.project.getSubtitle();
+		heroText.appendChild(subtitle);
+		projectHeader.appendChild(heroImage);
+
+		linkTag.appendChild(projectDiv);
+		return linkTag;
+	}
+
+	render(attachPoint) {
+		attachPoint.appendChild(this.domElement);
+	}
+	unrender() {
+		if (this.domElement.parentNode) {
+			this.domElement.parentNode.removeChild(this.domElement);
+		}
+	}
+}
+
+/*
 	Used to collect data to create new project
 
 	Should I create a factory for creating new elements?
@@ -267,7 +340,7 @@ class NewProject {
 				exampleProject.removeChild(exampleProject.firstElementChild);
 			}
 
-			let project = new Project(newProjObj.title, newProjObj.subtitle, newProjObj.img, null);
+			let project = new RenderProject(new Project(newProjObj.title, newProjObj.subtitle, newProjObj.img, null));
 			
 			// let pictureCard = new PictureCard(newProjObj.title, newProjObj.subtitle, newProjObj.img, null, null);
 			project.render(exampleProject);

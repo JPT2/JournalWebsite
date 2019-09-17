@@ -61,19 +61,19 @@
 
   <script>
     let projects = [
-      new Project("Bots", "Messing around with Python Bots", "../res/botting/imgs/icon.jpg", []),
-      new Project("Deep Reinforcement Learning", "Learing all about policy. Guess I should be a politician", "../res/drl/imgs/icon.png", []),
-      new Project("Platoon Dynamics", "A Decision Platform for HDVs", "../res/platoonDynamics/imgs/icon.png", []),
-      new Project("No Script For You!", "A RNN for generating Seinfeld Scripts", "../res/noScriptForYou/imgs/noScriptForYou.png", []),
-      new Project("Threads", "A Web Based Notebooking Tool", "../res/threads/imgs/threads.png", []),
-      new Project("OkEmoji", "Maps People's Emoji Responses in Your Vicinity. Won Best First Hack at HackNY some years back", "../res/okEmoji/imgs/okEmoji.png", []),
-      new Project("Noted", "A tool for sharing ideas with friends and mapping concepts (Predecessor to threads)", "../res/noted/imgs/noted.png", []),
-      new Project("This Website!", "Attempt at making an online progress journal for myself.", "../res/personalSite/imgs/personalSite.png", []),
+      {project: new Project("Bots", "Messing around with Python Bots", "../res/botting/imgs/icon.jpg", []), link: "./botting.html"},
+      {project: new Project("Deep Reinforcement Learning", "Learing all about policy. Guess I should be a politician", "../res/drl/imgs/icon.png", []), link: "./drl.html"},
+      {project: new Project("Platoon Dynamics", "A Decision Platform for HDVs", "../res/platoonDynamics/imgs/icon.png", []), link: "./platoonDynamics.html"},
+      {project: new Project("No Script For You!", "A RNN for generating Seinfeld Scripts", "../res/noScriptForYou/imgs/noScriptForYou.png", []), link: "./noScriptForYou.html"},
+      {project: new Project("Threads", "A Web Based Notebooking Tool", "../res/threads/imgs/threads.png", []), link: "./threads.html"},
+      {project: new Project("OkEmoji", "Maps People's Emoji Responses in Your Vicinity. Won Best First Hack at HackNY some years back", "../res/okEmoji/imgs/okEmoji.png", []), link: "./okEmoji.html"},
+      {project: new Project("Noted", "A tool for sharing ideas with friends and mapping concepts (Predecessor to threads)", "../res/noted/imgs/noted.png", []), link: "./noted.html"},
+      {project: new Project("This Website!", "Attempt at making an online progress journal for myself.", "../res/personalSite/imgs/personalSite.png", []), link: "./personalSite.html"},
     ]
 
     let attachPoint = document.getElementById("newsfeed");
     for (let i = 0; i < projects.length; i++) {
-      let renderable = new RenderProject(projects[i]);
+      let renderable = new LinkedRenderProject(projects[i].project, projects[i].link);
       renderable.render(attachPoint);
     }
   </script>

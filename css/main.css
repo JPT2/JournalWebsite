@@ -873,7 +873,11 @@ Styles for the newsfeed
   color: black;
   text-decoration: none;
   cursor: pointer;
-} 
+}
+
+#editor {
+  background-color: #eaeef2ed;;
+}
 
 @media only screen and (max-width: 600px) {
   .post {
@@ -908,6 +912,7 @@ Styles for the newsfeed
     overflow-wrap: break-word;
     width: 100%;
   }
+
   .notebook {
     padding: 0 10px 10px 10px;
   }

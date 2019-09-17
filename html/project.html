@@ -79,7 +79,7 @@
       ])),
     ]
 
-    let project2Render = new RenderProject(new Project("Big massive project", "Very cool", "../res/personalSite/imgs/personalSite.png", projectNotes));
+    let project2Render = new LinkedRenderProject(new RenderProject(new Project("Big massive project", "Very cool", "../res/personalSite/imgs/personalSite.png", projectNotes)), "./drl.html");
     let attachPoint = document.getElementById("tester")
     project2Render.render(attachPoint);
   </script>
