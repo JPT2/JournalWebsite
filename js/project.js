@@ -52,7 +52,6 @@ class Project {
 
 /*
 TODO - Make it so that if open up to a page dedicated solely to project, can 1 click go back (maybe use cookies)
-TODO - Add mobile friendly version of project?
 TODO - Decide if should be coupled with note?
 TODO - Decide if should store notes and then wrap them with a renderer, or just store the note
 TODO - Allow just setting bg colors as bgImg
@@ -65,6 +64,9 @@ class RenderProject {
 		this.notebook = document.createElement("div");
 		this.notebook.classList.add("notebook");
 		this.domElement.appendChild(this.notebook);
+
+		this.newNote = new CreateNote();
+		this.newNote.listenToNewNotes(this.project);
 
 		this.isOpen = false;
 		this.canEdit = false;
@@ -83,6 +85,7 @@ class RenderProject {
 		projectHeader.classList.add("project-header");
 		projectDiv.appendChild(projectHeader);
 
+		// Setup image stuff (Could add ability to do just a color?)
 		let heroImage = document.createElement("div");
 		heroImage.classList.add("hero-image");
 		heroImage.style.backgroundImage  = "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(" + this.project.getImg() + ")";
@@ -93,9 +96,17 @@ class RenderProject {
 			console.log("Mouse entered!");
 			heroImage.style.backgroundImage = "linear-gradient(rgba(0, 10, 30, 0.2), rgba(0, 10, 30, 0.2)), url(" + imgPath + ")";
 		});
+		heroImage.addEventListener("mouseleave", function() {
+			if (!project.isOpen) {
+				heroImage.style.backgroundImage  = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + imgPath + ")";
+			}
+		});
+
+		// Setup the options menu for the div (should only render on desktop?)
 		let project = this;
 		var optionsMenu2 = document.createElement("div"); // Menu for interacting with project
 		
+		// editing button for menu
 		let enableEditingButton = document.createElement("div");
 		enableEditingButton.classList.add("projectButton");
 		let editingIcon = document.createElement("img");
@@ -105,21 +116,15 @@ class RenderProject {
 		optionsMenu2.appendChild(enableEditingButton);
 
 		enableEditingButton.addEventListener("click", function() {
-			console.log("edit click open: " + project.isOpen + " and edit: " + project.canEdit);
 			if (project.isOpen && project.canEdit) {
-				// Disable editing
-				console.log("Disabling editing!");
 				project.disableEditing();
 			} else {
-				// Enable editing
-				console.log("Enabling editing!");
 				project.enableEditing();
 			}
 			project.canEdit = !project.canEdit;
 		});
 		
 		heroImage.addEventListener("click", function() {
-			console.log("Clicked!");
 			if (project.isOpen) {
 				// Minimize the project
 				project.close();
@@ -127,16 +132,10 @@ class RenderProject {
 			} else {
 				// Expand the project and show the notes
 				project.open();
-				optionsMenu2.classList.add("cardOptionsMenu2");
+				// optionsMenu2.classList.add("cardOptionsMenu2"); // TODO re-enable when do user accounts
 				projectDiv.appendChild(optionsMenu2);
 			}
 			project.isOpen = !project.isOpen;
-		});
-		heroImage.addEventListener("mouseleave", function() {
-			console.log("Mouse exited!");
-			if (!project.isOpen) {
-				heroImage.style.backgroundImage  = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + imgPath + ")";
-			}
 		});
 
 		let heroText = document.createElement("div");
@@ -174,12 +173,15 @@ class RenderProject {
 		for (let i = 0; i < this.project.numNotes(); i++) {
 			this.project.getNote(i).render(this.notebook);
 		}
+
+		this.newNote.render(this.notebook);
 	}
 
 	close() {
 		for (let i = 0; i < this.project.numNotes(); i++) {
 			this.project.getNote(i).unrender();
 		}
+		this.newNote.unrender(this.notebook);
 	}
 
 	render(attachPoint) {
@@ -189,7 +191,6 @@ class RenderProject {
 		} else {
 			console.log("No attachpoint found for " + attachPoint);
 		}
-		
 	}
 
 	unrender() {
@@ -230,8 +231,6 @@ class LinkedRenderProject {
 		// Create the link element
 		let linkTag = document.createElement("a");
 		linkTag.href = this.link;
-
-		// Should I re-use the card thing I have to allow for easily changing how it is displayed? or just make own thing?
 		
 		// Create div that will hold everything
 		let projectDiv = document.createElement("div");
@@ -249,12 +248,10 @@ class LinkedRenderProject {
 		// Darken on hover
 		let imgPath = this.project.getImg();
 		heroImage.addEventListener("mouseenter", function() {
-			console.log("Mouse entered!");
 			heroImage.style.backgroundImage = "linear-gradient(rgba(0, 10, 30, 0.2), rgba(0, 10, 30, 0.2)), url(" + imgPath + ")";
 		});
 		let project = this;
 		heroImage.addEventListener("mouseleave", function() {
-			console.log("Mouse exited!");
 			if (!project.isOpen) {
 				heroImage.style.backgroundImage  = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + imgPath + ")";
 			}
@@ -296,7 +293,6 @@ class LinkedRenderProject {
 class NewProject {
 	constructor() {
 		// Feel like using modals to just quickly get all the data might work
-
 		this.modal = this.createProjectModal();
 		this.modalContent = this.modal.firstChild.firstChild;
 		this.domElement = this.createButton();
@@ -373,19 +369,12 @@ class NewProject {
 		bgImgInput.name = "bgImg";
 		bgImgInput.accept = "image/gif, image/jpeg, image/png";
 
-		// let tstImg = document.createElement("img");
-		// content.appendChild(tstImg);
 		bgImgInput.addEventListener("change", function() {
 			var file = bgImgInput.files[0];
 			var reader  = new FileReader();
 
 			reader.onloadend = function (theFile) {
-				// console.log("Reader.result: " + reader.result);
-				// console.log("TheFile: "+ theFile.target.result);
-				// // console.log("TheFile: "+ theFile);
-				// newProjObj.img = reader.result;
 				newProjObj.img = theFile.target.result;
-				// tstImg.src = reader.result;
 				refreshExample();
 			}
 
@@ -396,13 +385,6 @@ class NewProject {
 				// preview.src = "";
 			}
 		}, false);
-		// bgImgInput.onchange = function(e) {
-		// 	// Should save image somehow?
-		// 	newProjObj.img = e.target.result;
-		// 	console.log("Setting img to: " + e.target.result);
-		// 	console.log(e.target.result);
-		// 	refreshExample();
-		// }
 
 		let subtitleRequest = document.createElement("h2");
 		subtitleRequest.textContent = "Project subtitle";
@@ -411,7 +393,6 @@ class NewProject {
 		subtitleInput.name = "subtitle";
 		subtitleInput.oninput = function() {
 			newProjObj.subtitle = subtitleInput.value;
-			console.log("Updated subtitle to: " + newProjObj.subtitle);
 			refreshExample();
 		}
 

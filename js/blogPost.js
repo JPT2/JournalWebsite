@@ -21,34 +21,9 @@ class BlogPost {
 		this.rendered = false;
 	}
 
-	// // Should probably decomission this constructor
-	// constructor(title, content, date, tags, parent) {
-	// 	this.note = new Note(title, content, date, tags, parent);
-	// 	this.domElement = this.create();
-	// 	this.editing = false;
-	// 	// this.render(parent); // Or maybe render logic should be handled by the caller? That might make more sense...
-	// }
-
 	create() {
 		let postDiv = document.createElement("div");
 		postDiv.classList.add("blogPost");
-
-		// Add a div for displaying the title (or subtitle) if there is one
-		// if (this.note.hasTitle()) {
-		// 	let titleDiv = document.createElement("div");
-		// 	if (this.note.hasParent()) {
-		// 		// Add subtitle
-		// 		titleDiv.classList.add("postSubtitle");
-		// 	} else {
-		// 		titleDiv.classList.add("postTitle");
-		// 		postDiv.classList.add("initial");
-		// 	}
-		// 	titleDiv.textContent = this.note.getTitle();
-		// 	postDiv.appendChild(titleDiv);
-			
-		// 	// TODO - Add ability to edit the title
-		// 		// TODO - Only edit title if there is permission (double the check on the backend.)
-		// }
 
 		// Populate the content
 		let contentDiv = document.createElement("div");
@@ -72,7 +47,6 @@ class BlogPost {
 		let noteObj = this.note;
 		saveButton.addEventListener("click", function() {
 			// Update the note's content
-			console.log("Saving new content!");
 			let content = contentBody.textContent;
 			noteObj.setContent(content);
 			menu.parentNode.removeChild(menu);
@@ -83,8 +57,6 @@ class BlogPost {
 		revertButton.classList.add("menuButton");
 		revertButton.classList.add("half");
 		revertButton.addEventListener("click", function() {
-			console.log("Reverting");
-			console.log("Content: " + noteObj.getContent());
 			contentBody.textContent = noteObj.getContent();
 			menu.parentNode.removeChild(menu);
 		});
@@ -94,12 +66,10 @@ class BlogPost {
 
 		let note = this;
 		contentDiv.addEventListener("click", function() {
-			console.log("Trying to turn on editing!");
 			if (note.editing) {
 				contentBody.setAttribute("contenteditable", true);
 				contentBody.focus();
 				contentBody.addEventListener("input", function() {
-					console.log("Made change to the post!");
 					// Give option to save changes, or revert to previous
 					contentDiv.parentNode.insertBefore(menu, contentDiv.nextSibling);
 				});
@@ -114,7 +84,6 @@ class BlogPost {
 			// TODO - Code to delete note
 		});
 		contentDiv.addEventListener("mouseenter", function() {
-			console.log("Mouse enter appending close button!");
 			contentDiv.appendChild(closeButton);
 		});
 
@@ -134,7 +103,6 @@ class BlogPost {
 
 	render(attachPoint) {
 		if (attachPoint) {
-			console.log("Rendering note");
 			attachPoint.appendChild(this.domElement);
 			this.rendered = true;
 		} else {

@@ -63,20 +63,138 @@ class Note {
 	}
 }
 
-class createNote {
+// Could maybe move this into a utility class
+function placeCaretAtEnd(el) {
+	el.focus();
+	if (typeof window.getSelection != "undefined"
+			&& typeof document.createRange != "undefined") {
+		var range = document.createRange();
+		range.selectNodeContents(el);
+		range.collapse(false);
+		var sel = window.getSelection();
+		sel.removeAllRanges();
+		sel.addRange(range);
+	} else if (typeof document.body.createTextRange != "undefined") {
+		var textRange = document.body.createTextRange();
+		textRange.moveToElementText(el);
+		textRange.collapse(false);
+		textRange.select();
+	}
+}
+
+class CreateNote {
 	constructor() {
-		
+		this.domElement = this.create();
+		this.attachPoint = null;
+		this.parentProjects = [];
+	}
+
+	listenToNewNotes(projectRef) {
+		this.parentProjects.push(projectRef);
+	}
+
+	pushNewNote(note) {
+		for (let i = 0; i < this.parentProjects.length; i++) {
+			this.parentProjects[i].addNote(note);
+		}
 	}
 
 	create() {
-		
+		// Div to hold everything we do (tethers button and textarea together)
+		let containerDiv = document.createElement("div");
+		containerDiv.classList.add("content");
+
+		// Object for handling all text input // TODO will want to update to some editor that has ability to format
+		let editor = document.createElement("p");
+		editor.classList.add("editor");
+		let obj = this;
+
+		// Don't want to show the text area by default so have a way of opening up place to edit
+		let addNoteButton = document.createElement("button");
+		addNoteButton.textContent = "Add New Note";
+		addNoteButton.onclick = function() {
+			// Render the div for making a new note
+			containerDiv.removeChild(addNoteButton);
+			containerDiv.appendChild(editor);
+			editor.addEventListener("input", function(e) {
+				// Idea here is if user is typing a question, pull it out of the note and allow them to revisit and answer it later
+				let editorString = editor.textContent;
+				if (editorString[editorString.length - 1] === "?") {
+					// Splice note (so everything before question becomes a note (that can still be edited) and the question becomes a "thought")
+					let text = editor.textContent;
+					let sentences = text.split(". ");
+					let noteBody = "";
+
+					// Create the note from the array
+					for (let i = 0; i < sentences.length-1; i++) {
+						// Pretty sure there is better way to do this
+						noteBody += sentences[i] + ". ";
+					}
+					let question = sentences[sentences.length -1];
+
+					// Create the "thought" with the question
+					let project = new Project(question, "", null, null);
+					let renderableProject = new RenderProject(project);
+					renderableProject.domElement.classList.add("mini");
+					renderableProject.render(obj.attachPoint);
+					obj.pushNewNote(renderableProject);
+
+					// Clear out the div contents
+					editor.textContent = noteBody;
+					placeCaretAtEnd(editor);
+
+					// Create way to respond
+						// TODO create new note inside the new project
+				}
+			})
+			editor.setAttribute("contentEditable", true);
+			editor.focus();
+
+			// Change button to now publish posts when clicked since they are currently in "editing/adding" mode
+			addNoteButton.onclick = function() {
+				let note = new Note(null, editor.textContent);
+				let renderableNote = new BlogPost(note);
+
+				// Publish note before since its where questions would be stemming from anyways
+				containerDiv.parentNode.insertBefore(renderableNote.domElement, containerDiv);		
+
+				// Want to push newNote after any questions that would have been added (in future this step might be unnecessary if questions end up being children or something)
+				let parent = containerDiv.parentNode;
+				parent.removeChild(containerDiv);
+				parent.appendChild(containerDiv); // Should move after all questions
+				editor.textContent = "";
+						
+			};
+			addNoteButton.textContent = "Publish";
+			containerDiv.appendChild(addNoteButton);
+		};
+
+		containerDiv.appendChild(addNoteButton);
+		return containerDiv;
+	}
+
+	render(attachPoint) {
+		if (attachPoint) {
+			attachPoint.appendChild(this.domElement);
+			this.attachPoint = attachPoint;
+		} else {
+			console.log("No attach point provided to CreateNote");
+		}
+	}
+
+	unrender() {
+		if (this.domElement.parentNode) {
+			this.domElement.parentNode.removeChild(this.domElement);
+			this.attachPoint = null;
+		} else {
+			console.log("Tried to unrender newNote when wasn't rendered");
+		}
 	}
 }
 
 class CollapsibleNoteCreator {
 	constructor(attachPoint) {
 	  // Bind context for certain methods that need a constant this
-	  // this.publish = this.publish.bind(this);
 	  this.newPost = this.render();
 	  this.attachPoint = attachPoint;
 	  if (this.newPost != null && attachPoint != null) {
@@ -198,7 +316,6 @@ class Editor {
     setupQuill() {
 		let quill = null;
 		if (!this.setup) {
-			console.log("have not setup before, setting up quill");
 			quill = new Quill("#editor", {
 				theme: "snow",
 			});
@@ -209,9 +326,7 @@ class Editor {
 
     render(attachPoint) {
         if (attachPoint) {
-			console.log("Have attachpoint for editor");
 			attachPoint.appendChild(this.editor);
-			console.log("Setting up quill");
             this.setupQuill();
         } else {
 			console.log("Tried to render editor without an attach point!")
