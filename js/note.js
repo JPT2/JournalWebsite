@@ -156,7 +156,8 @@ class CreateNote {
 				let renderableNote = new BlogPost(note);
 
 				// Publish note before since its where questions would be stemming from anyways
-				containerDiv.parentNode.insertBefore(renderableNote.domElement, containerDiv);		
+				containerDiv.parentNode.insertBefore(renderableNote.domElement, containerDiv);
+				pushNewNote(renderableNote);
 
 				// Want to push newNote after any questions that would have been added (in future this step might be unnecessary if questions end up being children or something)
 				let parent = containerDiv.parentNode;
