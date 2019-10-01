@@ -1,8 +1,9 @@
-// TODO - I think it would be cool to have a featured project top and to the left, and then a scrollable carousel to the right where hovering over something in it causes it to be featured
+// TODO - Need to add news/notices, and "notes"
 class Project {
-	constructor(title, subtitle, imgPath, noteList) {
+	constructor(title, subtitle, imgPath, description, noteList) {
 		this.title = title;
 		this.subtitle = subtitle;
+		this.description = description;
 		this.imgPath = imgPath ? imgPath : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/triangulation-minimalist-abstract-marble-and-metal-geometric-art-tina-lavoie.jpg";
 		this.notes = noteList ? noteList : [];
 	}
@@ -28,6 +29,16 @@ class Project {
 		this.imgPath = imgPath;
 	}
 
+	getDescription() {
+		return this.description;
+	}
+	setDescription(description) {
+		this.description = description;
+	}
+
+	getNotes() {
+		return this.notes;
+	}
 	getNote(index) {
 		return this.notes[index];
 	}
@@ -48,6 +59,104 @@ class Project {
 	clearNotes() {
 		this.notes.clear();
 	}
+
+	getNewsfeed() {
+		console.log("Get newsfeed. Returning: " + this.notes);
+		console.log(this.notes);
+		return this.notes;
+	}
+}
+
+class CreateProject {
+	constructor() {
+		this.domElement = this.create();
+		this.attachPoint = null;
+		this.parentProjects = [];
+	}
+
+	listenToNewProjects(projectRef) {
+		this.parentProjects.push(projectRef);
+	}
+
+	pushNewProject(note) {
+		for (let i = 0; i < this.parentProjects.length; i++) {
+			this.parentProjects[i].addNote(project);
+		}
+	}
+
+	create() {
+		// Div to hold everything we do (tethers button and textarea together)
+		let containerDiv = document.createElement("div");
+		containerDiv.classList.add("content");
+
+		// Object for handling all text input // TODO will want to update to some editor that has ability to format
+		// let titleTag = document.createElement("h3");
+		// titleTag.textContent = "Title";
+		let editorTitle = document.createElement("p");
+		editorTitle.classList.add("editor");
+
+		let editorBody = document.createElement("p");
+		editorBody.classList.add("editor");
+
+		let editorImgLink = document.createElement("p");
+		editorImgLink.classList.add("editor");
+		let obj = this;
+
+		// Don't want to show the text area by default so have a way of opening up place to edit
+		let addProjectButton = document.createElement("button");
+		addProjectButton.textContent = "Add New Project";
+		addProjectButton.onclick = function() {
+			// Render the div for making a new note
+			containerDiv.removeChild(addProjectButton);
+			containerDiv.appendChild(editorTitle);
+			containerDiv.appendChild(editorBody);
+			containerDiv.appendChild(editorImgLink);
+			editorTitle.setAttribute("contentEditable", true);
+			editorBody.setAttribute("contentEditable", true);
+			editorImgLink.setAttribute("contentEditable", true); // TODO change this to something more appropriate
+			editorTitle.focus();
+
+			// Change button to now publish posts when clicked since they are currently in "editing/adding" mode
+			addProjectButton.onclick = function() {
+				let project = new Project(editorTitle.textContent, editorBody.textContent, editorImgLink.textContent, null, null);
+				let renderableNote = new RenderProject(project);
+
+				// Publish note before since its where questions would be stemming from anyways
+				containerDiv.parentNode.insertBefore(renderableNote.domElement, containerDiv);
+				pushNewNote(renderableNote);
+
+				// Want to push newNote after any questions that would have been added (in future this step might be unnecessary if questions end up being children or something)
+				let parent = containerDiv.parentNode;
+				parent.removeChild(containerDiv);
+				parent.appendChild(containerDiv); // Should move after all questions
+				editor.textContent = "";
+						
+			};
+			addProjectButton.textContent = "Publish";
+			containerDiv.appendChild(addProjectButton);
+		};
+
+		containerDiv.appendChild(addProjectButton);
+		return containerDiv;
+	}
+
+	render(attachPoint) {
+		if (attachPoint) {
+			attachPoint.appendChild(this.domElement);
+			this.attachPoint = attachPoint;
+		} else {
+			console.log("No attach point provided to CreateNote");
+		}
+	}
+
+	unrender() {
+		if (this.domElement.parentNode) {
+			this.domElement.parentNode.removeChild(this.domElement);
+			this.attachPoint = null;
+		} else {
+			console.log("Tried to unrender newNote when wasn't rendered");
+		}
+	}
 }
 
 /*
@@ -67,6 +176,9 @@ class RenderProject {
 
 		this.newNote = new CreateNote();
 		this.newNote.listenToNewNotes(this.project);
+
+		this.newProject = new CreateProject();
+		this.newProject.listenToNewProjects(this.project);
 
 		this.isOpen = false;
 		this.canEdit = false;
@@ -97,9 +209,9 @@ class RenderProject {
 			heroImage.style.backgroundImage = "linear-gradient(rgba(0, 10, 30, 0.2), rgba(0, 10, 30, 0.2)), url(" + imgPath + ")";
 		});
 		heroImage.addEventListener("mouseleave", function() {
-			if (!project.isOpen) {
-				heroImage.style.backgroundImage  = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + imgPath + ")";
-			}
+			// if (!project.isOpen) {
+				heroImage.style.backgroundImage  = "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(" + imgPath + ")";
+			// }
 		});
 
 		// Setup the options menu for the div (should only render on desktop?)
@@ -174,7 +286,8 @@ class RenderProject {
 			this.project.getNote(i).render(this.notebook);
 		}
 
-		this.newNote.render(this.notebook);
+		// this.newNote.render(this.notebook);
+		// this.newProject.render(this.notebook);
 	}
 
 	close() {
@@ -182,6 +295,7 @@ class RenderProject {
 			this.project.getNote(i).unrender();
 		}
 		this.newNote.unrender(this.notebook);
+		this.newProject.unrender(this.notebook);
 	}
 
 	render(attachPoint) {
@@ -291,7 +405,7 @@ class LinkedRenderProject {
 	Should I create a factory for creating new elements?
 */
 class NewProject {
-	constructor() {
+	constructor(reportTo) {
 		// Feel like using modals to just quickly get all the data might work
 		this.modal = this.createProjectModal();
 		this.modalContent = this.modal.firstChild.firstChild;
@@ -300,11 +414,13 @@ class NewProject {
 		this.title = "Example Title";
 		this.subtitle = "Example Subtitle";
 		this.description = "Example description";
+		this.reportCallback = reportTo;
 	}
 
 	render(attachPoint) {
-		attachPoint.appendChild(this.domElement);
+		// attachPoint.appendChild(this.domElement);
 		attachPoint.appendChild(this.modal);
+		this.openModal;
 	}
 
 	createButton() {
@@ -405,6 +521,12 @@ class NewProject {
 			refreshExample();
 		}
 
+		let submit = document.createElement("button");
+		submit.textContent = "Submit";
+		submit.onclick = function() {
+			newProjObj.report(newProjObj.title, newProjObj.subtitle, newProjObj.imgPath, newProjObj.description);
+		}
+
 		// TODO add stuff for goals or expected finish date?
 		content.appendChild(header);
 		content.appendChild(nameRequest);
@@ -415,8 +537,17 @@ class NewProject {
 		content.appendChild(subtitleInput);
 		content.appendChild(descriptionRequest);
 		content.appendChild(descriptionInput);
+		content.appendChild(submit);
 		content.appendChild(exampleProject);
 		return modal;
+	}
+
+	openModal() {
+		this.modal.style.display = "block";
+	}
+
+	closeModal() {
+		this.modal.style.display = "none";
 	}
 
 	createModal() {
@@ -425,6 +556,7 @@ class NewProject {
 
 		window.onclick = function(event) {
 			if (event.target == modal) {
+				console.log("Closing modal on window click");
 				modal.style.display = "none";
 			}
 		}
@@ -436,6 +568,7 @@ class NewProject {
 		closeButton.innerHTML = "&times;";
 		closeButton.classList.add("close");
 		closeButton.onclick = function() {
+			console.log("Closing modal on x click");
 			modal.style.display = "none";
 		}
 
@@ -460,15 +593,11 @@ class NewProject {
 		});
 	}
 
-	askForSubtitle() {
-		
-	}
-
-	askForDescription() {
-		
-	}
-
-	askForBackgroundImage() {
-	
+	report(title, subtitle, bgImg, description) {
+		console.log("Reporting data to callback");
+		if (this.reportCallback) {
+			console.log("Callback was registered");
+			this.reportCallback(title, subtitle, bgImg, description);
+		}
 	}
 }

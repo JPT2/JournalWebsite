@@ -304,7 +304,6 @@ html, body {
   display: block; /* Makes whole element clickable */
   padding: 8px;
   width: 80px;
-  height: 50px;
 }
 
 /*#spotlight img {
@@ -459,13 +458,13 @@ a {
   font-family: 'Permanent Marker', cursive;
 }
 
-.subtitle {
+/* .subtitle {
   height: 20px;
   font-size: 15px;
   font-style: italic;
   vertical-align: middle;
   font-family: 'Bitter', serif;
-}
+} */
 
 .top-ribbon {
   position: absolute;
@@ -548,12 +547,12 @@ li .post {
   list-style-type: none;
 }
 
-.title {
+/* .title {
   white-space: nowrap; 
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 800px;
-}
+} */
 
 .good {
   background: #82e882;
@@ -644,7 +643,7 @@ li .post {
   overflow: hidden;
   transition: max-height 0.2s ease-out;
   /* background-color: #e0eff7; */
-  background-color: #aed5f7;
+  /* background-color: #aed5f7; */
   position: relative;
 }
 
@@ -907,14 +906,14 @@ Styles for the newsfeed
   }
 
   .title {
-    white-space: normal;
-    overflow: scroll;
-    text-overflow: ellipsis;
+    /* white-space: normal; */
+    /* overflow: scroll; */
+    /* text-overflow: ellipsis; */
     /* word-wrap: normal; */
     /* max-width: 800px; */
-    height: 100px;
+    /* height: 100px;
     overflow-wrap: break-word;
-    width: 100%;
+    width: 100%; */
   }
 
   .notebook {

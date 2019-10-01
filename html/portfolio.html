@@ -11,9 +11,9 @@
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="./css/normalize.css">
-  <link rel="stylesheet" href="./css/main.css">
-  <link rel="stylesheet" href="./css/portfolio.css">
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/portfolio.css">
   <link href="https://fonts.googleapis.com/css?family=Audiowide|Bitter|Dosis|Indie+Flower|Josefin+Sans|Merriweather+Sans|Permanent+Marker|Shadows+Into+Light&display=swap" rel="stylesheet">
 
   <meta name="theme-color" content="#fafafa">
@@ -48,7 +48,7 @@
         </div>
 
         <div id="title-wrapper">
-            <div id="edit-title" class=''>
+            <div id="edit-title" class='noshow'>
                 Edit
             </div>
             <div id="title"></div>
@@ -75,16 +75,16 @@
     </div>
   
 
-  <script src="./js/vendor/modernizr-3.7.1.min.js"></script>
+  <script src="../js/vendor/modernizr-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="./js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
-  <script src="./js/plugins.js"></script>
-  <script src="./js/main.js"></script>
-  <script src="./js/note.js"></script>
-  <script src="./js/blogPost.js"></script>
-  <script src="./js/project.js"></script>
-  <script src="./js/portfolio.js"></script>
-  <script src="./js/booksDB.js"></script>
+  <script>window.jQuery || document.write('<script src="../js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
+  <script src="../js/plugins.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/note.js"></script>
+  <script src="../js/blogPost.js"></script>
+  <script src="../js/project.js"></script>
+  <script src="../js/portfolio.js"></script>
+  <script src="../js/booksDB.js"></script>
 
   <script type="text/javascript">
     // Never invest a ton of time into designing specifics for something with high probability of change
@@ -95,32 +95,32 @@
 
     // New post database
     let projects = [
-        {title: "Platoon Dynamics", description: "A Decision Platform for HDVs", imgPath: "./res/platoonDynamics/imgs/icon.png", newsfeed: dummyNewsfeed},
-        {title: "No Script For You!", description: "A RNN for generating Seinfeld Scripts", imgPath: "./res/noScriptForYou/imgs/noScriptForYou.png", newsfeed: dummyNewsfeed},
-        {title: "Threads", description: "A Web Based Notebooking Tool", imgPath: "./res/threads/imgs/threads.png", newsfeedDiv: dummyNewsfeed},
-        {title: "OkEmoji", description: "Maps People's Emoji Responses in Your Vicinity. Won Best First Hack at HackNY some years back", imgPath: "./res/okEmoji/imgs/okEmoji.png", newsfeed: dummyNewsfeed},
-        {title: "Noted", description: "A tool for sharing ideas with friends and mapping concepts (Predecessor to threads)", imgPath: "./res/noted/imgs/noted.png", newsfeed: dummyNewsfeed},
-        {title: "This Website!", description: "Attempt at making an online progress journal for myself.", imgPath: "./res/personalSite/imgs/personalSite.png", newsfeed: dummyNewsfeed},
+        {title: "Platoon Dynamics", description: "A Decision Platform for HDVs", imgPath: "../res/platoonDynamics/imgs/icon.png", newsfeed: dummyNewsfeed},
+        {title: "No Script For You!", description: "A RNN for generating Seinfeld Scripts", imgPath: "../res/noScriptForYou/imgs/noScriptForYou.png", newsfeed: dummyNewsfeed},
+        {title: "Threads", description: "A Web Based Notebooking Tool", imgPath: "../res/threads/imgs/threads.png", newsfeedDiv: dummyNewsfeed},
+        {title: "OkEmoji", description: "Maps People's Emoji Responses in Your Vicinity. Won Best First Hack at HackNY some years back", imgPath: "../res/okEmoji/imgs/okEmoji.png", newsfeed: dummyNewsfeed},
+        {title: "Noted", description: "A tool for sharing ideas with friends and mapping concepts (Predecessor to threads)", imgPath: "../res/noted/imgs/noted.png", newsfeed: dummyNewsfeed},
+        {title: "This Website!", description: "Attempt at making an online progress journal for myself.", imgPath: "../res/personalSite/imgs/personalSite.png", newsfeed: dummyNewsfeed},
     ];
 
     // Notes
     let notes = [
       // new Project("Bioshock", "Both impressed and unimpressed with this game. Only half way (maybe?) through tho", []),
-        new Project("Gaming", "See what I'm playing and what I think of it", "./res/notes/gaming/imgs/icon.jpg", "This year I've been focused on clearing out my backlog of steam games and as such have been spending a lot more time playing singleplayer story driven games. Maybe one day one of my own games will be on this list :D", [
-            new Project("Limbo", "Enjoyable, but solemn and short.", "./res/notes/gaming/limbo/imgs/icon.jpg", "", []),
-            new Project("Celeste", "A really well-made thoughtful platformer.", "./res/notes/gaming/celeste/imgs/icon.jpg", "", []),
-            new Project("Psychonauts", "Haven't made my mind up on this one yet", "./res/notes/gaming/psychonauts/imgs/icon.jpg", "", []),
-            new Project("Hollow Knight", "Is this a dark souls?", "./res/notes/gaming/hollowKnight/imgs/icon.jpg", "", []),
-            new Project("Darkest Dungeon", "Stess testing the thought that people are a means to an ends", "./res/notes/gaming/darkestDungeon/imgs/icon.jpg", "", []),
-            new Project("Team Fight Tactics", "Thought it was fun for a bit. But I've since moved on.", "./res/notes/gaming/tft/imgs/icon.jpg", "", []),
+        new Project("Gaming", "See what I'm playing and what I think of it", "../res/notes/gaming/imgs/icon.jpg", "This year I've been focused on clearing out my backlog of steam games and as such have been spending a lot more time playing singleplayer story driven games. Maybe one day one of my own games will be on this list :D", [
+            new Project("Limbo", "Enjoyable, but solemn and short.", "../res/notes/gaming/limbo/imgs/icon.jpg", "", []),
+            new Project("Celeste", "A really well-made thoughtful platformer.", "../res/notes/gaming/celeste/imgs/icon.jpg", "", []),
+            new Project("Psychonauts", "Haven't made my mind up on this one yet", "../res/notes/gaming/psychonauts/imgs/icon.jpg", "", []),
+            new Project("Hollow Knight", "Is this a dark souls?", "../res/notes/gaming/hollowKnight/imgs/icon.jpg", "", []),
+            new Project("Darkest Dungeon", "Stess testing the thought that people are a means to an ends", "../res/notes/gaming/darkestDungeon/imgs/icon.jpg", "", []),
+            new Project("Team Fight Tactics", "Thought it was fun for a bit. But I've since moved on.", "../res/notes/gaming/tft/imgs/icon.jpg", "", []),
         ]),
-        new Project("Watching", "See what I'm watching", "./res/notes/watching/imgs/icon.jpg", "A list of all the shows I've been watching this year and my general thoughts about them.", [
-            new Project("Marvel's The Punisher", "Liked S1, lost interest in S2", "./res/notes/watching/punisher/imgs/icon.jpg", "", []),
-            new Project("Breaking Bad", "I'm behind the times I know. I started it but couldn't really stay interested", "./res/notes/watching/breakingBad/imgs/icon.jpg", "", []),
-            new Project("Neon Genesis Evangelion", "I've only seen one episode so far..", "./res/notes/watching/nge/imgs/icon.jpg", "", []),
-            new Project("Dark", "A really good German show that's basically stranger things as a thriller. Recommend!", "./res/notes/watching/dark/imgs/icon.jpg", "", []),
+        new Project("Watching", "See what I'm watching", "../res/notes/watching/imgs/icon.jpg", "A list of all the shows I've been watching this year and my general thoughts about them.", [
+            new Project("Marvel's The Punisher", "Liked S1, lost interest in S2", "../res/notes/watching/punisher/imgs/icon.jpg", "", []),
+            new Project("Breaking Bad", "I'm behind the times I know. I started it but couldn't really stay interested", "../res/notes/watching/breakingBad/imgs/icon.jpg", "", []),
+            new Project("Neon Genesis Evangelion", "I've only seen one episode so far...", "../res/notes/watching/nge/imgs/icon.jpg", "", []),
+            new Project("Dark", "A really good German show that's basically stranger things as a thriller. Recommed!", "../res/notes/watching/dark/imgs/icon.jpg", "", []),
         ]),
-        new Project("Research", "A collection og papers I've read and some thoughts. Trying to get better at drawing knowledge from this resource", "./res/notes/research/imgs/icon.jpg", []),
+        new Project("Research", "A collection og papers I've read and some thoughts. Trying to get better at drawing knowledge from this resource", "../res/notes/research/imgs/icon.jpg", []),
     ];
 
     // Books
@@ -128,12 +128,12 @@
 
     // Home
     let home = [
-        new Project("Welcome to Ject!", "J. Patrick Taggart's project notebook!", "./img/cyberPunk.jpg", "Welcome to my website :D", []),
+        new Project("Welcome to Ject!", "J. Patrick Taggart's project notebook!", "../img/cyberPunk.jpg", "Welcome to my website :D", []),
     ]
 
     let contact = [
-        new Project("Contact me", "Email, and social media accounts", "./img/cyberPunk.jpg", "Coming soon :d", []),
-        new Project("About me", "Who am I?", "./img/default.jpg", "Coming soon... I should put the thinker img here", []),
+        new Project("Contact me", "Email, and social media accounts", "../img/cyberPunk.jpg", "Coming soon :d", []),
+        new Project("About me", "Who am I?", "../img/profilePic.jpg", "Coming soon... I should put the thinker img here", []),
     ]
 
     let projectObjs = [];
@@ -150,27 +150,22 @@
     // Setup click handlers for menu buttons
     let homeButton = document.getElementById("home");
     homeButton.addEventListener("click", function() {
-        state.books = false;
         loadPage(home);
     });
     let notesButton = document.getElementById("notes");
     notesButton.addEventListener("click", function() {
-        state.books = false;
         loadPage(notes);
     });
     let booksButton = document.getElementById("books");
     booksButton.addEventListener("click", function() {
-        state.books = true; // TODO find better way to do this
         loadPage(books);
     });
     let projectsButton = document.getElementById("projects");
     projectsButton.addEventListener("click", function() {
-        state.books = false;
         loadPage(projectObjs);
     });
     let contactButton = document.getElementById("contact");
     contactButton.addEventListener("click", function() {
-        state.books = false;
         loadPage(contact);
     });
     loadPage(home);
