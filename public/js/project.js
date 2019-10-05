@@ -1,9 +1,13 @@
 // TODO - Need to add news/notices, and "notes"
 class Project {
-	constructor(title, subtitle, imgPath, description, noteList) {
+	constructor(id, title, subtitle, imgPath, description, author, createdAt, updatedAt, noteList,) {
+		this.id = id;
 		this.title = title;
 		this.subtitle = subtitle;
 		this.description = description;
+		this.author = author;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 		this.imgPath = imgPath ? imgPath : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/triangulation-minimalist-abstract-marble-and-metal-geometric-art-tina-lavoie.jpg";
 		this.notes = noteList ? noteList : [];
 	}

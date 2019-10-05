@@ -174,7 +174,45 @@
         loadPage(contact);
     });
     loadPage(home);
-    
+
+    // First test call to backend
+    var xhttp = new XMLHttpRequest();
+
+    // Tabs represent the clickable menu items
+    function getTab(tabName) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            // Load project using returned data
+            console.log("Returned!");
+            console.log(xhttp.responseText);
+            console.log(JSON.parse(xhttp.responseText));
+
+            // Should notes be included? (Would save on # requests but might be too much data. I definitely want notes for the project I'm loading in, but don't really need for others...)
+                // Since I'll sometimes need it and sometimes wont ill just make it a param. but this might kinda be premature
+            let projectList = JSON.parse(xhttp.responseText);
+            convertToProject(projectList);
+            // loadPage(pageData);
+        }
+        console.log("About to send request");
+        xhttp.open("GET", "tab/load?tab=" + tabName, true);
+        xhttp.send();
+        console.log("Request sent");
+    }
+    function wrapToProjects(projectList) {
+        let projectObjs = [];
+        for (let i = 0; i < projectList.length; i++) {
+            projectObs.push(convertToProject(projectList[i]));
+        }
+
+        // Error checking?
+        return projectObjs;
+    }
+    function convertToProject(pData) {
+        // Input is JSON object of form: author, created, description, imgPath, pID, subtitle, title, updatedAt
+        // Project obj is of form: title, subtitle, imgPath, description, noteList
+        return new Project(pData.pID, pData.title, pData.subtitle, pData.imgPath, pData.description, pData.author, pData.created, pData.updatedAt);
+    }
+    getTab("home");
   </script>
 
   <!-- Include stylesheet -->
