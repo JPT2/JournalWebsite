@@ -1,2 +1,1 @@
-Collection of all the databases for the site.
-Databases look to separate concerns and prioritize efficiency in lookup
+Need to move project.js, note.js, and other data models into here

@@ -95,6 +95,10 @@ function getProject(req, res) {
     // TODO
 }
 
+function updateProject(req, res) {
+    
+}
+
 // Methods for editing project state
 function deleteProject(req, res) {
 
@@ -126,6 +130,7 @@ var routes = {
     create: addProject,
     get: getProject,
     fill: fillProject,
+    update: updateProject,
     delete: deleteProject,
     setTitle: setTitle,
     setSubtitle: setSubtitle,

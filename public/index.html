@@ -85,6 +85,7 @@
   <script src="./js/project.js"></script>
   <script src="./js/portfolio.js"></script>
   <script src="./js/booksDB.js"></script>
+  <script src="./js/api/apiCalls.js"></script>
 
   <script type="text/javascript">
     // Never invest a ton of time into designing specifics for something with high probability of change
@@ -212,6 +213,15 @@
         for (let i = 0; i < projects.length; i++) {
             // promises.push(getNotes(projects[i]));
             promises.push(fillProject(projects[i]));
+            // let fillPromise = apiFillProject(projects[i].getID()).then(function(projectData) {
+            //     if (projectData.notes) {
+            //         projects[i].notes = notes;
+            //     }
+            //     if (projectData.subProjects) {
+            //         projects[i].subProjects = subProjects;
+            //     }
+            // })
+            // promises.push(apiFillProject(projects[i].getID()));
         }
 
         return Promise.all(promises);
