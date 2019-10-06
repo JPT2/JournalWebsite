@@ -10,6 +10,7 @@ let state = {
 function loadProject(project) {
     console.log("Loading project");
     console.log(project);
+    console.log(project.getNotes());
     state.activeProject = project;
 
     loadHeroImage(project.getImg());
@@ -133,6 +134,16 @@ function loadDescription(description, notes) {
     contentP.classList.add("content");
     contentP.textContent = description;
     notebook.appendChild(contentP);
+
+    console.log("Notes: ");
+    console.log(notes);
+    for (let i = 0; i < notes.length; i++) {
+        console.log("Appending to notebook: " + notes[i]);
+        let noteContent = document.createElement("p");
+        noteContent.classList.add("content");
+        noteContent.textContent = notes[i].content;
+        notebook.appendChild(noteContent);
+    }
     div.appendChild(notebook);
 
     let addDescripDiv = document.getElementById("add-description");
@@ -183,6 +194,8 @@ function addScroll() {
             console.log("Making new project list");
             state.projects = [project];
         }
+
+        // Send project to backend
     }
 
     if (state.modal) {

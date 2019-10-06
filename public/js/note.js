@@ -7,36 +7,25 @@
 */
 class Note {
 	// This class is basically a data struct wrapper for notes on the site
-	constructor(title, content, date, tags, parent) {
-		this.title = title; // TODO decide if this is still going to be used
+	constructor(nID, content, created, updated, parent) {
+		this.id = nID; // TODO decide if this is still going to be used
 		this.content = content;
-		this.date = date; // TODO decide if want to add a "originally posted date" and a "last edited" date
-		this.tags = tags;
+		this.created = created ? created : new Date();
+		this.updated = updated;
+		// this.tags = tags;
 		this.parent = parent;
 	}
 
-	setTitle(title) {
-		this.title = title; // TODO what types of titles might I not want allowed?
-	}
-	getTitle() {
-		return this.title;
-	}
 	hasTitle() {
 		return this.title ? true : false;
 	}
 
 	setContent(content) {
 		this.content = content; // TODO at some point in future might want to optimize updates and only edit stuff that needs it
+		this.updated = new Date();
 	}
 	getContent() {
 		return this.content;
-	}
-
-	setDate(date) {
-		this.date = date;
-	}
-	getDate() {
-		return this.date;
 	}
 
 	setParent(parent) {
@@ -56,9 +45,11 @@ class Note {
 	// If need JSON version of object call this function
 	export() {
 		return {
-			"title": this.title,
-			"content": this.content,
-			"parent": this.parent,
+			title: this.title,
+			content: this.content,
+			parent: this.parent,
+			createdAt: this.created,
+			updatedAt: this.updatedAt,
 		}
 	}
 }

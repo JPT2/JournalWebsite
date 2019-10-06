@@ -1,5 +1,9 @@
 /*
     Should house all functions dealing with project management (creation, deletion, edit)
+    Projects are the containers!
+
+    TODO
+    make all the db calls into promises
 */
 
 // In actual DB am going to need to have a tab DB since need way of getting the tab ids (unless I just make tab names unique...)
@@ -20,7 +24,7 @@ let tab2ProjectMock = [
 // Is there a meaningful difference between a project and note?
 // pID, title, author, subtitle, imgPath, description, updatedAt, created
 let projectDBMock = [
-    {pID: 1, title: 'Welcome to Ject!', author: 'JPT2', subtitle: "J. Patrick Taggart's project notebook!", imgPath: "./img/cyberPunk.jpg", description: "Welcome to my website :D", updatedAt: new Date(), created: new Date()},
+    {pID: 1, title: 'Welcome to Ject!', author: 'JPT2', subtitle: "J. Patrick Taggart's project notebook!", imgPath: "./img/cyberPunk.jpg", description: "Welcome to my website :D Now pulling stuff from my pseudo database!", updatedAt: new Date(), created: new Date()},
     {pID: 2, title: "Platoon Dynamics", author: 'JPT2', subtitle: 'A decision platform for HDVs',imgPath: "./res/platoonDynamics/imgs/icon.png", description: "A Decision Platform for HDVs", updatedAt: new Date(), created: new Date()},
     {pID: 3, title: "No Script For You!", author: 'JPT2', subtitle: 'AI applied to Seinfeld', imgPath: "./res/noScriptForYou/imgs/noScriptForYou.png", description: "A RNN for generating Seinfeld Scripts", updatedAt: new Date(), created: new Date()},
     {pID: 4, title: "Threads", author: 'JPT2', subtitle: "An idea platform", imgPath: "./res/threads/imgs/threads.png", description: "A Web Based Notebooking Tool", updatedAt: new Date(), created: new Date()},
@@ -28,19 +32,22 @@ let projectDBMock = [
     {pID: 6, title: "Noted", author: 'JPT2', subtitle: "Attempt to make an online conversation space", description: "A tool for sharing ideas with friends and mapping concepts (Predecessor to threads)", imgPath: "./res/noted/imgs/noted.png", updatedAt: new Date(), created: new Date()},
     {pID: 7, title: "This Website!", author: 'JPT2', subtitle: "My online project portfolio", description: "Attempt at making an online progress journal for myself.", imgPath: "./res/personalSite/imgs/personalSite.png", updatedAt: new Date(), created: new Date()},
     {pID: 8, title: "Gaming", author: 'JPT2', subtitle: "What I've been playing lately", description: "See what I'm playing and what I think of it", imgPath: "./res/gaming/imgs/icon.jpg", updatedAt: new Date(), created: new Date()},
-    {pID: 9, title: "Watching", author: 'JPT2', subtitle: "See what I'm watching", description: "./res/notes/watching/imgs/icon.jpg", imgPath: "A list of all the shows I've been watching this year and my general thoughts about them.", updatedAt: new Date(), created: new Date()},
-    {pID: 9, title: "Research", author: 'JPT2', subtitle: "See what I'm looking into", description: "./res/notes/research/imgs/icon.jpg", imgPath: "I've been trying to read more papers so this is a catalog of how I'm doing on that front.", updatedAt: new Date(), created: new Date()},
-    {pID: 10, title: "Test", author: 'JPT2', subtitle: "Testing a nested project", description: "./res/notes/research/imgs/icon.jpg", imgPath: "A test of doing some stuff :d", updatedAt: new Date(), created: new Date()},
-    {pID: 10, title: "Test2", author: 'JPT2', subtitle: "Testing a nested project 2", description: "./res/notes/watching/imgs/icon.jpg", imgPath: "A test of doing some stuff 2 :d", updatedAt: new Date(), created: new Date()},
+    {pID: 9, title: "Watching", author: 'JPT2', subtitle: "See what I'm watching", description: "./res/notes/watching/imgs/icon.jpg", description: "A list of all the shows I've been watching this year and my general thoughts about them.", updatedAt: new Date(), created: new Date()},
+    {pID: 9, title: "Research", author: 'JPT2', subtitle: "See what I'm looking into", description: "./res/notes/research/imgs/icon.jpg", description: "I've been trying to read more papers so this is a catalog of how I'm doing on that front.", updatedAt: new Date(), created: new Date()},
+    {pID: 10, title: "Test", author: 'JPT2', subtitle: "Testing a nested project", imgPath: "./res/notes/research/imgs/icon.jpg", description: "A test of doing some stuff :d", updatedAt: new Date(), created: new Date()},
+    {pID: 11, title: "Test2", author: 'JPT2', subtitle: "Testing a nested project 2", imgPath: "./res/notes/watching/imgs/icon.jpg", description: "A test of doing some stuff 2 :d", updatedAt: new Date(), created: new Date()},
 ]
 
 let project2ProjectMock = [
-    {pID1: 1, pID2: 10},
+    {pID: 1, pID2: 10},
     {pID: 1, pID2: 11},
 ]
 
 let project2NoteMock = [
     {pID: 1, nID: 1},
+    {pID: 1, nID: 4},
+    {pID: 1, nID: 5},
+    {pID: 1, nID: 6},
     {pID: 10, nID: 2},
     {pID: 11, nID: 3},
 ]
@@ -70,6 +77,22 @@ function getProject(id, cb) {
     // Didn't find it, alert the user
     log("getProject) Failed to find project with given id");
     cb(null, "Could not find project with id: " + id);
+}
+
+function getProjectP(id) {
+    return new Promise(function(resolve, reject) {
+        for (let i = 0; i < projectDBMock.length; i++) {
+            if (projectDBMock[i].pID === id) {
+                log("getProject) Returning pID: " + id);
+                resolve(projectDBMock[i]);
+                return;
+            }
+        }
+    
+        // Didn't find it, alert the user
+        log("getProject) Failed to find project with given id");
+        reject("Could not find project with id: " + id);
+    });
 }
 
 function getProjectNotes(id, cb) {
@@ -143,6 +166,21 @@ function setSubtitle(id, sub, cb) {
     cb(null, "ERROR) Project " + id + " was not found");
 }
 
+function getNoteIDs(pID) {
+    return new Promise(function(resolve, reject) {
+        let nIDs = [];
+        for (let i = 0; i < project2NoteMock.length; i++) {
+            if (project2NoteMock[i].pID == pID) {
+                nIDs.push(project2NoteMock[i].nID);
+            }
+        }
+
+        // Maybe should check if project exists and error oout if it doesnt?
+        console.log("Found note ids: " + nIDs + " for project id " + pID);
+        resolve(nIDs);
+    });
+}
+
 function addNote(id, nID, cb) {
     if (!id || !nID) {
         log("addNote) Error - pID: " + id + " nID: " + nID);
@@ -170,6 +208,21 @@ function removeNote(id, nID, cb) {
     log("removeNote) Error - Could not find not: " + id);
 }
 
+function getSubProjectIDs(pID) {
+    return new Promise(function(resolve, reject) {
+        let pIDs = [];
+        for (let i = 0; i < project2ProjectMock.length; i++) {
+            if(project2ProjectMock[i].pID == pID) {
+                pIDs.push(project2ProjectMock[i].pID2);
+            }
+        }
+
+        console.log("Got sub project ids: ");
+        console.log(pIDs);
+        resolve(pIDs);
+    });
+}
+
 // // Or should I just only have the singleton and let controller deal with it?
 // function removeNotes(id, nIDs, cb) {
 
@@ -177,13 +230,15 @@ function removeNote(id, nID, cb) {
 
 var database = {
     create : createProject,
-    get : getProject,
+    get : getProjectP,
     getForTab : getForTab,
+    getNoteIDs : getNoteIDs,
     delete : deleteProject,
     setTitle: setTitle,
     setSubtitle: setSubtitle,
     addNote: addNote,
     removeNote: removeNote,
+    getSubProjectIDs: getSubProjectIDs
     // removeNotes: removeNotes,
 };
 

@@ -1,7 +1,10 @@
 projectDB = require('../models/projectDB');
+notesDB = require('../models/noteDB');
 
 /*
     Seems like at this level I should just make sure data is present, check validity before querying database
+
+    Can do a one to many promise event response (think of then as registering an event handler!)
     TODO
     Why is client getting multiple responses?
     How to tell client something went wrong?
@@ -13,7 +16,6 @@ function loadTab(req, res) {
     // Pull based on tagName
     if (q.tab) {
         console.log("Trying to get projects for tab: " + q.tab);
-        // TODO just make the db calls into promises
         let tabPromise = new Promise(function(resolve, reject) {
             projectDB.getForTab(q.tab, function(pIDs, err) {
                 if(err) {
@@ -22,20 +24,12 @@ function loadTab(req, res) {
                 resolve(pIDs);
             })
         });
-        
-        tabPromise.then(function(pIDs) {
-            getProjects(pIDs, function(projects, err) {
-                if (err) {
-                    res.send(err);
-                } else {
-                    // In the future maybe fill here, but could also send back the project data and then let them make separate request for fills? Its just I know I need the "first" page data here
-                    res.send(projects);
-                }
-            })
-        }).catch(err => res.send(err));
+
+        tabPromise.then(getProjects).then(function(projects) {res.send(projects)}).catch(err => res.send);
+
     } else {
         // Let them know no tab name was given
-        console.log("Tab) Request with no tab name");
+        console.log('\x1b[33m%s\x1b[0m', "Tab) Request with no tab name");
         res.send("Please provide tab name when requesting information for tabs");
     }
 }
@@ -62,33 +56,43 @@ function addProject(req, res) {
     }
 }
 
-function getProjects(pIDs, cb) {
+// TODO - Currently if this fails it doesnt return anything... Should maybe find way to pass back the objects it did recover?
+function getProjects(pIDs) {
     let promises = [];
     for (let i = 0; i < pIDs.length; i++) {
-        promises.push(new Promise(function(resolve, reject) {
-            // Kinda weird probably better way to do this
-            projectDB.get(pIDs[i], function(pData, err) {
-                if (err) {
-                    reject(err);
-                }
-                resolve(pData);
-            });
-        }))
+        promises.push(projectDB.get(pIDs[i]));
     }
-    Promise.all(promises).then(function(projects) {
-        // Return projects (Should I sort them here by date?)
-        cb(projects, null);
-    }).catch(err => cb(null, err));
+
+    return Promise.all(promises);
+}
+
+function fillProject(req, res) {
+    let q = req.query;
+
+    console.log("Filling project + " + q.pID);
+    if (q.pID) {
+        // Want to get project2Projects and project2Notes
+        let project2Notes = projectDB.getNoteIDs(q.pID).then(notesDB.getNotes);
+        let project2Projects = projectDB.getSubProjectIDs(q.pID).then(getProjects);
+
+        Promise.all([project2Notes, project2Projects]).then(function(values) {
+            console.log("Filling with");
+            console.log(values);
+            let returnObj = {
+                notes: values[0],
+                subProjects: values[1],
+            }
+            res.send(returnObj);
+        }).catch(err => res.send(err));
+        // projectDB.getNoteIDs(q.pID).then(notesDB.getNotes).then(notes => { console.log("Sending response: " + notes); res.send(notes) }).catch(err => res.send(err));
+    } else {
+        res.send("ERROR) Cannot fill project without project id");
+    }
+    
 }
 
 function getProject(req, res) {
-    let params = req.query;
-
-    if (!id) {
-        // Need id in order to query DB
-        log("getProject) ERROR - Cannot find a project without project Id");
-        res.send("ERROR - Cannot find a project without project Id");
-    }
+    // TODO
 }
 
 // Methods for editing project state

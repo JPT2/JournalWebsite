@@ -179,6 +179,7 @@
     var xhttp = new XMLHttpRequest();
 
     // Tabs represent the clickable menu items
+    // TODO make these into promises
     function getTab(tabName) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -190,18 +191,112 @@
             // Should notes be included? (Would save on # requests but might be too much data. I definitely want notes for the project I'm loading in, but don't really need for others...)
                 // Since I'll sometimes need it and sometimes wont ill just make it a param. but this might kinda be premature
             let projectList = JSON.parse(xhttp.responseText);
-            convertToProject(projectList);
-            // loadPage(pageData);
+            fillProjects(projectList).then(function(filledProjects) {
+                console.log("Filled projects");
+                console.log(filledProjects);
+                let projectObjs = wrapToProjects(filledProjects);
+                loadPage(projectObjs);
+            }).catch(err => console.log("ERROR In PROMISE - fillPROJECTS: " + err)); // Adds notes to each project
+            let projectObjs = wrapToProjects(projectList);
+            loadPage(projectObjs);
         }
         console.log("About to send request");
         xhttp.open("GET", "tab/load?tab=" + tabName, true);
         xhttp.send();
         console.log("Request sent");
     }
+
+    function fillProjects(projects) {
+        // TODO 
+        let promises = [];
+        for (let i = 0; i < projects.length; i++) {
+            // promises.push(getNotes(projects[i]));
+            promises.push(fillProject(projects[i]));
+        }
+
+        return Promise.all(promises);
+    }
+
+    function fillProject(pData) {
+        return new Promise(function(resolve, reject) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                // Load project using returned data
+                console.log("Returned from fillProject call!");
+                console.log(JSON.parse(xhttp.responseText));
+
+                // Should notes be included? (Would save on # requests but might be too much data. I definitely want notes for the project I'm loading in, but don't really need for others...)
+                    // Since I'll sometimes need it and sometimes wont ill just make it a param. but this might kinda be premature
+                let fillData = JSON.parse(xhttp.responseText); // TODO - Going to need to add an error flag to return
+                if (fillData.notes) {
+                    console.log("Addding notes: " + fillData.notes);
+                    let parsedNotes = wrapToNotes(fillData.notes);
+                    pData.notes = parsedNotes;
+                }
+                if (fillData.subProjects) {
+                    console.log("Adding sub projects: " + fillData.subProjects);
+                    console.log(fillData.subProjects);
+                    let parsedProjects = wrapToProjects(fillData.subProjects);
+                    pData.subProjects = parsedProjects;
+                }
+
+                console.log("resolving with");
+                console.log(pData);
+                resolve(pData);
+            }
+            console.log("About to send request");
+            xhttp.open("GET", "project/fill?pID=" + pData.pID, true);
+            xhttp.send();
+            console.log("Request sent");
+        });
+    }
+
+    function getNotes(pData) {
+        return new Promise(function(resolve, reject) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                // Load project using returned data
+                console.log("Returned from getNotes call!");
+                console.log(JSON.parse(xhttp.responseText));
+
+                // Should notes be included? (Would save on # requests but might be too much data. I definitely want notes for the project I'm loading in, but don't really need for others...)
+                    // Since I'll sometimes need it and sometimes wont ill just make it a param. but this might kinda be premature
+                let notes = JSON.parse(xhttp.responseText); // TODO - Going to need to add an error flag to return
+                if (notes.length) {
+                    let parsedNotes = wrapToNotes(notes);
+                    pData.notes = parsedNotes;  // Add notes to project
+                    resolve(pData);
+                } else {
+                    resolve(pData);
+                }
+                
+            }
+            console.log("About to send request");
+            xhttp.open("GET", "project/fill?pID=" + pData.pID, true);
+            xhttp.send();
+            console.log("Request sent");
+        });
+    }
+
+    function convertToNote(noteData) {
+        return new Note(noteData.nID, noteData.content, noteData.createdAt, noteData.updatedAt);
+    }
+
+    function wrapToNotes(notes) {
+        let noteObjs = [];
+        for (let i = 0; i < notes.length; i++) {
+            noteObjs.push(convertToNote(notes[i]));
+        }
+
+        // Error checking?
+        return noteObjs;
+    }
+
     function wrapToProjects(projectList) {
+        console.log("Wrap2Project given data: " + projectList);
         let projectObjs = [];
         for (let i = 0; i < projectList.length; i++) {
-            projectObs.push(convertToProject(projectList[i]));
+            projectObjs.push(convertToProject(projectList[i]));
         }
 
         // Error checking?
@@ -210,7 +305,8 @@
     function convertToProject(pData) {
         // Input is JSON object of form: author, created, description, imgPath, pID, subtitle, title, updatedAt
         // Project obj is of form: title, subtitle, imgPath, description, noteList
-        return new Project(pData.pID, pData.title, pData.subtitle, pData.imgPath, pData.description, pData.author, pData.created, pData.updatedAt);
+                        //    id,   title,         subtitle,     imgPath,       description,       author,       createdAt,       updatedAt,       noteList,  subProjects
+        return new Project(pData.pID, pData.title, pData.subtitle, pData.imgPath, pData.description, pData.author, pData.created, pData.updatedAt, pData.notes, pData.subProjects);
     }
     getTab("home");
   </script>

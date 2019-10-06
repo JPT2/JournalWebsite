@@ -23,11 +23,10 @@ app.get('/',  (req, res) => getHomepage(req, res) ); // res.send('Hello World!')
 app.get('/tab/load', projectC.loadTab);
 app.get('/project/get', projectC.get);
 app.get('/project/fill', projectC.fill);
-app.get('/project/create', projectC.create);
+app.post('/project/create', projectC.create);
 app.get('/project/delete', projectC.delete);
-app.get('/project/title/set', projectC.setTitle);
-app.get('/project/subtitile/set', projectC.setSubtitle);
-app.get('/project/note/add', projectC.addNote);
+app.post('/project/update', projectC.update); // Fpr updating a img, title, subtitle
+app.post('/project/note/add', projectC.addNote);
 app.get('/project/note/remove', projectC.removeNote);
 
 // removeNotes: removeNotes,

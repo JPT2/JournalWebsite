@@ -1,22 +1,27 @@
 // TODO - Need to add news/notices, and "notes"
 class Project {
-	constructor(id, title, subtitle, imgPath, description, author, createdAt, updatedAt, noteList,) {
-		this.id = id;
+	constructor(id, title, subtitle, imgPath, description, author, createdAt, updatedAt, noteList, subProjects) {
+		this.id = id; // Should there be a default value for new projects?
 		this.title = title;
 		this.subtitle = subtitle;
 		this.description = description;
 		this.author = author;
-		this.createdAt = createdAt;
+		this.createdAt = createdAt ? createdAt : new Date();
 		this.updatedAt = updatedAt;
 		this.imgPath = imgPath ? imgPath : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/triangulation-minimalist-abstract-marble-and-metal-geometric-art-tina-lavoie.jpg";
 		this.notes = noteList ? noteList : [];
+		this.subProjects = subProjects ? subProjects : [];
 	}
 
+	getID() {
+		return this.id;
+	}
 	getTitle() {
 		return this.title;
 	}
 	setTitle(title) {
 		this.title = title;
+		this.updatedAt = new Date();
 	}
 
 	getSubtitle() {
@@ -24,6 +29,7 @@ class Project {
 	}
 	setSubtitle(subtitle) {
 		this.subtitle = subtitle;
+		this.updatedAt = new Date();
 	}
 
 	getImg() {
@@ -31,6 +37,7 @@ class Project {
 	}
 	setImg(imgPath) {
 		this.imgPath = imgPath;
+		this.updatedAt = new Date();
 	}
 
 	getDescription() {
@@ -51,6 +58,7 @@ class Project {
 	}
 	addNote(note) {
 		this.notes.push(note);
+		this.updatedAt = new Date();
 	}
 	removeNote(note) {
 		for (let i = 0; i < this.notes.length; i++) {
@@ -64,10 +72,47 @@ class Project {
 		this.notes.clear();
 	}
 
+	getSubProjects() {
+		return this.subProjects;
+	}
+	getSubProject(index) {
+		return this.subProjects[index];
+	}
+	numSubProjects() {
+		return this.subProjects.length;
+	}
+	addSubProject(project) {
+		this.subProjects.add(project);
+		this.updatedAt = new Date();
+	}
+	removeSubProject(pID) {
+		for (let i = 0; i < this.subProjects.length; i++) {
+			if (this.subProjects[i].id == pID) {
+				this.subProjects.splice(i, 1);
+				this.updatedAt = new Date();
+			}
+		}
+	}
+
 	getNewsfeed() {
-		console.log("Get newsfeed. Returning: " + this.notes);
-		console.log(this.notes);
-		return this.notes;
+		console.log("Newsfeed: " + this.subProjects);
+		console.log(this.subProjects);
+		return this.subProjects;
+	}
+
+	export() {
+		return {
+			pID: this.id,
+			title: this.title,
+			subtitle: this.subtitle,
+			author: this.author,
+			description: this.description,
+			createdAt: this.createdAt,
+			updatedAt: this.updatedAt,
+			imgPath: this.imgPath,
+			// notes: this.notes,	// Export should probably only be the details about the specific project
+			// subProjects: this.subProjects,
+		}
 	}
 }
 
