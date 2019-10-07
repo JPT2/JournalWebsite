@@ -25,12 +25,12 @@ function loadTab(req, res) {
             })
         });
 
-        tabPromise.then(getProjects).then(function(projects) {res.send(projects)}).catch(err => res.send);
+        tabPromise.then(getProjects).then(function(projects) {res.send({content: projects, error: null})}).catch(err => res.send({content: null, error: res.send}));
 
     } else {
         // Let them know no tab name was given
         console.log('\x1b[33m%s\x1b[0m', "Tab) Request with no tab name");
-        res.send("Please provide tab name when requesting information for tabs");
+        res.send({content: null, error: "Please provide tab name when requesting information for tabs"});
     }
 }
 
@@ -40,7 +40,7 @@ function addProject(req, res) {
 
     if (params) {
         if (!title) {
-            log("addProject) ERROR - NO title was provided");
+            log("addProject) ERROR - No title was provided");
         }
         if (!imgLink) {
             // Provide a default image
@@ -48,10 +48,10 @@ function addProject(req, res) {
         projectDB.create(params.title, params.subtitle, params.description, params.imgLink, params.publishDate, function(project, err) {
             if (err) {
                 log("addProject) " + err);
-                res.send(err); // DO I need a return statement to not send multiple times?
+                res.send({content: null, error: err}); // DO I need a return statement to not send multiple times?
             }
 
-            res.send(project);
+            res.send({content: project, error: err});
         });
     }
 }
@@ -82,8 +82,8 @@ function fillProject(req, res) {
                 notes: values[0],
                 subProjects: values[1],
             }
-            res.send(returnObj);
-        }).catch(err => res.send(err));
+            res.send({content: returnObj, error: null});
+        }).catch(err => res.send({content: null, error: err}));
         // projectDB.getNoteIDs(q.pID).then(notesDB.getNotes).then(notes => { console.log("Sending response: " + notes); res.send(notes) }).catch(err => res.send(err));
     } else {
         res.send("ERROR) Cannot fill project without project id");
@@ -96,7 +96,10 @@ function getProject(req, res) {
 }
 
 function updateProject(req, res) {
-    
+    console.log("Updating project: " + req.body);
+    projectDB.update(req.body).then(function(updated) {
+        res.send({content: updated, error: null});
+    }).catch(err => res.send({content: null, error: err}));
 }
 
 // Methods for editing project state

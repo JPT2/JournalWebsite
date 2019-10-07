@@ -3,14 +3,21 @@
 // Feel like this might get dicey later on
 let state = {
     activeProject: null,
+    activeEdited: false,
     projects: null,
     modal: null, // TODO <- Shouldnt do this...
+}
+
+function pushUpdate() {
+    console.log("Updating to ", state.activeProject);
+    apiUpdateProject(state.activeProject);
 }
 
 function loadProject(project) {
     console.log("Loading project");
     console.log(project);
-    console.log(project.getNotes());
+
+    // Save changes to old project if need to? Or do it on as needed basis. Feel it might be better to do as needed in case fails
     state.activeProject = project;
 
     loadHeroImage(project.getImg());
@@ -46,6 +53,7 @@ function editHeroImage() {
     if (url) {
         state.activeProject.setImg(url);
         loadHeroImage(url);
+        pushUpdate();
     }
 }
 
@@ -229,14 +237,17 @@ function enableEditTitle() {
         // Deal with title updates
         if (textNodes[0].textContent) {
             // Save the title // TODO
+            state.activeProject.setTitle(textNodes[0].textContent);
         }
         textNodes[0].contentEditable = "false";
 
         // Deal with subtitle
         if (textNodes[1].textContent) {
             // Save the subtitle // TODO
+            state.activeProject.setSubtitle(textNodes[1].textContent);
         }
         textNodes[1].contentEditable = "false";
+        pushUpdate();
 
         // Make it so can edit text again
         editFlag.onclick = enableEditTitle;

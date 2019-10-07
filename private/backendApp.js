@@ -12,6 +12,7 @@ const app = express()
 const port = 3000
 
 // Setup middleware for serving static files
+app.use(express.json())
 app.use('/css', express.static(path.join(__dirname, '../public/css')));
 app.use('/fonts', express.static(path.join(__dirname, '../public/fonts')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));

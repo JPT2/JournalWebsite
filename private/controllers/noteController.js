@@ -4,10 +4,10 @@ function getNote(req, res) {
     let q = req.query;
     if (q.nID) {
         noteDB.get(q.nID).then(function(noteData) {
-            res.send(noteData);
+            res.send({content: noteData, error: null});
         }).catch(err => res.send(err));
     } else {
-        res.send("ERROR) Cannot retrieve note data without id");
+        res.send({content: null, error: "Cannot retrieve note data without id"});
     }
 }
 
@@ -15,10 +15,10 @@ function addNote(req, res) {
     let q = req.query;
     if (q.nID) {
         noteDB.addNote(q.nID, q.content, q.createdAt, q.updatedAt).then(function(noteData) {
-            res.send(noteData);
-        }).catch(err => res.send(err));
+            res.send({content: noteData, error: null});
+        }).catch(err => res.send({content: null, error: err}));
     } else {
-        res.send("ERROR) Cannot retrieve note data without id");
+        res.send({content: null, error: "Cannot retrieve note data without id"});
     }
 }
 

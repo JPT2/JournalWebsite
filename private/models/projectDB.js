@@ -57,9 +57,9 @@ function log(msg) {
 }
 
 
-function createProject(title, subtitle, description, imgLink, publishDate, cb) {
+function createProject(title, subtitle, description, imgPath, publishDate, cb) {
     // Should make sure no duplicates exist somehow
-    projectDBMock.push({pID: projectDBMock.length, title: title, author: "JPT", subtitle: subtitle, imgPath: imgLink, description: description, updatedAt: publishDate, created: publishDate});
+    projectDBMock.push({pID: projectDBMock.length, title: title, author: "JPT", subtitle: subtitle, imgPath: imgPath, description: description, updatedAt: publishDate, created: publishDate});
     cb(true, null);
 }
 
@@ -127,6 +127,29 @@ function deleteProject(id, cb) {
     log("deleteProject) Could not find project: " + id);
     cb(null, "Project " + id + " was not found");
 
+}
+
+function updateProject(projectData) {
+    return new Promise(function(resolve, reject) {
+        for (let i = 0; i < projectDBMock.length; i++) {
+            if (projectDBMock[i].pID == projectData.pID) {
+                if (projectData.title) {
+                    projectDBMock[i].title = projectData.title;
+                }
+                if (projectDBMock[i].subtitle == projectData.subtitle) {
+                    projectDBMock[i].subtitle = projectData.subtitle;
+                }
+    
+                projectDBMock[i].author = projectData.author ? projectData.author : projectDBMock[i].author;
+                projectDBMock[i].imgPath = projectData.imgPath ? projectData.imgPath : projectDBMock[i].imgPath;
+                projectDBMock[i].description = projectData.description ? projectData.description : projectDBMock[i].description;
+                projectDBMock[i].updatedAt = projectData.updatedAt ? projectData.updatedAt : projectDBMock[i].updatedAt;
+                resolve(true);
+                return;
+            }
+        }
+        reject("updateProject) No project with id " + projectData.pID + " found in database");
+    });
 }
 
 function setTitle(id, title, cb) {
@@ -233,6 +256,7 @@ var database = {
     get : getProjectP,
     getForTab : getForTab,
     getNoteIDs : getNoteIDs,
+    update: updateProject,
     delete : deleteProject,
     setTitle: setTitle,
     setSubtitle: setSubtitle,

@@ -28,6 +28,10 @@ var xhttp = new XMLHttpRequest();
         console.log("Request sent");
     }
 
+function apiGetTab(tabName) {
+    return apiGetCall("tab/load?tab=" + tabName);
+}
+
 function apiAddProject(project) {
     // Should these be promises?
     return apiPostCall("project/add", project.export());
@@ -57,7 +61,7 @@ function apiPostCall(route, jsonObj) {
         // Handle the return
         xhttp.onreadystatechange = function() {
             console.log("Ready state chagned");
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {\
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                 console.log("Api call returned with: " + xhttp.responseText);
                 let returnData = JSON.parse(xhttp.responseText);
                 if (returnData.error) {
@@ -81,9 +85,9 @@ function apiGetCall(route) {
         // Handle the return
         xhttp.onreadystatechange = function() {
             console.log("Ready state chagned");
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {\
-                console.log("Api call returned with: " + xhttp.responseText);
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                 let returnData = JSON.parse(xhttp.responseText);
+                console.log("Get request " + route + " returned with: " + returnData);
                 if (returnData.error) {
                     reject(returnData.error);
                     return;
