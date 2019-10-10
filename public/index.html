@@ -44,6 +44,7 @@
             <div id="edit-hero-image" class='noshow'>
                 Edit
             </div>
+            <div id="image-status"></div>
             <div id="hero-image"></div>
         </div>
 
@@ -51,18 +52,21 @@
             <div id="edit-title" class=''>
                 Edit
             </div>
+            <div id="title-status"></div>
             <div id="title"></div>
         </div>
         <div id="description-wrapper" class="hide-scroll">
             <div id="add-description" class='noshow'>
                 +
             </div>
+            <div id="descirption-status"></div>
             <div id="description"></div>
         </div>
         <div id="newsfeed-wrapper" class="hide-scroll">
             <div id="add-newsfeed" class='noshow'>
                 +
             </div>
+            <div id="newsfeed-status"></div>
             <div id="newsfeed"></div>
         </div> 
     </div>
@@ -104,26 +108,6 @@
         {title: "This Website!", description: "Attempt at making an online progress journal for myself.", imgPath: "./res/personalSite/imgs/personalSite.png", newsfeed: dummyNewsfeed},
     ];
 
-    // Notes
-    let notes = [
-      // new Project("Bioshock", "Both impressed and unimpressed with this game. Only half way (maybe?) through tho", []),
-        new Project("Gaming", "See what I'm playing and what I think of it", "./res/notes/gaming/imgs/icon.jpg", "This year I've been focused on clearing out my backlog of steam games and as such have been spending a lot more time playing singleplayer story driven games. Maybe one day one of my own games will be on this list :D", [
-            new Project("Limbo", "Enjoyable, but solemn and short.", "./res/notes/gaming/limbo/imgs/icon.jpg", "", []),
-            new Project("Celeste", "A really well-made thoughtful platformer.", "./res/notes/gaming/celeste/imgs/icon.jpg", "", []),
-            new Project("Psychonauts", "Haven't made my mind up on this one yet", "./res/notes/gaming/psychonauts/imgs/icon.jpg", "", []),
-            new Project("Hollow Knight", "Is this a dark souls?", "./res/notes/gaming/hollowKnight/imgs/icon.jpg", "", []),
-            new Project("Darkest Dungeon", "Stess testing the thought that people are a means to an ends", "./res/notes/gaming/darkestDungeon/imgs/icon.jpg", "", []),
-            new Project("Team Fight Tactics", "Thought it was fun for a bit. But I've since moved on.", "./res/notes/gaming/tft/imgs/icon.jpg", "", []),
-        ]),
-        new Project("Watching", "See what I'm watching", "./res/notes/watching/imgs/icon.jpg", "A list of all the shows I've been watching this year and my general thoughts about them.", [
-            new Project("Marvel's The Punisher", "Liked S1, lost interest in S2", "./res/notes/watching/punisher/imgs/icon.jpg", "", []),
-            new Project("Breaking Bad", "I'm behind the times I know. I started it but couldn't really stay interested", "./res/notes/watching/breakingBad/imgs/icon.jpg", "", []),
-            new Project("Neon Genesis Evangelion", "I've only seen one episode so far..", "./res/notes/watching/nge/imgs/icon.jpg", "", []),
-            new Project("Dark", "A really good German show that's basically stranger things as a thriller. Recommend!", "./res/notes/watching/dark/imgs/icon.jpg", "", []),
-        ]),
-        new Project("Research", "A collection og papers I've read and some thoughts. Trying to get better at drawing knowledge from this resource", "./res/notes/research/imgs/icon.jpg", []),
-    ];
-
     // Books
     let books = getBooksScrollBar();
 
@@ -152,12 +136,14 @@
     let homeButton = document.getElementById("home");
     homeButton.addEventListener("click", function() {
         state.books = false;
-        loadPage(home);
+        getTab("home");
+        // loadPage(home);
     });
     let notesButton = document.getElementById("notes");
     notesButton.addEventListener("click", function() {
         state.books = false;
-        loadPage(notes);
+        // loadPage(notes);
+        getTab("notes");
     });
     let booksButton = document.getElementById("books");
     booksButton.addEventListener("click", function() {
@@ -167,48 +153,31 @@
     let projectsButton = document.getElementById("projects");
     projectsButton.addEventListener("click", function() {
         state.books = false;
-        loadPage(projectObjs);
+        // loadPage(projectObjs);
+        getTab("projects");
     });
     let contactButton = document.getElementById("contact");
     contactButton.addEventListener("click", function() {
         state.books = false;
         loadPage(contact);
     });
-    loadPage(home);
-
-    // First test call to backend
-    var xhttp = new XMLHttpRequest();
+    // loadPage(home);
 
     // Tabs represent the clickable menu items
-    // TODO make these into promises
     function getTab(tabName) {
         apiGetTab(tabName).then(function(projectList) {
-            // Load page while wait for promise to return
-            console.log(projectList);
             let filledProjects = fillProjects(projectList);
 
             // Load page with partial data while wait for returen of promise (might waste work here?)
+            console.log("ProjectList: ", projectList);
             let projectObjs = wrapToProjects(projectList);
             loadPage(projectObjs);
             return filledProjects;
         }).then(function(filledProjects) {
+            console.log("FilledProjects: ", filledProjects);
             let projectObjs = wrapToProjects(filledProjects);
             loadPage(projectObjs);
-
-            // TODO Delete once done with testing
-            apiUpdateProject(projectObjs[0]);
         }).catch(err => console.log("ERROR In PROMISE - fillPROJECTS: " + err));
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            // let projectList = JSON.parse(xhttp.responseText);
-            // fillProjects(projectList).then(function(filledProjects) {
-                // let projectObjs = wrapToProjects(filledProjects);
-                // loadPage(projectObjs);
-            // }).catch(err => console.log("ERROR In PROMISE - fillPROJECTS: " + err)); // Adds notes to each project
-            // let projectObjs = wrapToProjects(projectList);
-            // loadPage(projectObjs);
-        }
     }
 
     function fillProjects(projectDataList) {
@@ -256,8 +225,6 @@
         return projectObjs;
     }
     function convertToProject(pData) {
-        // Input is JSON object of form: author, created, description, imgPath, pID, subtitle, title, updatedAt
-        // Project obj is of form: title, subtitle, imgPath, description, noteList
                         //    id,   title,         subtitle,     imgPath,       description,       author,       createdAt,       updatedAt,       noteList,  subProjects
         return new Project(pData.pID, pData.title, pData.subtitle, pData.imgPath, pData.description, pData.author, pData.created, pData.updatedAt, pData.notes, pData.subProjects);
     }

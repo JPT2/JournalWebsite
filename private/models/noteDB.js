@@ -9,12 +9,21 @@ let notesDBMock = [
     {nID: 6, content: ":)", updatedAt: new Date(), created: new Date()},
 ]
 
+// If in future allow for notes to exist in multiple contexts will need to be able to find what projects are associated to a note
+let notes2Project = [
+
+]
+
 let note2NotesDBMock = [
 
 ]
 
-function addNote(title, subtitle, description, imgLink, publishDate, cb) {
-
+function addNote(content, created) {
+    return new Promise(function(resolve, reject) {
+        let note = {pID: notesDBMock.length, content: content, createdAt: created, updatedAt: created};
+        notesDBMock.push(note);
+        resolve(note);
+    });
 }
 
 // TODO - Brush up on difference between anon funcs and arrow funcs
@@ -31,22 +40,17 @@ function getNote(nID) {
     });
 }
 
-// Gets all notes for a project (this belongs on controller level I think)
-function getForProject(pID, cb) {   // This "action" belongs in the project DB model i think (get the ids, then ask noteDB for the content)
-    // // Returns all the note IDs for a project
-    // return new Promise(function(resolve, reject) {
-    //     for (let i = 0; i < notesDBMock)
-    // })
-}
-
 function getNotes(nIDs) {
     console.log("Getting notes for: " + nIDs);
+    let promises = [];
     if (!nIDs.length) {
         // Dont query if nothing to search for
         console.log("Aborted query to getNotes no nIDs provided");
-        return;
+        promises.push(new Promise(function(resolve, reject) {
+            reject("Failed to get notes. No ids provided");
+        }))
+        return Promise.all(promises);
     }
-    let promises = [];
 
     console.log("Fetching notes " + nIDs + " from database");
     for (let i = 0; i < nIDs.length; i++) {
@@ -57,29 +61,38 @@ function getNotes(nIDs) {
 }
 
 // Methods for editing project state
-function deleteNote(id, cb) {
-
+function deleteNote(nID) {
+    return new Promise(function(resolve, reject) {
+        if (!nID) {
+            reject("Failed to delete note. No id provided");
+        }
+        for (let i = 0; i < notesDBMock.length; i++) {
+            if (notesDBMock[i] == nID) {
+                notesDBMock.splice(i, 1);
+                resolve(true);
+            }
+        }
+        reject("Failed to delete note. Could not find note in database");
+    });
 }
 
-function setContent(id, content, cb) {
-
-}
-
-function addSubNote(id, nID, cb) {
-
-}
-
-function addSubNotes(id, nIDs, cb) {
-    
-}
-
-function removeNote(id, nID, cb) {
-
-}
-
-// Or should I just only have the singleton and let controller deal with it?
-function removeNotes(id, nIDs, cb) {
-
+function update(nID, content) {
+    return new Promise(function(resolve, reject) {
+        if (!nID) {
+            reject("Failed to update content. No note ID was provided");
+        }
+        if (!content) {
+            reject("Failed to update content. No content provided");
+        }
+        for (let i = 0; i < notesDBMock.length; i++) {
+            if (notesDBMock[i].nID == nID) {
+                notesDBMock.content = content;
+                notesDBMock.updatedAt = new Date();
+                resolve(notesDBMock[i]);
+            }
+        }
+        reject("Failed to update content. Could not find note with id " + nID);
+    });
 }
 
 var database = {
@@ -87,11 +100,7 @@ var database = {
     get : getNote,
     getNotes : getNotes,
     delete : deleteNote,
-    setContent: setContent,
-    addSubNote: addSubNote,
-    addSubNotes: addSubNotes,
-    removeNote: removeNote,
-    removeNotes: removeNotes,
+    update: update,
 };
 
 module.exports = database;

@@ -2,6 +2,45 @@
 // // var bcrypt = require('bcrypt');
 // // var async = require('async');
 
+let userDBMock = [
+    {username: "JPT2", password: "admin", firstName: "James", lastName: "Taggart", preferred: "Patrick", permissions: "1"},
+]
+
+function addUser(username, password, firstName, lastname, preferred, permissions) {
+    return new Promise(function(resolve, reject) {
+        for (let i = 0; i < userDBMock.length; i++) {
+            if (userDBMock[i] == username) {
+                reject("Could not make user account. Username is taken.");
+                return;
+            }
+        }
+
+        // Can add user. First hash their password
+        let entry = { username: username, password: password, firstname: firstName, lastname: lastname, preferred: preferred, permissions: permissions};
+        userDBMock.push(entry);
+        resolve(entry);
+    });
+}
+
+function deleteUser(username) {
+    return new Promise(function(resolve, reject) {
+        for (let i = 0; i < userDBMock.length; i++) {
+            if (userDBMock[i].username == username) {
+                let user = userDBMock[i];
+                userDBMock.splice(i, 1);
+                resolve(user);
+                return;
+            }
+        }
+        reject("Failed to remove user. No user " + username + " found in the database.");
+    });
+}
+
+module.exports = {
+    addUser: addUser,
+    deleteUser: deleteUser,
+}
+
 // function addAffiliation(affiliation, username, callback) {
 //   schemas.Affiliations.create({
 //      username: username,

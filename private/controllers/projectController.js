@@ -8,6 +8,7 @@ notesDB = require('../models/noteDB');
     TODO
     Why is client getting multiple responses?
     How to tell client something went wrong?
+    ADD CHECKS TO SEE IF USER IS LOGGED IN AND HAS PERMISSION TO PERFORM THESE ACTIONS ONCE DONE TESTING
 */
 function loadTab(req, res) {
     let q = req.query;
@@ -16,16 +17,7 @@ function loadTab(req, res) {
     // Pull based on tagName
     if (q.tab) {
         console.log("Trying to get projects for tab: " + q.tab);
-        let tabPromise = new Promise(function(resolve, reject) {
-            projectDB.getForTab(q.tab, function(pIDs, err) {
-                if(err) {
-                    reject(err);
-                }
-                resolve(pIDs);
-            })
-        });
-
-        tabPromise.then(getProjects).then(function(projects) {res.send({content: projects, error: null})}).catch(err => res.send({content: null, error: res.send}));
+        projectDB.getForTab(q.tab).then(getProjects).then(function(projects) {console.log("Sending ", projects); res.send({content: projects, error: null})}).catch(err => res.send({content: null, error: err}));
 
     } else {
         // Let them know no tab name was given
@@ -36,23 +28,23 @@ function loadTab(req, res) {
 
 function addProject(req, res) {
     console.log("Adding project to database");
-    let params = req.query;
+    let q = req.query;
 
-    if (params) {
-        if (!title) {
+    if (q) {
+        if (!q.title) {
             log("addProject) ERROR - No title was provided");
+            res.send({content: null, error: err});
         }
-        if (!imgLink) {
+        if (!q.imgPath) {
             // Provide a default image
+            log("addProject) ERROR - No img was provided");
+            res.send({content: null, error: err});
         }
-        projectDB.create(params.title, params.subtitle, params.description, params.imgLink, params.publishDate, function(project, err) {
-            if (err) {
-                log("addProject) " + err);
-                res.send({content: null, error: err}); // DO I need a return statement to not send multiple times?
-            }
 
-            res.send({content: project, error: err});
-        });
+        // title, subtitle, description, imgPath, publishDate,
+        projectDB.create(q.title, q.subtitle, q.description, q.imgPath, q.createdAt).then(function(project) {
+            res.send({content: project, error: null});
+        }).catch(err => res.send({content: null, error: err}));
     }
 }
 
@@ -72,8 +64,25 @@ function fillProject(req, res) {
     console.log("Filling project + " + q.pID);
     if (q.pID) {
         // Want to get project2Projects and project2Notes
-        let project2Notes = projectDB.getNoteIDs(q.pID).then(notesDB.getNotes);
-        let project2Projects = projectDB.getSubProjectIDs(q.pID).then(getProjects);
+        let project2Notes = projectDB.getNoteIDs(q.pID).then(function(nIDs) {
+            if (nIDs && nIDs.length) {
+                return notesDB.getNotes(nIDs);
+            } else {
+                // There aren't any notes to pull so just end early
+                return new Promise(function(resolve, reject) {
+                    resolve([]);
+                });
+            }
+        });
+        let project2Projects = projectDB.getSubProjectIDs(q.pID).then(function(pIDs) {
+            if (pIDs) {
+                return getProjects(pIDs);
+            } else {
+                return new Promise(function(resolve, reject) {
+                    resolve([]);
+                })
+            }
+        });
 
         Promise.all([project2Notes, project2Projects]).then(function(values) {
             console.log("Filling with");
@@ -86,13 +95,16 @@ function fillProject(req, res) {
         }).catch(err => res.send({content: null, error: err}));
         // projectDB.getNoteIDs(q.pID).then(notesDB.getNotes).then(notes => { console.log("Sending response: " + notes); res.send(notes) }).catch(err => res.send(err));
     } else {
-        res.send("ERROR) Cannot fill project without project id");
+        res.send({content: null, error: "Cannot fill project without project id"});
     }
     
 }
 
 function getProject(req, res) {
-    // TODO
+    let q = req.query;
+    projectDB.get(q.pID).then(function(project) {
+        res.send({content: project, error: null});
+    }).catch(err => res.send({content: null, error: err}));
 }
 
 function updateProject(req, res) {
@@ -104,28 +116,109 @@ function updateProject(req, res) {
 
 // Methods for editing project state
 function deleteProject(req, res) {
-
+    let q = req.query;
+    if (q.pID) {
+        projectDB.delete(q.pID).then(function(project) {
+            // delete from other databases
+            let deletePromises = [
+                projectDB.getNoteIDs(q.pID).then(notesDB.deleteNotes).then(function(value) {projectDB.wipeP2N(q.pID)}),
+                projectDB.wipepP2P(q.pID),
+            ];
+            Promise.all(deletePromises).then(function(values) {
+                res.send({content: true, error: null});
+            }).catch(err => res.send({content: null, error: err}));
+        }).catch(err => res.send({content: null, error: err}));
+    } else {
+        res.send({content: null, error: "Failed to delete project. No ID provided"});
+    }
 }
 
 function setTitle(req, res) {
-
+    let data = req.body;
+    projectDB.setTitle(data.pID, data.title).then(function(project) {
+        res.send({content: project, error: null});
+    }).catch({content: null, error: err});
 }
 
 function setSubtitle(req, res) {
-
+    let data = req.body;
+    projectDB.setSubtitle(data.pID, body.subtitle).then(function(project) {
+        res.send({content: project, error: null});
+    }).catch({content: null, error: err});
 }
 
 function addNote(req, res) {
+    let data = req.body;
 
+    if (data.content) {
+        // Add note to note database, use id of that to add to p2n database
+        notesDB.addNote(data.content, data.createdAt ? data.createdAt : new Date()).then(function(note) {
+            return projectDB.addNote(note.nID);
+        }).then(function(success) {
+            res.send({content: success, error: null});
+        }).catch(err => res.send({content: null, error: err}));
+    } else {
+        res.send({content: null, error: "Failed to add note. No content."});
+    }
 }
 
-function removeNote(req, res) {
-
+function deleteNote(req, res) {
+    let data = req.body;
+    if (!data.pID || !data.nID) {
+        projectDB.deleteNote(data.pID, data.nID).then(notesDB.deleteNote(data.nID)).then(function(value) {
+            res.send({content: value, error: null});
+        }).catch(err => res.send({content: null, error: err}));
+    } else {
+        res.send({content: null, error: "Failed to delete note from project. Need both ids to delete. Given pID: " + data.pID + " and noteID: " + data.nID});
+    }
 }
 
 // Or should I just only have the singleton and let controller deal with it?
-function removeNotes(req, res) {
+function deleteNotes(req, res) {
+    let data = req.body;
+    if (data.pID) {
+        if (data.nIDs) {
+            let promises = [];
+            for (let i = 0; i < data.nIDs.length; i++) {
+                promises.push(projectDB.deleteNote(data.pID, data.nID).then(notesDB.deleteNote(data.nID)));
+            }
+            Promise.all(promises).then(function(values) {   
+                res.send({content: values, error: null});
+            }).then(values => res.send({content: values, error: null})).catch(err => res.send({content: null, error: err}));
+        } else {
+            res.send({content: null, error: "Failed to delete notes. No note list provided."});
+        }
+    } else {
+        res.send({content: null, error: "Failed to delete notes. No project id provided."});
+    }   
+}
 
+function addSubProject(req, res) {
+    // Create project, then bind
+    let data = req.body;
+    if (data.pID) {
+        if (data.project) {
+            projectDB.addSubProject(data.pID, data.project);
+        } else {
+            res.send({content: null, error: "Failed to add subproject. Missing data for sub project"});
+        }
+    } else {
+        res.send({content: null, error: "Failed to add subproject. Missing ID for parent project"});
+    }
+}
+
+function deleteSubProject(req, res) {
+    let data = req.query;
+    if (data.pID) {
+        if (data.pID2) {
+            // First delete binding, then remove project (must worse to have pointer to nothing imo)
+            projectDB.deleteSubProject(data.pID, data.pID2).then(projectDB.deleteProject(data.pID2)).then(function(_) { res.send({content: _, error: null}); }).catch(err => res.send({content: null, error: err}));
+        } else {
+            res.send({content: null, error: "Failed to delete subproject. Missing ID for subproject"});
+        }
+    } else {
+        res.send({content: null, error: "Failed to delete subproject. Missing ID for parent project"});
+    }
 }
 
 var routes = {
@@ -138,8 +231,10 @@ var routes = {
     setTitle: setTitle,
     setSubtitle: setSubtitle,
     addNote: addNote,
-    removeNote: removeNote,
-    removeNotes: removeNotes,
+    deleteNote: deleteNote,
+    deleteNotes: deleteNotes,
+    addSubProject: addSubProject,
+    deleteSubProject: deleteSubProject,
 }
 
 module.exports = routes;

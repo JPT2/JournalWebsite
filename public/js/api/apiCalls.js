@@ -32,9 +32,40 @@ function apiGetTab(tabName) {
     return apiGetCall("tab/load?tab=" + tabName);
 }
 
+function apiGetProject(pID) {
+    return apiGetCall("project/get?pID=" + pID);
+}
+
+function apiUpdateProject(project) {
+    return apiPostCall("project/update", project.export());
+}
+
+function apiGetNote(nID) {
+    return apiPostCall("note/get?nID=" + nID);
+}
+
+function apiDeleteNoteFromProject(pID, nID) {
+    return apiGetCall("project/note/delete?pID=" + pID + "&nID=" + nID); // I feel like stuff that has to do with adding to db or modifying db should probably be post calls...
+}
+
+function apiDeleteSubProject(pID, pID2) {
+    return apiGetCall('project/subProject/delete?pID=' + pID + "&pID2=" + pID2);
+}
+function updateNote(note) {
+    return apiPostCall('note/update', note.export());
+}
+
+function addUser(username, password, firstName, lastName, preferred) {
+    return apiPostCall('user/add', {username: username, password: password, firstName: firstName, lastName: lastName, preferred: preferred});
+}
+
+function apiDeleteUser(username) {
+    return apiPostCall('user/delete', {username: username});
+}
+
 function apiAddProject(project) {
     // Should these be promises?
-    return apiPostCall("project/add", project.export());
+    return apiPostCall("project/create", project.export());
 }
 
 function apiDeleteProject(project) {
@@ -45,8 +76,12 @@ function apiUpdateProject(project) {
     return apiPostCall("project/update", project.export());
 }
 
-function apiAddNote2Project(note, pID) {
+function apiAddNote2Project(pID, note) {
     return apiPostCall("project/note/add", {pID: pID, note: note.export()});
+}
+
+function apiAddSubProject(pID, project) {
+    return apiPostCall("project/subProject/add", {pID: pID, project: project.export()});
 }
 
 function apiFillProject(pID) {
@@ -87,7 +122,7 @@ function apiGetCall(route) {
             console.log("Ready state chagned");
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                 let returnData = JSON.parse(xhttp.responseText);
-                console.log("Get request " + route + " returned with: " + returnData);
+                console.log("Get request " + route + " returned with: ", returnData);
                 if (returnData.error) {
                     reject(returnData.error);
                     return;
@@ -99,7 +134,7 @@ function apiGetCall(route) {
         xhttp.open("GET", route, true);
         xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
         xhttp.send();
-    }) 
+    });
 }
 
 function encodeObject(data) {

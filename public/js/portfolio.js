@@ -297,16 +297,29 @@ function addNews() {
     let addFlag = document.getElementById("add-newsfeed");
     addFlag.textContent = "save";
     addFlag.onclick = function() {
-        addFlag.textContent ="+";
         if (editable.textContent) {
             editable.contentEditable = "false";
-            let project = new Project(editable.textContent, "", "./img/cyberPunk.jpg", "", []);
+            // id, title, subtitle, imgPath, description, author, createdAt, updatedAt, noteList, subProjects
+            let project = new Project(null, editable.textContent, "", "", "./img/cyberPunk.jpg");
+            let statusDiv = document.getElementById("newsfeed-status");
+            apiAddProject(project).then(function(projectData) {
+                return apiAddProject2Project(state.activeProject.getID(), projectData.pID); // Guess im making the assumption that the active project has a pID, which it technically always should
+            }).then(function(success) {
+                // If we got here maybe give a message saying it added successfully?
+                addFlag.textContent ="+";
+                addFlag.onclick = addNews;
+                status.div.textContent = "Successfully added text";
+                setTimeout(function() {
+                    status.div.textContent = "";
+                }, 2000);
+            }).catch(function(err) {
+                // Print an error message
+                status.div.classList.add("error");
+                status.div.textContent = err;
+            });
         } else {
             editable.parentNode.removeChild(editable);
         }
-        
-        // have to add to currently rendered project somehow... Need state mangement. (Should have something monitoring what is currently rendered, whats in the wings, etc.)
-        addFlag.onclick = addNews;
     };
 
     // Add the new element

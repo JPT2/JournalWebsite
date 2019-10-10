@@ -1,7 +1,63 @@
-// var db = require('../models/userDB.js');
+/*
+    TODO - ADD CHECKS TO SEE IF USER IS LOGGED IN AND HAS PERMISSION TO PERFORM THESE ACTIONS ONCE DONE TESTING
+*/
+var db = require('../models/userDB.js');
 // // var FriendshipDB = require("../models/friendsDB.js");
 // // var PostDB = require("../models/postsDB.js");
 // // var async = require('async');
+
+function addUser(req, res) {
+    let data = req.body;
+    if (!data.username) {
+        res.send({content: null, error: "Failed to add user. No username provided"});
+    }
+    if (!data.password) {
+        res.send({content: null, error: "Failed to add user. No password provided"});
+    }
+    if (!data.firstName) {
+        res.send({content: null, error: "Failed to add user. No firstName provided"});
+    }
+    if (!data.lastName) {
+        res.send({content: null, error: "Failed to add user. No lastName provided"});
+    }
+
+    db.addUser(data.username, data.password, data.firstName, data.lastName, data.preferred, data.permissions ? 0 : 0).then(function(user) {
+        req.session.account = data.username;
+        res.send({content: user, error: null});
+    }).catch(err => res.send({content: null, error: err})); // By default not going to let people to accidently make themselves an admin (would only want to allow an admin to create another admin)
+}
+
+function deleteUser(req, res) {
+    // Should probably check to make sure this is the user who is requesting this
+    let username = req.session.account;
+    let toDelete = req.body.username;
+
+    if (!toDlete) {
+        res.send({content: null, error: "Failed to delete user. No username provided"});
+        return;
+    }
+    if (!username) {
+        res.send({content: null, error: "Failed to delete user. You are not logged in."});
+        return;
+    }
+
+    getPermission(username).then(function(permission) {
+        return new Promise(function(resolve, reject) {
+            if (permission == 1) {
+                resolve(true);
+            } else {
+                reject("Failed to delete user. You do not have permissio to perform this action");
+            }
+        });
+    }).then(db.deleteUser(toDelete)).then(function() {
+        res.send({content: true, error: null});
+    }).catch(err => res.send({content: null, error: err}));
+}
+
+module.exports = {
+    add: addUser,
+    delete: deleteUser,
+}
 
 // var getLogin = function(req, res) {
 //   res.render('main.ejs', {error: ""});
