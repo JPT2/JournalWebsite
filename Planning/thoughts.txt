@@ -1,0 +1,95 @@
+Ok so goal of this is to come up with a simple feature set of things I want for this site, goals, desires, and design principles/themes. In essence, all the high level things I want to achieve. And then I'll leave it to the dev process to flesh those things out. Thus, what I'm puttin out here aren't finished ideas but targets I want to throw darts at to see where they land.
+
+So its seems at the high level the things I want to accomplish are
+
+Try to focus on the "what" here instead of the how
+
+Features
+    -Make it easy to catalog the books I'm reading and keep track of my thoughts on them so I don't have to re-read books as much. Should also put down "insights I have that are attached to the book"
+        -what the book is about
+        -what i learned from the book
+        -tangential thoughts the book aroused (maybe don't show this part)
+            -fleshed out versions of those thoughts
+        -keep live list of interesting books I'm considering
+    -Show off projects I have and am working on
+        -what the project is
+        -why I decided to work on it
+        -some concrete thing to prove the project exists
+        -updates
+        -lessons learned
+        -have some type of accountabiltiy (have something that forces a deadline onto me and makes it so I have to present things (like milestones)) <- force action and make it so I'll have a breadcrumb trail to track
+    -Catch stray thoughts I have
+    -Remind me to flesh thoughts out
+    -Reminders? <- For stuff I want to do? (Like a to do list maybe? Maybe list of priorities... Is this a different project?)
+
+    thoughts
+    --------------
+        Think I should just focus on the book list and the project list for now
+            Goal of the book list should be to encourage me to read consistently
+                So what should go into the book list
+                    Book info
+                    What I got from it
+                    Random thoughts I had
+            Goal of the project list should be to encourage me to consistently build out projects with deliverables that I can express opinions on so I can re-orient if need be
+                What should go into the project list
+                    Project info <- Why include this (I'm going to want to know what project I'm talking about, and what I'm trying to go after)
+                        What, why, updates
+                            Should this stuff by dynamic? Do I want to change the description of the project over time?
+                                Like is the goal for this to be a chronicle of the stuff I've done on the project so far?
+                    Deliverables and critiques
+                    Lessons I learned
+                    Some type of schedule?
+Design principles
+    -Keep It Simple Stupid
+    -don't make people work harder than they need to
+    -things should speak for themselves
+    -less clicks is better
+    -things on the screen should be there for a reason (everything should have a reason for being there)
+Goals
+    -Keep me reading a lot and regularly
+        -Make it so I'm not reading for volume, but instead for quality/content
+    -Encourage me to work on projects
+        -Encourage action and learning from what I do
+    -Be a hub where I can go to get a litmus test of how I'm doing and if things are growing. Want to be like a window to see if im growing
+
+
+Other thoughts
+    Even with things laid out as is, it doesn't seem like the site is really a portfolio site anymore. The book stuff and the projects are kind of two different avenues
+        Unless I rethink the site as putting me on display and saying these are the things I find interesting and what I'm doing with them
+        So then there's a question of should the projects and books be on separate pages or all together?
+
+        I mean i think at this point I just need to decide on a base, approach it, then take aim again. Im spending so much time in this meta bullshit land circling around things I dont know about, I dont think it makes sense getting this meta until I have a better idea of the metrics to measure with
+        Although how do I trade off not "wasting time" or "making dumb mistakes" with "bias towards action" and "failing fast". I mean I think at this point if I don't have ways of determining if the  next step is correct or not then I have to take a step in the direction I think is correct and then use that information to learn.
+
+So what are next steps for website
+    Well need to do 2 things to complete website as I see fit
+        1.) Develop project view
+            What needs to be done to do this?
+                1.) Project View - Goal: let someone drill down and see how the project is coming along and what my thoughts are on it. Audience: Someone who wants to poke around and explore how I attacked this idea
+                2.) Project List View - Goal: just give barebones info on what the project is and why its cool.  Audience: Someone who doesn't have a lot of time, just wants most important details
+                    What do I need to present?
+                        Well, project title, little description, what its made with (some type of classification for it), status, some type of proof of work
+                            Title should go to status should go to description should go to proof of work
+
+                ~.) Is there anything else I need to do? Why these options?
+                    Well objectively all I want to do is present the project I'm working on and thus I'll need a way for people to look and see which ones they want. Anything on top of this would be some other feature or further complexity thats not oriented towards this specific goal.
+                    Where I think it be interesting to consider is, whether I want the project view to be distinct of the list view, or should they be integrated. Like the question is do I have enough content to populate a page with a project in a way thats meaningful. What would I want a full page project to lookj like?
+                        I could also start just by having projects viewable in listview and then if there's more to them have them also appear in a solo view or way to "focus" on only the one proejct. I want people to be able to easily and freely skip between the projects, but eventually I think it would be nice to have the drill down. I think it comes down to who the target audience is. If the audience is a recuiter than there relavent info for a recruiter should be at that high level, if its a friend than they probably want more intimate details (how I think about it, and theyll drill in. Either way I think I should start with just the project list view first that just presents info a recuiter or someone skimming through the projects would be interested in)
+        2.) Develop book view 
+        ~.) Why do I think these are the correct steps?
+            Becaues the way I want to leverage the portfolio site is to keep myself on task and motivated. And I'm looking to do that via having a place where I can post the stuff I'm working on, update it, and do next steps. I want to start developing a hub for myself.
+
+
+Goal for this worksession: A MVP that I can grow from with respect to the project view of the website
+    MVP - Project
+    MVP - Project List View
+        Audience - Recruiter/People who don't have time
+        Needs to   
+            1.) Display name of the project
+                Title, Subtitle
+            2.) Display why project is interesting
+                Subtitle, description
+            3.) Display what skills were used to build the project?
+                Tags?
+            4.) Provide proof of work
+                Link

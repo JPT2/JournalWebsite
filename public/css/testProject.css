@@ -1,0 +1,160 @@
+#main-content {
+    width: 100%;
+    height: calc(100% - 56px); /* Subtract height of menu bar */
+}
+
+.project{
+    /* Feel like should either have a fixed width or a fixed height */
+    width: 800px;
+}
+
+/* Delete everything above this line */
+html {
+    font-size: 2vw;
+}
+
+#menu-bar {
+    height: 60px;
+    background: #242222;
+}
+
+.masthead {
+    height: 100%;
+    padding-left: 1vw;
+    float: left;
+}
+
+.siteName {
+    font-size: 30px;
+}
+.masthead .subtitle {
+    font-size: 16px;
+}
+
+#main {
+    background: #131212;
+    height: calc(100% - 60px - 1px - 40px);
+    padding-top: 40px;
+}
+
+/* Styles for main area */
+#displayArea {
+    height: 100%;
+    width: calc(100% - 400px);
+    width: 70%;
+    float: left;
+}
+
+#navigator {
+    height: 100%;
+    float: left;
+    width: calc(30% - 1px);
+    background: #131212;
+    border-left: 1px solid #00000054;
+    /* border-left: #fff3 1px solid; */
+}
+
+/* Styles for Display Area */
+.spacer {
+    width: 99%;
+    margin: auto;
+    height: 100%;
+    background: white;
+}
+
+.header {
+    height: 16vw;
+    width: 100%;
+}
+
+.body {
+    width: 100%;
+    padding: none;
+    background: none;
+    margin: none;
+}
+
+.notebook {
+    font-size: 0.7em;
+}
+
+.content {
+    border-bottom: 1px solid #00000054;
+}
+
+#image-wrapper {
+    height: 100%;
+    color: white;
+}
+
+#header-hero-image {
+    height: 100%;
+}
+
+/* Style for image-wrapper */
+#title-wrapper {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Style for title-wrapper */
+#title {
+    /* height:70%; */
+    font-size: 4em;
+}
+
+#subtitle {
+    /* height:30%; */
+    font-size: 1.5em;
+}
+
+#edit-title {
+    /* height: 100%; */
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    border-left: 1px #0000001a solid;
+    text-align: center;
+    font-size: 30px;
+    line-height: 100px;
+    background-color: #ffffffdb;
+}
+
+/* Styles for navigator */
+#navbar {
+    width: 100%;
+    height: 3vw;
+    color: white;
+}
+
+/* Styles for navbar */
+.navbutton {
+    width: 33.33%;
+    float: left;
+    text-align: center;
+}
+
+#scrollArea {
+
+}
+
+.project {
+    width: 95%;
+    border: 1px solid #fff3;
+    margin: 10px auto;
+}
+
+.hero-text h1 {
+    font-size: 1.2em;
+}
+
+.hero-text p {
+    font-size: 0.6em;
+}
+
+/* Experimental */
+.open {
+    color: #555;
+}

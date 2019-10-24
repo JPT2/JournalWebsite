@@ -34,14 +34,14 @@
 }
 
 #title {
-    height: calc(100% - 11px);
+    /* height: calc(100% - 11px);
     width: 100%;
     text-align: center;
     border-bottom: 1px solid black;
     padding-top: 10px;
     padding-right: 17px;
     overflow-y: scroll;
-    box-sizing: content-box;
+    box-sizing: content-box; */
 }
 
 #title .title, #title .subtitle {
@@ -56,7 +56,7 @@
     overflow: hidden;
 }
 
-#edit-title {
+/* #edit-title {
     height: 100%;
     position: absolute;
     top: 0;
@@ -67,7 +67,7 @@
     font-size: 30px;
     line-height: 100px;
     background-color: #ffffffdb;
-}
+} */
 
 #description {
     width: 100%;
@@ -154,12 +154,12 @@
 }
 
 .content {
-    height: 100%;
+    /* height: 100%;
     border-radius: 0px 0px 00px 40px;
     padding: 5px 15px 15px 50px;
     margin: 10px 20px 0 20px;
     border-bottom: 1px solid #00000054;
-    min-height: 12px;
+    min-height: 12px; */
 }
 
 .notice {

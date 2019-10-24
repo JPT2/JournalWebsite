@@ -427,10 +427,10 @@ td .mini-card {
 }
 
 .body {
-  width: 70%;
+  /* width: 70%;
   margin: 0 auto;
   background: #d0dffa45;
-  padding: 25px;
+  padding: 25px; */
 }
 
 .block {
@@ -444,10 +444,10 @@ a {
 }
 
 .masthead {
-  height: 50px;
+  /* height: 50px;
   width: 300px;
   float: left;
-  padding: 3px;
+  padding: 3px; */
 }
 
 .siteName {
@@ -755,7 +755,7 @@ table {
 }
 
 .notebook {
-  padding: 0 10px 10px 50px;
+  /* padding: 0 10px 10px 50px; */
 }
 
 .notebook .project {

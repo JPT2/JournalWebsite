@@ -4,8 +4,6 @@ function newNote(content, date, tags) {
 
 let reading = [
     ["Empires of the Sea: The siege of Malta, The Battle of Lepanto, and the Contest for the Center of the World", "Roger Crowley", './res/books/empiresOfTheSea/icon.jpg', "none", []],
-    ["The Metamorphosis", "Franz Kafka", './res/books/metamorphosis/icon.jpg', "none", []],
-    ["Steve Jobs", "Walter Isaacson", './res/books/steveJobs/icon.jpg', "none", []],
     ["Orientalism", "Edward W. Said", './res/books/orientalism/icon.jpg', "none", []],
 ];
 
@@ -34,6 +32,8 @@ let toRead = [
 ];
 
 let read = [
+    ["Steve Jobs", "Walter Isaacson", './res/books/steveJobs/icon.jpg', "none", []],
+    ["The Metamorphosis", "Franz Kafka", './res/books/metamorphosis/icon.jpg', "none", []],
     ["On Writing: A Memoir of the Craft", "Stephen King", './res/books/stephenKing/icon.jpg', "none", [
         newNote("I've been having a number of issues dealing with trying to create projects and how to navigate the inherent ambiguity in doing things for yourself. I'm not sure if this is the right book, but I'm hoping that there might be some insight on how to start to approach or think about those issues in this book.")
     ]],
@@ -109,7 +109,8 @@ let read2018 = [
 ];
 
 function wrapBookToProject(bookData) {
-    return new Project(bookData[0], bookData[1], bookData[2], bookData[3], bookData[4]);
+    // id, title, subtitle, imgPath, description, author, createdAt, updatedAt, noteList, subProjects
+    return new Project(-1, bookData[0], bookData[1], bookData[2], bookData[3], bookData[4]);
 }
 
 function wrapBooksToProjects(books) {

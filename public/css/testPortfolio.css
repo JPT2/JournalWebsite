@@ -1,0 +1,24 @@
+.lowerDisplay {
+    
+}
+
+#newsfeed {
+    border-left: solid black 1px;
+    width: 200px;
+    float: left;
+}
+
+#project {
+    height: 499px;
+    border-bottom: 1px solid black;
+}
+
+#portfolio {
+    width: calc(100% - 200px);
+    float: left;
+}
+
+#lowerContainer {
+    width: 100%;
+    height: calc(100% - 556px);
+}
