@@ -5,6 +5,9 @@ function newNote(content, date, tags) {
 let reading = [
     ["Empires of the Sea: The siege of Malta, The Battle of Lepanto, and the Contest for the Center of the World", "Roger Crowley", './res/books/empiresOfTheSea/icon.jpg', "none", []],
     ["Orientalism", "Edward W. Said", './res/books/orientalism/icon.jpg', "none", []],
+    ["Persian Letters", "Montesquie", './res/books/orientalism/icon.jpg', "none", []],
+    ["Better Angels of Our Nature", "Steven Pinker", './res/books/orientalism/icon.jpg', "none", []],
+    ["A Splendid Exchange: How Trade Shaped The World", "William Bernstein", "./res/books/splendidExchange/icon.jpg", "none", []],
 ];
 
 let considering = [
@@ -19,7 +22,6 @@ let considering = [
     ["Measure What Matters: How Google, Bono, and the Gates Foundation Rock the World with OKRs", "John Doer", './res/books/measureWhatMatters/icon.jpg', "none", []],
     ["A Geometry of Music: Harmony and Counterpoint in the Extended Common Practice", "Dmitri Tymoczko", './res/books/GeometryOfMusic/icon.jpg', "none", []],
     ["The Role of the Individual in History", "Georgi Plekhanov", './res/books/roleOfIndividual/icon.jpg', "none", []],
-    ["The Alchemist", "Paulo Coelho", './res/books/theAlchemist/icon.jpg', "none", []],
     ["The Shallows: What the Internet is Doing to Our Brains", "Nicholas G. Carr", './res/books/theShallows/icon.jpg', "none", []],
     ["This is Your Brain on Music: The Science of a Human Obsession", "Daniel Levitin", './res/books/brainOnMusic/icon.jpg', "none", []],
     ["The Future of Humanity: Terraforming Mars, Interstellar Travel, Immortality, and Our Destiny Beyond Earth", "Michio Kaku", './res/books/futureHumanity/icon.jpg', "none", []],
@@ -32,6 +34,8 @@ let toRead = [
 ];
 
 let read = [
+    ["Exploration", "Stewart A. Weaver", "./res/books/alchmeist/icon.jpg", "none", []],
+    ["The Alchemist", "Paulo Coelho", "./res/books/alchmeist/icon.jpg", "none", []],
     ["Steve Jobs", "Walter Isaacson", './res/books/steveJobs/icon.jpg', "none", []],
     ["The Metamorphosis", "Franz Kafka", './res/books/metamorphosis/icon.jpg', "none", []],
     ["On Writing: A Memoir of the Craft", "Stephen King", './res/books/stephenKing/icon.jpg', "none", [

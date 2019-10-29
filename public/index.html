@@ -11,9 +11,10 @@
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="./css/normalize.css">
-  <link rel="stylesheet" href="./css/main.css">
-  <link rel="stylesheet" href="./css/portfolio.css">
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/portfolio.css">
+  <link rel="stylesheet" href="../css/testProject.css">
   <link href="https://fonts.googleapis.com/css?family=Audiowide|Bitter|Dosis|Indie+Flower|Josefin+Sans|Merriweather+Sans|Permanent+Marker|Shadows+Into+Light&display=swap" rel="stylesheet">
 
   <meta name="theme-color" content="#fafafa">
@@ -25,7 +26,7 @@
   <![endif]-->
 
   <!-- Add your site or application content here -->
-    <div id="menu-bar" class="marker">
+    <!-- <div id="menu-bar" class="marker">
         <div class="masthead">
             <div class="siteName">JecT</div>
             <div class="subtitle">An interactive project journal</div>
@@ -37,9 +38,9 @@
             <li><a class="hover" id="projects">Projects</a></li>
             <li><a class="hover" id="home">Home</a></li>
         </ul>
-    </div>
+    </div> -->
 
-    <div id="display">
+    <!-- <div id="display">
         <div id="image-wrapper">
             <div id="edit-hero-image" class='noshow'>
                 Edit
@@ -69,14 +70,87 @@
             <div id="newsfeed-status"></div>
             <div id="newsfeed"></div>
         </div> 
-    </div>
+    </div> -->
 
-    <div id="scroll-wrapper" class="hide-scroll">
+    <!-- <div id="scroll-wrapper" class="hide-scroll">
         <div id="add-scroll" class="noshow">
             +
         </div>
         <div id="scroll"></div>
-    </div>
+    </div> -->
+
+    <div id="menu-bar" class="marker">
+            <div class="masthead">
+                <div class="siteName">Foli</div>
+                <div class="subtitle">A Catalog Of Adventure</div>
+            </div>
+        </div>
+    
+        <div id="main">
+          <div id="displayArea">
+            <div id="display-cover"></div>
+            <div class="spacer">
+                <div class="header">
+                    <div id="image-wrapper">
+                        <div id="edit-hero-image" class='noshow'>
+                            Edit
+                        </div>
+                        <div id="image-status"></div>
+                        <div id="header-hero-image">
+                            <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)), url('../img/cyberPunk.jpg');">
+                              <div id="title-wrapper">
+                                  <div id="edit-title" class=''>
+                                      Edit
+                                  </div>
+                                  <div id="title-status"></div>
+                                  <div id="title">Hi There!</div>
+                                  <div id="subtitle">Welcome to Foli, my project catalog</div>
+                              </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+    
+                <div class="body">
+                    <div id="description-wrapper" class="hide-scroll">
+                        <div id="add-description" class='noshow'>
+                            +
+                        </div>
+                        <div id="descirption-status"></div>
+                        <div id="description">
+                            <div class="notebook">
+                                <p class="content">As a project catalog, you can find the projects that I've been working on recently or finished through using the area on the right. Just click on "Project" and then choose whatever project you're interested in from the list to learn more. While Foli is primarily focused on tracking my projects, I've recently gotten back into reading heavily and thus if you want to see what I've been up to in that regard feel free to check in there as well. Have fun poking around, and if there's anything you want to notify me about feel free to contact me with the details found in the "Contact" tab"</p>
+                                <p class="content">:)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="newsfeed-wrapper" class="hide-scroll">
+                        <div id="add-newsfeed" class='noshow'>
+                            +
+                        </div>
+                        <div id="newsfeed-status"></div>
+                        <div id="newsfeed"></div>
+                    </div> 
+                  </div>
+            </div>
+            
+            
+              
+          </div>
+          <div id="navigator">
+            <div id="nav-cover"></div>
+              <div id="navbar">
+                <div id="projects" class="navbutton">Projects</div>
+                <div id="books" class="navbutton">Books</div>
+                <div id="contact" class="navbutton">Contact</div>
+              </div>
+              <div id="selected">
+              </div>
+              <div id="portfolio" class="scroll-area">
+              </div>
+          </div>
+        </div>
   
 
   <script src="./js/vendor/modernizr-3.7.1.min.js"></script>
@@ -133,20 +207,21 @@
     }
 
     // Setup click handlers for menu buttons
-    let homeButton = document.getElementById("home");
-    homeButton.addEventListener("click", function() {
-        state.books = false;
-        getTab("home");
-        // loadPage(home);
-    });
-    let notesButton = document.getElementById("notes");
-    notesButton.addEventListener("click", function() {
-        state.books = false;
-        // loadPage(notes);
-        getTab("notes");
-    });
+    // let homeButton = document.getElementById("home");
+    // homeButton.addEventListener("click", function() {
+    //     state.books = false;
+    //     getTab("home");
+    //     // loadPage(home);
+    // });
+    // let notesButton = document.getElementById("notes");
+    // notesButton.addEventListener("click", function() {
+    //     state.books = false;
+    //     // loadPage(notes);
+    //     getTab("notes");
+    // });
     let booksButton = document.getElementById("books");
     booksButton.addEventListener("click", function() {
+        console.log("book button clicked");
         state.books = true; // TODO find better way to do this
         loadPage(books);
     });
@@ -154,10 +229,12 @@
     projectsButton.addEventListener("click", function() {
         state.books = false;
         // loadPage(projectObjs);
+        console.log("project button clicked");
         getTab("projects");
     });
     let contactButton = document.getElementById("contact");
     contactButton.addEventListener("click", function() {
+        console.log("Clicked contact");
         state.books = false;
         loadPage(contact);
     });

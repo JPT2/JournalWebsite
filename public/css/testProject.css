@@ -55,6 +55,15 @@ html {
 }
 
 /* Styles for Display Area */
+#display-cover {
+    position: absolute;
+    height: calc(100% - 60px - 1px - 40px);
+    width: 70%;
+    z-index:2;
+    transition: all 0.5s ease;
+    /* background: #0e0f0fe8; */
+}
+
 .spacer {
     width: 99%;
     margin: auto;
@@ -94,8 +103,10 @@ html {
 /* Style for image-wrapper */
 #title-wrapper {
     height: 100%;
-    width: 100%;
+    width: calc(100% - 10px);
     overflow: hidden;
+    padding-left: 10px;
+
 }
 
 /* Style for title-wrapper */
@@ -123,6 +134,19 @@ html {
 }
 
 /* Styles for navigator */
+#selected {
+    border-bottom: 1px solid #ffffff52;
+}
+
+#nav-cover {
+    position: absolute;
+    height: calc(100% - 60px - 1px - 40px);
+    width: 35%;
+    right:0;
+    transition: all ease;
+    z-index: 2;
+}
+
 #navbar {
     width: 100%;
     height: 3vw;
@@ -136,14 +160,32 @@ html {
     text-align: center;
 }
 
-#scrollArea {
+.scroll-area {
+    overflow: scroll;
+}
 
+#portfolio {
+    height: calc(100% - 3vw - 321px);
 }
 
 .project {
     width: 95%;
-    border: 1px solid #fff3;
+    /* border: 1px solid #fff3; */
     margin: 10px auto;
+}
+
+.hero-text {
+    color: white;
+    background: none;
+    transition: all 0.5s ease;
+    border: 1px solid #fff3;
+}
+
+.sleep {
+    color: black;
+    /* background: black; */
+    background: #000000d6;
+    border: none;
 }
 
 .hero-text h1 {
@@ -157,4 +199,26 @@ html {
 /* Experimental */
 .open {
     color: #555;
+}
+
+.project {
+    -webkit-animation-name: pullIn; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1.25s; /* Safari 4.0 - 8.0 */
+    animation-name: pullIn;
+    animation-duration: 1.5s;
+    animation-timing-function: cubic-bezier(0,0.4,0.7,1);
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes pullIn {
+    from {top: 100vh;}
+    60% {top: 1vh}
+    to {top:0}
+}
+
+/* Standard syntax */
+@keyframes pullIn {
+    from {top: 100vh;}
+    65% {top: -4vh}
+    to {top:0}
 }

@@ -161,7 +161,8 @@ function loadDescription(description, notes) {
 }
 
 function loadScrollBar(projects) {
-    let div = document.getElementById("scroll");
+    // let div = document.getElementById("scroll");
+    let div = document.getElementById("portfolio");
     cleanDiv(div);
 
     // Update state to let us now what is currently active

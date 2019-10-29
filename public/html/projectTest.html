@@ -35,6 +35,7 @@
 
     <div id="main">
       <div id="displayArea">
+        <div id="display-cover"></div>
         <div class="spacer">
             <div class="header">
                 <div id="image-wrapper">
@@ -85,12 +86,13 @@
           
       </div>
       <div id="navigator">
+        <div id="nav-cover"></div>
           <div id="navbar">
             <div class="navbutton">Projects</div>
             <div class="navbutton">Books</div>
             <div class="navbutton">Contact</div>
           </div>
-          <div class="scroll-area">
+          <div id="selected">
             <div class="project">
                 <div class="project-header">
                   <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/cyberPunk.jpg');">
@@ -100,7 +102,19 @@
                     </div>
                   </div>
                 </div>
-              </div>
+            </div>
+          </div>
+          <div id="portfolio" class="scroll-area">
+            <!-- <div class="project">
+                <div class="project-header">
+                  <div class="hero-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/cyberPunk.jpg');">
+                    <div class="hero-text">
+                      <h1 class="marker">Welcome to Foli!</h1>
+                      <p>J. Patrick Taggart's Project Catalog!</p>
+                    </div>
+                  </div>
+                </div>
+            </div> -->
           </div>
       </div>
     </div>
@@ -111,20 +125,101 @@
     
   
 
-  <script src="./js/vendor/modernizr-3.7.1.min.js"></script>
+  <script src="../js/vendor/modernizr-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="./js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
-  <script src="./js/plugins.js"></script>
-  <script src="./js/main.js"></script>
-  <script src="./js/note.js"></script>
-  <script src="./js/blogPost.js"></script>
-  <script src="./js/project.js"></script>
-  <script src="./js/portfolio.js"></script>
-  <script src="./js/booksDB.js"></script>
-  <script src="./js/api/apiCalls.js"></script>
+  <script>window.jQuery || document.write('<script src="../js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
+  <script src="../js/plugins.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/note.js"></script>
+  <script src="../js/blogPost.js"></script>
+  <script src="../js/project.js"></script>
+  <script src="../js/portfolio.js"></script>
+  <script src="../js/booksDB.js"></script>
+  <script src="../js/api/apiCalls.js"></script>
 
   <script>
-      let project = 
+    let projects = [
+      {title: "Platoon Dynamics", description: "A Decision Platform for HDVs", imgPath: "../res/platoonDynamics/imgs/icon.png", newsfeed: []},
+      {title: "No Script For You!", description: "A RNN for generating Seinfeld Scripts", imgPath: "../res/noScriptForYou/imgs/noScriptForYou.png", newsfeed: []},
+      {title: "Threads", description: "A Web Based Notebooking Tool", imgPath: "../res/threads/imgs/threads.png", newsfeedDiv: []},
+      {title: "OkEmoji", description: "Maps People's Emoji Responses in Your Vicinity. Won Best First Hack at HackNY some years back", imgPath: "../res/okEmoji/imgs/okEmoji.png", newsfeed: []},
+      {title: "Noted", description: "A tool for sharing ideas with friends and mapping concepts (Predecessor to threads)", imgPath: "../res/noted/imgs/noted.png", newsfeed: []},
+      {title: "This Website!", description: "Attempt at making an online progress journal for myself.", imgPath: "../res/personalSite/imgs/personalSite.png", newsfeed: []},
+    ];
+
+    let scrollArea = document.getElementById("portfolio");
+
+    let projectObjs = [];
+    for (let i = 0; i < projects.length; i++) {
+      // id, title, subtitle, imgPath, description, author, createdAt, updatedAt, noteList, subProjects
+        projectObjs.push(new RenderProject(new Project(i, projects[i].title, null, projects[i].imgPath, projects[i].description, "JPT2")));
+        projectObjs[i].render(scrollArea);
+    }
+
+    function sleepProjects(projects) {
+      for (let i = 0; i < projects.length; i++) {
+        projects[i].sleep();
+      }
+    }
+
+    function wakeProjects(projects) {
+      for (let i = 0; i < projects.length; i++) {
+        projects[i].awake();
+      }
+    }
+
+    function sleepNav() {
+      sleepProjects(projectObjs);
+    }
+    let displayCover = document.getElementById("display-cover");
+    function sleepDisplay() {
+      displayCover.classList.add("sleep");
+    }
+
+    let navCover = document.getElementById("nav-cover");
+    function expandNavCover() {
+      navCover.style.display = "";
+    }
+    function collapseNavCover() {
+      navCover.style.display = "none";
+    }
+
+    function expandDisplayCover() {
+      displayCover.style.display = "";
+    }
+    function collapseDisplayCover() {
+      displayCover.style.display = "none";
+    }
+
+    function wakeNav() {
+      // Awaken all project
+      wakeProjects(projectObjs);
+    }
+
+    function wakeDisplay() {
+      // Awaken the display
+      displayCover.classList.remove("sleep");
+    }
+
+    navCover.onmouseenter = function() {
+      collapseNavCover();
+      wakeNav();
+      sleepDisplay();
+      // expandDisplayCover(); // Need to figure out how to handle this better
+    };
+
+    displayCover.onmouseenter = function() {
+      // collapseDisplayCover();
+      wakeDisplay();
+      sleepNav();
+      expandNavCover();
+    }
+
+    // Start with all projects asleep
+    sleepNav();
+    wakeDisplay();
+    expandDisplayCover();
+
   </script>
 
   <!-- Include stylesheet -->

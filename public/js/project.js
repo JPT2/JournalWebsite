@@ -234,6 +234,26 @@ class RenderProject {
 		this.rendered = false;
 	}
 
+	sleep() {
+		let heroText = this.domElement.childNodes[0].childNodes[0].childNodes[0];
+		let heroImage = this.domElement.childNodes[0].childNodes[0];
+
+		// heroImage.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + this.project.imgPath + ")";
+		// heroText.style.color = "black";
+		// heroText.style.background = "#000000c9";
+		heroText.classList.add("sleep");
+	}
+
+	awake() {
+		let heroText = this.domElement.childNodes[0].childNodes[0].childNodes[0];
+		let heroImage = this.domElement.childNodes[0].childNodes[0];
+
+		// heroImage.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(" + this.project.imgPath + ")";
+		// heroText.style.background = "none";
+		// heroText.style.color = "white";
+		heroText.classList.remove("sleep");
+	}
+
 	createDomElement() {
 		// Should I re-use the card thing I have to allow for easily changing how it is displayed? or just make own thing?
 		
